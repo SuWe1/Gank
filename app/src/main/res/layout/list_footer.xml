@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 2r: paddingStart=paddingLeft, paddingEnd=paddingRightr
+2l: paddingStart=paddingRight, paddingEnd=paddingLeft
+也就是说，paddingLeft,paddingRight要成对使用
+paddingStart和paddingEnd要成对使用
+不能把paddingLeft/Right和paddingStart/End混用-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:gravity="center_horizontal"
+    android:background="@color/viewBackground">
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/address_looking_up"
+        style="?android:attr/progressBarStyleInverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:visibility="visible"/>
+    <TextView
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center_vertical"
+        android:text="Loading..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
