@@ -71,7 +71,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         view.findViewById(R.id.toolbar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scrollView.smoothScrollBy(0,0);
+                scrollView.smoothScrollTo(0,0);
             }
         });
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
