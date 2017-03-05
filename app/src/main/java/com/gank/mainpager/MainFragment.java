@@ -3,8 +3,10 @@ package com.gank.mainpager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +29,8 @@ public class MainFragment extends Fragment {
     private GankFragment gankFragment;
     private GankPresenter gankPresenter;
 
+    private TabLayout tabLayout;
+
     public MainFragment() {
     }
 
@@ -37,6 +41,7 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        this.context=getActivity();
         super.onCreate(savedInstanceState);
         // Fragment状态恢复
         if (savedInstanceState!=null){
@@ -61,7 +66,12 @@ public class MainFragment extends Fragment {
     }
 
     private void initView(View v){
-
+        tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
+        ViewPager viewPager = (ViewPager) v.findViewById(R.id.view_pager);
+        viewPager.setOffscreenPageLimit(1);
+        adapter=new MainPagerAdapter(getChildFragmentManager(),context,gankFragment);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override

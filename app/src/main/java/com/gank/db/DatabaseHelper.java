@@ -15,14 +15,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table if no exits Gank("
+        db.execSQL("create table if not exists Gank("
                 + "id integer primary key autoincrement,"
                 + "gank_id integer not null,"
                 + "gank_news text,"
                 + "gank_content text,"
-                + "gank_url varchar");
+                + "gank_url varchar)");
         //增加是否收藏选项
-        db.execSQL("alert table Gank add column bookemark interger default 0");
+        db.execSQL("alter table Gank add column bookmark integer default 0");
     }
 
     @Override

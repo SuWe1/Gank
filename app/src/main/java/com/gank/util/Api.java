@@ -19,6 +19,7 @@ public class Api {
      * 随机数据：http://gank.io/api/random/data/分类/个数
      数据类型：福利 | Android | iOS | 休息视频 | 拓展资源 | 前端
      个数： 数字，大于0
+     目前随机数据来源当前列表
      */
     public static final String Gank_Android_Look_Around="http://gank.io/api/random/data/Android/";
 }

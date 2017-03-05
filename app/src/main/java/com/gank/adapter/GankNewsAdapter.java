@@ -22,15 +22,16 @@ import java.util.List;
  */
 
 public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = "GankNewsAdapter";
     private Context context;
     private List<GankNews.Question> list=new ArrayList<>();
     private final LayoutInflater inflater;
-
     //设置回调
     private OnRecyclerViewOnClickListener listener;
 
     private static final int TYPE_NORMTAL=0;
     private static final  int TYPE_FOOTER=1;
+    private static final int TYPE_NO_IMG=3;
 
     public GankNewsAdapter( List<GankNews.Question> list, Context context) {
         this.inflater = LayoutInflater.from(context);
@@ -45,28 +46,32 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 return new NormalViewHolder(inflater.inflate(R.layout.home_list_item_layout,parent,false),listener);
             case TYPE_FOOTER:
                 return new FooterViewHolder(inflater.inflate(R.layout.list_footer,parent,false));
+            case TYPE_NO_IMG:
+                return new NoImageViewHolder(inflater.inflate(R.layout.home_list_item_without_image,parent,false),listener);
         }
         return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof NormalViewHolder){
+        if (!(holder instanceof FooterViewHolder)){
             GankNews.Question item=list.get(position);
-            if (item.getImages().get(0)!=null){
-                ((NormalViewHolder) holder).imageView.setImageResource(R.mipmap.ic_launcher);
-            }else {
+            if (holder instanceof NormalViewHolder){
                 Glide.with(context)
                         .load(item.getImages().get(0))
                         .asBitmap()
-                        .placeholder(R.mipmap.ic_launcher)
+                        .placeholder(R.mipmap.loading)
                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                        .error(R.mipmap.ic_launcher)
+                        .error(R.mipmap.loading)
                         .centerCrop()
                         .into(((NormalViewHolder) holder).imageView);
+                ((NormalViewHolder) holder).textView.setText(item.getDesc());
+            }else if (holder instanceof NoImageViewHolder){
+                ((NormalViewHolder) holder).textView.setText(item.getDesc());
             }
-            ((NormalViewHolder) holder).textView.setText(item.getDesc());
         }
+
+
     }
 
     //大小加上footer
@@ -79,6 +84,8 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int getItemViewType(int position) {
         if (position==list.size()){
             return TYPE_FOOTER;
+        }if (list.get(position).getImages().size()==0){
+            return TYPE_NO_IMG;
         }
         return TYPE_NORMTAL;
     }
@@ -89,9 +96,9 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     class NormalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ImageView imageView;
-        private TextView textView;
-        private OnRecyclerViewOnClickListener listener;
+         ImageView imageView;
+         TextView textView;
+         OnRecyclerViewOnClickListener listener;
 
         public NormalViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
             super(itemView);
@@ -110,6 +117,24 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
+    class NoImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+         TextView textView;
+        OnRecyclerViewOnClickListener listener;
+        public NoImageViewHolder(View itemView ,OnRecyclerViewOnClickListener listener) {
+            super(itemView);
+            textView= (TextView) itemView.findViewById(R.id.textViewTitle);
+            this.listener=listener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (listener!=null){
+                listener.onItemClick(v,getLayoutPosition());
+            }
+        }
+    }
     class FooterViewHolder extends RecyclerView.ViewHolder{
         public FooterViewHolder(View itemView) {
             super(itemView);

@@ -27,17 +27,17 @@ public class GankNews {
     }
 
     public class Question{
-        private ArrayList<String> images;
+        private ArrayList<String> images=null;
         private String desc;
-        private int type;
-        private int url;
-        private int _id;
+        private String type;
+        private String url;
+        private String _id;
 
-        public int get_id() {
+        public String get_id() {
             return _id;
         }
 
-        public void set_id(int _id) {
+        public void set_id(String _id) {
             this._id = _id;
         }
 
@@ -57,19 +57,19 @@ public class GankNews {
             this.desc = desc;
         }
 
-        public int getType() {
+        public String getType() {
             return type;
         }
 
-        public void setType(int type) {
+        public void setType(String type) {
             this.type = type;
         }
 
-        public int getUrl() {
+        public String getUrl() {
             return url;
         }
 
-        public void setUrl(int url) {
+        public void setUrl(String url) {
             this.url = url;
         }
     }

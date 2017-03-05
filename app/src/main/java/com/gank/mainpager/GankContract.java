@@ -16,7 +16,7 @@ public interface GankContract {
         void showLoading();
         void Stoploading();
         void showResult(ArrayList<GankNews.Question> list);
-        void showPickDialog();
+        void showNotNetError();
 
     }
     interface Presenter extends BasePresenter{

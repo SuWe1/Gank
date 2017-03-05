@@ -16,9 +16,12 @@
 
 package com.gank.adapter;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.gank.mainpager.GankFragment;
 
 /**
  * Created by Lizhaotailang on 2016/8/10.
@@ -26,18 +29,34 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
-    public MainPagerAdapter(FragmentManager fm) {
+    private String [] titles;
+    private Context context;
+    private GankFragment gankFragment;
+
+    public GankFragment getGankFragment() {
+        return gankFragment;
+    }
+
+    public MainPagerAdapter(FragmentManager fm,Context context,GankFragment gankFragment) {
         super(fm);
+        this.context=context;
+        titles=new String[]{"Android"};
+        this.gankFragment=gankFragment;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return null;
+        return gankFragment;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return titles.length;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titles[position];
     }
 /*
     private String[] titles;
