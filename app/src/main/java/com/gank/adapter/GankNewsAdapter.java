@@ -2,6 +2,7 @@ package com.gank.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,7 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         .into(((NormalViewHolder) holder).imageView);
                 ((NormalViewHolder) holder).textView.setText(item.getDesc());
             }else if (holder instanceof NoImageViewHolder){
-                ((NormalViewHolder) holder).textView.setText(item.getDesc());
+                ((NoImageViewHolder) holder).textViewNoImg.setText(item.getDesc());
             }
         }
 
@@ -82,9 +83,10 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        if (position==list.size()){
+        Log.i(TAG, "getItemViewType: "+list.size());
+        if (position==getItemCount()-1){
             return TYPE_FOOTER;
-        }if (list.get(position).getImages().size()==0){
+        }if (list.get(position).getImages()==null){
             return TYPE_NO_IMG;
         }
         return TYPE_NORMTAL;
@@ -119,11 +121,11 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     class NoImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-         TextView textView;
+         TextView textViewNoImg;
         OnRecyclerViewOnClickListener listener;
         public NoImageViewHolder(View itemView ,OnRecyclerViewOnClickListener listener) {
             super(itemView);
-            textView= (TextView) itemView.findViewById(R.id.textViewTitle);
+            textViewNoImg = (TextView) itemView.findViewById(R.id.textViewTitle);
             this.listener=listener;
             itemView.setOnClickListener(this);
         }

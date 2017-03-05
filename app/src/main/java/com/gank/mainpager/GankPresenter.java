@@ -141,7 +141,7 @@ public class GankPresenter implements GankContract.Presenter {
         intent  .putExtra("id", list.get(positon).get_id());
         intent  .putExtra("url",list.get(positon).getUrl());
         intent   .putExtra("title", list.get(positon).getDesc());
-        if (item.getImages().size()==0){
+        if (item.getImages()==null){
             intent.putExtra("imgUrl", "");
         }else {
             intent.putExtra("imgUrl", list.get(positon).getImages().get(0));
