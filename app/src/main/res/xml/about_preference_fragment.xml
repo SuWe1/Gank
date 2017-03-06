@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="Gank">
+        <Preference android:title="@string/app_name" />
+        <Preference android:title="@string/about_version" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/about_anthor">
+        <Preference
+            android:summary="@string/about_please"
+            android:title="@string/about_name"
+            app:key="anthor" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/about_support">
+        <Preference
+            android:key="feedback"
+            android:title="@string/about_bug" />
+        <Preference
+            android:summary="@string/about_commit_bug"
+            android:title="@string/about_email" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

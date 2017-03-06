@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceCategory android:title="@string/basic_settings">
+    <CheckBoxPreference android:title="@string/setting_no_pic"
+        android:key="no_picture_mode"
+        android:defaultValue="false"
+        android:summary="@string/setting_no_pic_summary"/>
+    <CheckBoxPreference android:title="@string/setting_time_of_saving_article"
+        android:key="time_of_saving_article"
+        android:entries="@array/time_to_save_article"
+        android:entryValues="@array/time_to_save_values"
+        android:defaultValue="7"/>
+</PreferenceCategory>
+    <PreferenceCategory android:title="@string/setting_other">
+        <Preference android:title="@string/setting_clear_glide_cache"/>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -26,4 +26,21 @@
     <string name="deleted_from_bookmarks">删除成功</string>
     <string name="not_net_work">没有网络连接</string>
     <string name="bookmarks_Android_title">Android</string>
+
+    <string name="about_version">版本:V1.0</string>
+    <string name="about_please">大三狗求实习机会=。=</string>
+    <string name="about_name">Swy</string>
+    <string name="about_anthor">关于我</string>
+    <string name="about_support">反馈/支持</string>
+    <string name="about_bug">反馈Bug</string>
+    <string name="about_commit_bug">yeshuwei911@gmail.com</string>
+    <string name="about_email">我的联系方式</string>
+
+
+    <string name="basic_settings">基本设置</string>
+    <string name="setting_no_pic">无图模式</string>
+    <string name="setting_no_pic_summary">阅读时不加载图片</string>
+    <string name="setting_time_of_saving_article">缓存周期</string>
+    <string name="setting_other">其他设置</string>
+    <string name="setting_clear_glide_cache">清除缓存</string>
 </resources>
