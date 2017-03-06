@@ -13,14 +13,19 @@ import java.util.ArrayList;
 
 public interface BookmarksContract {
     interface Presenter extends BasePresenter{
+        //请求结果
         void  loadResults(boolean reflesh);
+        //跳转到详情页
         void startReading(BeanTeype type,int position);
+        //请求新数据
         void checkForFreshData();
         void lookAround();
     }
 
     interface View extends BaseView<Presenter>{
-        void showResults(ArrayList<GankNews> ganklist);
+        //显示结果
+        void showResults(ArrayList<GankNews.Question> ganklist,ArrayList<Integer> types);
+        //刷新数据变化
         void notifyDataChanged();
         void showLoading();
         void stopLoading();

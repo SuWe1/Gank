@@ -43,6 +43,7 @@ public class GankPresenter implements GankContract.Presenter {
     //当前加载页数
     private int CurrentPagerNum;
 
+
     //获取View
     public GankPresenter(Context context, GankContract.View view) {
         this.context=context;
@@ -135,6 +136,7 @@ public class GankPresenter implements GankContract.Presenter {
 
     @Override
     public void StartReading(int positon) {
+        //每个item就是一组数据
         GankNews.Question item=list.get(positon);
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra("type", BeanTeype.TYPE_Gank);

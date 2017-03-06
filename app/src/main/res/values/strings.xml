@@ -25,4 +25,5 @@
     <string name="added_to_bookmarks">成功添加到收藏夹</string>
     <string name="deleted_from_bookmarks">删除成功</string>
     <string name="not_net_work">没有网络连接</string>
+    <string name="bookmarks_Android_title">Android</string>
 </resources>
