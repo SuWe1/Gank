@@ -17,6 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".detail.DetailActivity"/>
+        <activity android:name=".settings.SettingsPreferenceActivity"/>
+        <activity android:name=".about.AboutPreferenceActivity"/>
     </application>
 
 </manifest>

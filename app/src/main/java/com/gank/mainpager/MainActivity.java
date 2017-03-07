@@ -1,5 +1,6 @@
 package com.gank.mainpager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
@@ -13,8 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.gank.R;
+import com.gank.about.AboutPreferenceActivity;
 import com.gank.mark.BookmarksFragment;
 import com.gank.mark.BookmarksPresenter;
+import com.gank.settings.SettingsPreferenceActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -118,9 +121,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else if (id==R.id.nav_change_theme){
 
         }else if (id==R.id.nav_settings){
-
+            startActivity(new Intent(this, SettingsPreferenceActivity.class));
         }else if (id==R.id.nav_about){
-
+            startActivity(new Intent(this, AboutPreferenceActivity.class));
         }
         return true;
     }
