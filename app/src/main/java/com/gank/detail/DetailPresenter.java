@@ -152,7 +152,8 @@ public class DetailPresenter implements  DetailContract.Presenter {
                 tempId="gank_id";
                 break;
         }
-        String sql="select * from"+tempTable+"where"+tempId+"=?";
+        //这里SQL语句没写好 卡了我三天的bug啊！！！ 一定要注意空格
+        String sql="select * from "+tempTable+" where "+tempId+" =? ";
         Cursor cursor=dbHelper.getReadableDatabase()
                 .rawQuery(sql,new String[]{String.valueOf(id)});
         if (cursor.moveToNext()){

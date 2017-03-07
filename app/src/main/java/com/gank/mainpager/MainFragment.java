@@ -50,7 +50,7 @@ public class MainFragment extends Fragment {
         }else {
             gankFragment=GankFragment.newInstance();
         }
-        gankPresenter=new GankPresenter(context,gankFragment);
+        gankPresenter=new GankPresenter(getActivity(),gankFragment);
     }
 
     @Nullable

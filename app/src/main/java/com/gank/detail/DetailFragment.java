@@ -98,7 +98,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
             final BottomSheetDialog dialog=new BottomSheetDialog(getActivity());
             View view=getActivity().getLayoutInflater().inflate(R.layout.detail_bar_detail,null);
             if (presenter.queryIsBooksMarks()){
-                ((TextView)view.findViewById(R.id.textView)).setText("取消收藏该编文章");
+                ((TextView)view.findViewById(R.id.textView)).setText(R.string.action_delete_from_bookmarks);
                 ((ImageView)view.findViewById(R.id.imageView)).setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
             }
             //添加收藏

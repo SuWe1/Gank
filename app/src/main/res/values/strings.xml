@@ -58,5 +58,6 @@
     <string name="sure">肯定</string>
     <string name="yes">必须</string>
     <string name="no_app_store_found">没有邮件类App</string>
+    <string name="action_delete_from_bookmarks">取消收藏该编文章</string>
 
 </resources>
