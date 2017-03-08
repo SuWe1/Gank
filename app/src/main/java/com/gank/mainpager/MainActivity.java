@@ -1,6 +1,8 @@
 package com.gank.mainpager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
@@ -10,8 +12,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.gank.R;
 import com.gank.about.AboutPreferenceActivity;
@@ -119,7 +123,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else if (id==R.id.nav_bookmarks){
             showBookMarksFragment();
         }else if (id==R.id.nav_change_theme){
+            //当DrawerLayout关闭后更改主题
+            drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+                @Override
+                public void onDrawerSlide(View drawerView, float slideOffset) {
 
+                }
+
+                @Override
+                public void onDrawerOpened(View drawerView) {
+
+                }
+
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                    SharedPreferences sp=getSharedPreferences("user_settings",MODE_PRIVATE);
+                    //检测当前主题模式
+                    int mode=getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                    if (mode==Configuration.UI_MODE_NIGHT_YES){
+                        sp.edit().putInt("theme",0).apply();
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    }else {
+                        sp.edit().putInt("theme",1).apply();
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    }
+                    getWindow().setWindowAnimations(R.style.WindowsAnimationonChange);
+                    recreate();
+                }
+
+                @Override
+                public void onDrawerStateChanged(int newState) {
+
+                }
+            });
         }else if (id==R.id.nav_settings){
             startActivity(new Intent(this, SettingsPreferenceActivity.class));
         }else if (id==R.id.nav_about){
@@ -132,6 +168,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
+        /*FragmentManager manager = getSupportFragmentManager();
+        manager.putFragment(outState, "MainFragment", mainFragment);
+        manager.putFragment(outState,"BookmarksFragment",bookmarksfragment);*/
         if (mainFragment.isAdded()){
             getSupportFragmentManager().putFragment(outState,"MainFragment",mainFragment);
         }

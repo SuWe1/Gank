@@ -16,8 +16,9 @@ import com.gank.interfaze.OnStringListener;
 public class StringModeImpl  {
     private Context context;
 
+    //获取Application的context避免内存泄漏
     public StringModeImpl(Context context) {
-        this.context = context;
+        this.context = context.getApplicationContext();
     }
 
     public void load(String url, final OnStringListener listener){

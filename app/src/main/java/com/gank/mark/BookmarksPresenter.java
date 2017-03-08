@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.gank.adapter.BookMarksAdapter;
 import com.gank.bean.BeanTeype;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
  */
 
 public class BookmarksPresenter implements BookmarksContract.Presenter {
-
+    private static final String TAG = "BookmarksPresenter";
     private BookmarksContract.View view;
     private Context context;
     private Gson gson;
@@ -82,6 +83,7 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
         if (cursor.moveToNext()){
             do {
                 //将收藏的每组数据存放在一个列表中
+                Log.i(TAG, "checkForFreshData: "+cursor.getString(cursor.getColumnIndex("gank_news")));
                 GankNews.Question gq=gson.fromJson(cursor.getString(cursor.getColumnIndex("gank_news")),GankNews.Question.class);
                 gankList.add(gq);
                 types.add(BookMarksAdapter.TYPE_Gank_NORMAL);

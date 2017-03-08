@@ -84,7 +84,8 @@ public class GankPresenter implements GankContract.Presenter {
                                     values.put("gank_news", gson.toJson(item));
                                     values.put("gank_content", "");
                                     values.put("gank_url", item.getUrl());
-                                    db.insert("Gank", null, values);
+                                    long addResult=db.insert("Gank", null, values);
+                                    Log.i(TAG, "onSuccess: addResult "+addResult);
                                 } finally {
                                     db.endTransaction();
                                 }
