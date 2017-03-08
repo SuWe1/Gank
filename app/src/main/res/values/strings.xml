@@ -37,6 +37,8 @@
     <string name="about_bug">反馈Bug</string>
     <string name="about_commit_bug">yeshuwei911@gmail.com</string>
     <string name="about_email">我的联系方式</string>
+    <string name="about_thank">致谢</string>
+    <string name="anout_thank_gank">感谢干货集中营无私的提供Api</string>
 
 
     <string name="basic_settings">基本设置</string>

@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table if not exists Gank("
                 + "id integer primary key autoincrement,"
-                + "gank_id integer not null,"
+                + "gank_id text not null,"
                 + "gank_news text,"
                 + "gank_content text,"
                 + "gank_url varchar)");
@@ -27,6 +27,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        switch (oldVersion){
+            case 7:
+                db.execSQL("drop table if exists Gank");
+                onCreate(db);
+        }
     }
 }

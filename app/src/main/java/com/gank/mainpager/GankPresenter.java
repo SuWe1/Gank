@@ -50,7 +50,7 @@ public class GankPresenter implements GankContract.Presenter {
         this.view=view;
         this.view.setPresenter(this);
         model=new StringModeImpl(context);
-        dbHelper=new DatabaseHelper(context,"Histroy.db",null,5);
+        dbHelper=new DatabaseHelper(context,"Histroy.db",null,8);
         db=dbHelper.getWritableDatabase();
     }
 

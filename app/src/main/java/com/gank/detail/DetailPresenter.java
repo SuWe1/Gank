@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 import com.gank.bean.BeanTeype;
 import com.gank.bean.StringModeImpl;
@@ -20,6 +21,7 @@ import com.google.gson.Gson;
  */
 
 public class DetailPresenter implements  DetailContract.Presenter {
+    private static final String TAG = "DetailPresenter";
     private DetailContract.View view;
     private StringModeImpl model;
     private Context context;
@@ -66,7 +68,7 @@ public class DetailPresenter implements  DetailContract.Presenter {
         this.view.setPresenter(this);
         model=new StringModeImpl(context);
         sp=context.getSharedPreferences("user_settings",Context.MODE_PRIVATE);
-        dbHelper=new DatabaseHelper(context,"Histroy.db",null,5);
+        dbHelper=new DatabaseHelper(context,"Histroy.db",null,8);
         gson=new Gson();
     }
 
@@ -119,18 +121,19 @@ public class DetailPresenter implements  DetailContract.Presenter {
                 tmpTable="Gank";
                 tmpID="gank_id";
         }
+        Log.i(TAG, "addToOrDeleteFromBookMarks: tmpTable:"+tmpTable+" tmpID:"+tmpID+" id:"+id+" queryIsBooksMarks():"+queryIsBooksMarks());
         if (queryIsBooksMarks()){
             //从收藏列表删除
             ContentValues values=new ContentValues();
             values.put("bookmark",0);
-            dbHelper.getWritableDatabase().update(tmpTable,values,tmpID+"=?",new String[]{String.valueOf(id)});
+            dbHelper.getWritableDatabase().update(tmpTable,values,tmpID+" = ? ",new String[]{String.valueOf(id)});
             values.clear();
             view.showDeletedFromBookmarks();
         }else {
             //添加到收藏
             ContentValues values=new ContentValues();
             values.put("bookmark",1);
-            dbHelper.getWritableDatabase().update(tmpTable,values,tmpID+"=?",new String[]{String.valueOf(id)});
+            dbHelper.getWritableDatabase().update(tmpTable,values,tmpID+" = ? ",new String[]{String.valueOf(id)});
             values.clear();
             view.showAddedToBookmarks();
         }
@@ -153,7 +156,7 @@ public class DetailPresenter implements  DetailContract.Presenter {
                 break;
         }
         //这里SQL语句没写好 卡了我三天的bug啊！！！ 一定要注意空格
-        String sql="select * from "+tempTable+" where "+tempId+" =? ";
+        String sql="select * from "+tempTable+" where "+tempId+" = ? ";
         Cursor cursor=dbHelper.getReadableDatabase()
                 .rawQuery(sql,new String[]{String.valueOf(id)});
         if (cursor.moveToNext()){

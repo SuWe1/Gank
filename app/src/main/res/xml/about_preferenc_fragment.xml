@@ -14,5 +14,7 @@
             android:key="commit_bug"/>
         <Preference android:title="@string/about_email"
             android:summary="@string/about_commit_bug"/>
+        <Preference android:title="@string/about_thank"
+            android:summary="@string/anout_thank_gank"/>
     </PreferenceCategory>
 </PreferenceScreen>

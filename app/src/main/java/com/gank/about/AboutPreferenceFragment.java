@@ -37,13 +37,13 @@ public class AboutPreferenceFragment extends PreferenceFragmentCompat implements
                 return false;
             }
         });
-        /*findPreference("author").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        findPreference("author").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 presenter.showEasterEgg();
                 return false;
             }
-        });*/
+        });
 
     }
 

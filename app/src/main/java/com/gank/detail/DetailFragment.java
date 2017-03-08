@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +31,7 @@ import com.gank.R;
 
 public class DetailFragment extends Fragment implements DetailContract.View {
 
+    private static final String TAG = "DetailFragment";
     private ImageView imageView;
     private WebView webview;
     private NestedScrollView scrollView;
@@ -98,6 +100,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
             final BottomSheetDialog dialog=new BottomSheetDialog(getActivity());
             View view=getActivity().getLayoutInflater().inflate(R.layout.detail_bar_detail,null);
             if (presenter.queryIsBooksMarks()){
+                Log.i(TAG, "onOptionsItemSelected: "+presenter.queryIsBooksMarks());
                 ((TextView)view.findViewById(R.id.textView)).setText(R.string.action_delete_from_bookmarks);
                 ((ImageView)view.findViewById(R.id.imageView)).setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
             }
