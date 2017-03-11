@@ -68,7 +68,7 @@ public class DetailPresenter implements  DetailContract.Presenter {
         this.view.setPresenter(this);
         model=new StringModeImpl(context);
         sp=context.getSharedPreferences("user_settings",Context.MODE_PRIVATE);
-        dbHelper=new DatabaseHelper(context,"Histroy.db",null,8);
+        dbHelper=new DatabaseHelper(context,"Histroy.db",null,9);
         gson=new Gson();
     }
 

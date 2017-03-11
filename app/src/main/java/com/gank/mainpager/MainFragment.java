@@ -3,6 +3,7 @@ package com.gank.mainpager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +18,9 @@ import android.view.ViewGroup;
 import com.gank.R;
 import com.gank.adapter.MainPagerAdapter;
 
+import java.lang.reflect.Type;
+import java.util.Random;
+
 /**
  * Created by 11033 on 2017/3/4.
  */
@@ -27,7 +31,9 @@ public class MainFragment extends Fragment {
 
     private MainPagerAdapter adapter;
     private GankFragment gankFragment;
+    private FrontFragment frontFragment;
     private GankPresenter gankPresenter;
+    private FrontPresenter frontPresenter;
 
     private TabLayout tabLayout;
 
@@ -47,10 +53,13 @@ public class MainFragment extends Fragment {
         if (savedInstanceState!=null){
             FragmentManager manager=getChildFragmentManager();
             gankFragment= (GankFragment) manager.getFragment(savedInstanceState,"gank");
+            frontFragment= (FrontFragment) manager.getFragment(savedInstanceState,"front");
         }else {
+            frontFragment=FrontFragment.newInstance();
             gankFragment=GankFragment.newInstance();
         }
         gankPresenter=new GankPresenter(getActivity(),gankFragment);
+        frontPresenter=new FrontPresenter(getActivity(),frontFragment);
     }
 
     @Nullable
@@ -61,15 +70,35 @@ public class MainFragment extends Fragment {
         initView(view);
         //显示菜单懒
         setHasOptionsMenu(true);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+//                if (tab.getPosition() == 1) {
+//                    fab.hide();
+//                } else {
+//                    fab.show();
+//                }
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         return view;
     }
 
     private void initView(View v){
         tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) v.findViewById(R.id.view_pager);
-        viewPager.setOffscreenPageLimit(1);
-        adapter=new MainPagerAdapter(getChildFragmentManager(),context,gankFragment);
+        viewPager.setOffscreenPageLimit(3);
+        adapter=new MainPagerAdapter(getChildFragmentManager(),context,gankFragment,frontFragment);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -88,6 +117,7 @@ public class MainFragment extends Fragment {
         if (outState==null){
             FragmentManager manager=getChildFragmentManager();
             manager.putFragment(outState,"gank",gankFragment);
+            manager.putFragment(outState,"front",frontFragment);
         }
 
     }
@@ -101,9 +131,19 @@ public class MainFragment extends Fragment {
     }
     //考虑要不要随机读取android ios 前端 目前默认只是android
     public void lookAround(){
-        gankPresenter.LookAround();
+        Random random=new Random();
+        //0-2的随机数 不包括2
+        int who=random.nextInt(2);
+        switch (who){
+            case 0:
+                gankPresenter.LookAround();
+                break;
+            case 1:
+                frontPresenter.LookAround();
+        }
+
     }
-  /*  public MainPagerdapter getAdapter(){
+     public MainPagerAdapter getAdapter(){
         return adapter;
-    }*/
+    }
 }

@@ -22,4 +22,8 @@ public class Api {
      目前随机数据来源当前列表
      */
     public static final String Gank_Android_Look_Around="http://gank.io/api/random/data/Android/";
+
+
+    //前端api
+    public static final String Gank_Front="http://gank.io/api/data/%E5%89%8D%E7%AB%AF/10/";
 }

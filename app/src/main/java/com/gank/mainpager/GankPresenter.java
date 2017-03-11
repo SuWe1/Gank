@@ -50,13 +50,13 @@ public class GankPresenter implements GankContract.Presenter {
         this.view=view;
         this.view.setPresenter(this);
         model=new StringModeImpl(context);
-        dbHelper=new DatabaseHelper(context,"Histroy.db",null,8);
+        dbHelper=new DatabaseHelper(context,"Histroy.db",null,9);
         db=dbHelper.getWritableDatabase();
     }
 
 
     @Override
-    public void loatPosts(int PagerNum, final boolean cleaing) {
+    public void loadPosts(int PagerNum, final boolean cleaing) {
         CurrentPagerNum=PagerNum;
         if (cleaing) {
             view.showLoading();
@@ -127,12 +127,12 @@ public class GankPresenter implements GankContract.Presenter {
 
     @Override
     public void reflush() {
-        loatPosts(CurrentPagerNum,true);
+        loadPosts(CurrentPagerNum,true);
     }
 
     @Override
     public void loadMore(int PagerNum) {
-        loatPosts(CurrentPagerNum+PagerNum,false);
+        loadPosts(CurrentPagerNum+PagerNum,false);
     }
 
     @Override
@@ -163,6 +163,6 @@ public class GankPresenter implements GankContract.Presenter {
 
     @Override
     public void start() {
-        loatPosts(CurrentPagerNum,true);
+        loadPosts(CurrentPagerNum,true);
     }
 }

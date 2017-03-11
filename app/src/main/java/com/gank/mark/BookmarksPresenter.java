@@ -36,7 +36,7 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
         this.view=view;
         this.view.setPresenter(this);
         gson=new Gson();
-        dbHelper=new DatabaseHelper(context,"Histroy.db",null,8);
+        dbHelper=new DatabaseHelper(context,"Histroy.db",null,9);
         db=dbHelper.getWritableDatabase();
 
         gankList=new ArrayList<GankNews.Question>();

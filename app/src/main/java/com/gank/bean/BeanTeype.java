@@ -5,5 +5,5 @@ package com.gank.bean;
  */
 
 public enum BeanTeype {
-    TYPE_Gank
+    TYPE_Gank,TYPE_Front
 }

@@ -21,14 +21,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "gank_news text,"
                 + "gank_content text,"
                 + "gank_url varchar)");
+        db.execSQL("create table if not exists Front("
+                + "id integer primary key autoincrement,"
+                + "front_id text not null,"
+                + "front_news text,"
+                + "front_content text,"
+                + "front_url varchar)");
         //增加是否收藏选项
         db.execSQL("alter table Gank add column bookmark integer default 0");
+        db.execSQL("alter table Front add column bookmark integer default 0");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         switch (oldVersion){
             case 7:
+                db.execSQL("drop table if exists Gank");
+                onCreate(db);
+            case 8:
                 db.execSQL("drop table if exists Gank");
                 onCreate(db);
         }

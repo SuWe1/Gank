@@ -21,7 +21,7 @@ public interface GankContract {
     }
     interface Presenter extends BasePresenter{
         // 请求数据
-        void loatPosts(int PagerNum,boolean cleaing);
+        void loadPosts(int PagerNum, boolean cleaing);
         //刷新数据
         void  reflush();
         //加载更多
