@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private  MainFragment mainFragment;
     private BookmarksFragment bookmarksfragment;
-    private GankFragment gankFragment;
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
