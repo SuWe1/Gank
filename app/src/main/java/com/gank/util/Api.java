@@ -26,4 +26,7 @@ public class Api {
 
     //前端api
     public static final String Gank_Front="http://gank.io/api/data/%E5%89%8D%E7%AB%AF/10/";
+
+    //福利
+    public static final String Gank_Meizi="http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/";
 }
