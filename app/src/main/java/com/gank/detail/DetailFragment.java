@@ -281,4 +281,13 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         toolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBarPlus1);
         toolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        webview.removeAllViews();
+        webview.destroy();
+        webview=null;
+        Log.i(TAG, "onDestroyView: webview is destroy");
+    }
 }
