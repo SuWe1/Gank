@@ -77,7 +77,7 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
                 }
                 break;
             case TYPE_Front:
-                GankNews.Question q=gankList.get(position-1);
+                GankNews.Question q=frontList.get(position-2-gankList.size());
                 intent.putExtra("type", BeanTeype.TYPE_Front);
                 intent  .putExtra("id", q.get_id());
                 intent  .putExtra("url",q.getUrl());
