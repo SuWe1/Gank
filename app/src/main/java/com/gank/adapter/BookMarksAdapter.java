@@ -25,17 +25,21 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Context context;
     private LayoutInflater inflater;
     private List<GankNews.Question> gankList;
+    private List<GankNews.Question> frontList;
 
 
     private OnRecyclerViewOnClickListener listener;
 
     public static final int TYPE_Gank_NORMAL = 0;
     public static final int TYPE_Gank_WITH_HEADER = 1;
+    public static final int TYPE_Front_NORMAL = 2;
+    public static final int TYPE_Front_WITH_HEADER = 3;
     private List<Integer> types;
-    public BookMarksAdapter(Context context, ArrayList<GankNews.Question> list, ArrayList<Integer> types) {
+    public BookMarksAdapter(Context context, ArrayList<GankNews.Question> gankList,ArrayList<GankNews.Question> frontList ,ArrayList<Integer> types) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.gankList = list;
+        this.gankList = gankList;
+        this.frontList=frontList;
         this.types=types;
     }
 
@@ -46,6 +50,7 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType){
+            case TYPE_Front_NORMAL:
             case TYPE_Gank_NORMAL:
                 View view=inflater.inflate(R.layout.home_list_item_layout,parent,false);
                 return new GankViewHolder(view,this.listener);
@@ -77,6 +82,28 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
                     ((GankViewHolder)holder).textView.setText(ad.getDesc());
                 }
+                break;
+            case TYPE_Front_WITH_HEADER:
+                ((GankTitleViewHolder)holder).textView.setText(context.getResources().getString(R.string.bookmarks_Front_title));
+                break;
+            case TYPE_Front_NORMAL:
+                if (!frontList.isEmpty()){
+                    GankNews.Question question=frontList.get(position-gankList.size()-2);
+                    if (question.getImages()==null){
+                        ((GankViewHolder)holder).imageView.setVisibility(View.VISIBLE);
+                    }else {
+                        Glide.with(context)
+                                .load(question.getImages().get(0))
+                                .asBitmap()
+                                .centerCrop()
+                                .placeholder(R.mipmap.loading)
+                                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                                .error(R.mipmap.loading)
+                                .into(((GankViewHolder)holder).imageView);
+                    }
+                    ((GankViewHolder)holder).textView.setText(question.getDesc());
+                }
+
                 break;
         }
     }

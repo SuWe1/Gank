@@ -59,15 +59,17 @@ public class BookmarksFragment extends Fragment implements BookmarksContract.Vie
     }
 
     @Override
-    public void showResults(ArrayList<GankNews.Question> ganklist,ArrayList<Integer> types) {
+    public void showResults(ArrayList<GankNews.Question> ganklist,ArrayList<GankNews.Question> frontList,ArrayList<Integer> types) {
         if (adapter==null){
-            adapter=new BookMarksAdapter(getActivity(),ganklist,types);
+            adapter=new BookMarksAdapter(getActivity(),ganklist,frontList,types);
             adapter.setItemOnClickListener(new OnRecyclerViewOnClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
                     int type=recyclerView.findViewHolderForLayoutPosition(position).getItemViewType();
                     if (type==BookMarksAdapter.TYPE_Gank_NORMAL){
                         presenter.startReading(BeanTeype.TYPE_Gank,position);
+                    }else  if (type==BookMarksAdapter.TYPE_Front_NORMAL){
+                        presenter.startReading(BeanTeype.TYPE_Front,position);
                     }
                 }
             });

@@ -26,6 +26,7 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
     private Gson gson;
 
     private ArrayList<GankNews.Question> gankList;
+    private ArrayList<GankNews.Question> frontList;
 
     private ArrayList<Integer> types;
 
@@ -40,6 +41,7 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
         db=dbHelper.getWritableDatabase();
 
         gankList=new ArrayList<GankNews.Question>();
+        frontList=new ArrayList<GankNews.Question>();
         types=new ArrayList<>();
     }
 
@@ -49,10 +51,11 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
             view.showLoading();
         }else {
             gankList.clear();
+            frontList.clear();
             types.clear();
         }
         checkForFreshData();
-        view.showResults(gankList,types);
+        view.showResults(gankList,frontList,types);
         view.stopLoading();
     }
 
@@ -72,6 +75,19 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
                 }else {
                     intent.putExtra("imgUrl", gq.getImages().get(0));
                 }
+                break;
+            case TYPE_Front:
+                GankNews.Question q=gankList.get(position-1);
+                intent.putExtra("type", BeanTeype.TYPE_Front);
+                intent  .putExtra("id", q.get_id());
+                intent  .putExtra("url",q.getUrl());
+                intent   .putExtra("title", q.getDesc());
+                if (q.getImages()==null){
+                    intent.putExtra("imgUrl", "");
+                }else {
+                    intent.putExtra("imgUrl", q.getImages().get(0));
+                }
+                break;
         }
         context.startActivity(intent);
     }
@@ -85,6 +101,17 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
                 //将收藏的每组数据存放在一个列表中
                 Log.i(TAG, "checkForFreshData: "+cursor.getString(cursor.getColumnIndex("gank_news")));
                 GankNews.Question gq=gson.fromJson(cursor.getString(cursor.getColumnIndex("gank_news")),GankNews.Question.class);
+                gankList.add(gq);
+                types.add(BookMarksAdapter.TYPE_Gank_NORMAL);
+            }while (cursor.moveToNext());
+        }
+        types.add(BookMarksAdapter.TYPE_Front_WITH_HEADER);
+        cursor=db.rawQuery("select * from Front where bookmark = ?",new String[]{"1"});
+        if (cursor.moveToNext()){
+            do {
+                //将收藏的每组数据存放在一个列表中
+                Log.i(TAG, "checkForFreshData: "+cursor.getString(cursor.getColumnIndex("front_news")));
+                GankNews.Question gq=gson.fromJson(cursor.getString(cursor.getColumnIndex("front_news")),GankNews.Question.class);
                 gankList.add(gq);
                 types.add(BookMarksAdapter.TYPE_Gank_NORMAL);
             }while (cursor.moveToNext());

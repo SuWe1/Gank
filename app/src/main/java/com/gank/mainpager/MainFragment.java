@@ -3,7 +3,6 @@ package com.gank.mainpager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 import com.gank.R;
 import com.gank.adapter.MainPagerAdapter;
 
-import java.lang.reflect.Type;
 import java.util.Random;
 
 /**
@@ -73,8 +71,8 @@ public class MainFragment extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-//                if (tab.getPosition() == 1) {
+//                FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+//                if (tab.getPosition() == 0) {
 //                    fab.hide();
 //                } else {
 //                    fab.show();
@@ -100,6 +98,8 @@ public class MainFragment extends Fragment {
         viewPager.setOffscreenPageLimit(3);
         adapter=new MainPagerAdapter(getChildFragmentManager(),context,gankFragment,frontFragment);
         viewPager.setAdapter(adapter);
+        //当我们的tab选择时，让viewpager选中对应的item。
+        //setupWithViewPager必须在ViewPager.setAdapter()之后调用
         tabLayout.setupWithViewPager(viewPager);
     }
 
