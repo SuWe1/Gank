@@ -7,6 +7,13 @@
     android:fitsSystemWindows="true"
     tools:context=".mainpager.MainActivity"
     >
+    <!--  这个就是 Layout 占位-->
+    <FrameLayout
+        android:id="@+id/layout_fragment"
+        android:layout_marginTop="?actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <android.support.design.widget.AppBarLayout
         app:elevation="0dp"
         android:layout_width="match_parent"
@@ -22,11 +29,5 @@
             />
 
     </android.support.design.widget.AppBarLayout>
-    <!--  这个就是 Layout 占位-->
-    <FrameLayout
-        android:id="@+id/layout_fragment"
-        android:layout_marginTop="?actionBarSize"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
 </android.support.design.widget.CoordinatorLayout>

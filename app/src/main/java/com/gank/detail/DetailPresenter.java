@@ -120,6 +120,11 @@ public class DetailPresenter implements  DetailContract.Presenter {
             case TYPE_Gank:
                 tmpTable="Gank";
                 tmpID="gank_id";
+                break;
+            case TYPE_Front:
+                tmpTable="Front";
+                tmpID="front_id";
+                break;
         }
         Log.i(TAG, "addToOrDeleteFromBookMarks: tmpTable:"+tmpTable+" tmpID:"+tmpID+" id:"+id+" queryIsBooksMarks():"+queryIsBooksMarks());
         if (queryIsBooksMarks()){
@@ -153,6 +158,10 @@ public class DetailPresenter implements  DetailContract.Presenter {
             case TYPE_Gank:
                 tempTable="Gank";
                 tempId="gank_id";
+                break;
+            case  TYPE_Front:
+                tempTable="Front";
+                tempId="front_id";
                 break;
         }
         //这里SQL语句没写好 卡了我三天的bug啊！！！ 一定要注意空格
