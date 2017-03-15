@@ -77,15 +77,15 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
                 }
                 break;
             case TYPE_Front:
-                GankNews.Question q=frontList.get(position-2-gankList.size());
+                GankNews.Question question=frontList.get(position-2-gankList.size());
                 intent.putExtra("type", BeanTeype.TYPE_Front);
-                intent  .putExtra("id", q.get_id());
-                intent  .putExtra("url",q.getUrl());
-                intent   .putExtra("title", q.getDesc());
-                if (q.getImages()==null){
+                intent  .putExtra("id", question.get_id());
+                intent  .putExtra("url",question.getUrl());
+                intent   .putExtra("title", question.getDesc());
+                if (question.getImages()==null){
                     intent.putExtra("imgUrl", "");
                 }else {
-                    intent.putExtra("imgUrl", q.getImages().get(0));
+                    intent.putExtra("imgUrl", question.getImages().get(0));
                 }
                 break;
         }
