@@ -13,6 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, name, factory, version);
     }
 
+    //开始写的时候 Gank这个表是对应来存储Android数据的
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table if not exists Gank("

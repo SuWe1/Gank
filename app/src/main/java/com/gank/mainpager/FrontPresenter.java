@@ -92,7 +92,22 @@ public class FrontPresenter implements GankContract.Presenter {
             });
         }else{
             //从数据库加载的逻辑
-            view.showNotNetError();
+            //更新列表缓存 因为详情页都是用webView呈现 所以缓存content为空
+            if (cleaing){
+                list.clear();
+                Cursor cursor=db.query("Front",null,null,null,null,null,null);
+                if (cursor.moveToNext()){
+                    do {
+                        GankNews.Question news=gson.fromJson(cursor.getString(cursor.getColumnIndex("front_news")),GankNews.Question.class);
+                        list.add(news);
+                    }while (cursor.moveToNext());
+                }
+                cursor.close();
+                view.Stoploading();
+                view.showResult(list);
+            }else {
+                view.showNotNetError();
+            }
         }
     }
 

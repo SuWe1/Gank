@@ -197,6 +197,7 @@ public class DetailPresenter implements  DetailContract.Presenter {
                     view.showResultWithoutBody(url);
                 }else {
                     view.showNotNetError();
+                    //本是参考网上案列存储详情页数据的 但是详情页都是用webView呈现 所以缓存content为空
                     /*Cursor cursor=dbHelper.getReadableDatabase()
                     .query("Gank",null,null,null,null,null,null);
                 if (cursor.moveToNext()){
@@ -210,6 +211,13 @@ public class DetailPresenter implements  DetailContract.Presenter {
                     view.stopLoading();
         }
                 break;
+            case TYPE_Front:
+                if (Network.networkConnected(context)){
+                    view.showResultWithoutBody(url);
+                }else {
+                    view.showNotNetError();
+                    view.stopLoading();
+                }
         }
         view.stopLoading();
     }

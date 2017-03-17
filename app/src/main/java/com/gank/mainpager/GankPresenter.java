@@ -79,6 +79,7 @@ public class GankPresenter implements GankContract.Presenter {
                             Log.i(TAG, "onSuccess: list.size"+list.size());
                             if (!queryIfIdExists(item.get_id())) {
                                 db.beginTransaction();
+                                //因为详情页都是用webView呈现 所以缓存content为空
                                 try {
                                     values.put("gank_id", item.get_id());
                                     values.put("gank_news", gson.toJson(item));
@@ -108,7 +109,22 @@ public class GankPresenter implements GankContract.Presenter {
             });
         } else {
             //暂时没做缓存加载
-            view.showNotNetError();
+            //更新列表缓存 因为详情页都是用webView呈现 所以缓存content为空
+            if (cleaing){
+                list.clear();
+                Cursor cursor=db.query("Gank",null,null,null,null,null,null);
+                if (cursor.moveToNext()){
+                    do {
+                        GankNews.Question news=gson.fromJson(cursor.getString(cursor.getColumnIndex("gank_news")),GankNews.Question.class);
+                        list.add(news);
+                    }while (cursor.moveToNext());
+                }
+                cursor.close();
+                view.Stoploading();
+                view.showResult(list);
+            }else {
+                view.showNotNetError();
+            }
         }
     }
 
