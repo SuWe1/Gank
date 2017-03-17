@@ -2,10 +2,16 @@ package com.gank.mainpager;
 
 import android.content.Context;
 
+import com.android.volley.VolleyError;
+import com.gank.app.App;
 import com.gank.bean.MeiziNews;
 import com.gank.bean.StringModeImpl;
-import com.gank.db.DatabaseHelper;
+import com.gank.interfaze.OnStringListener;
+import com.gank.util.Api;
+import com.gank.util.Network;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.litesuits.orm.db.model.ConflictAlgorithm;
 
 import java.util.ArrayList;
 
@@ -17,12 +23,12 @@ public class MeiziPresenter implements MeiziContract.Presenter {
     private Context context;
     private MeiziContract.View view;
     private StringModeImpl mode;
-    private Gson gson;
+    private Gson gson=new Gson();
     private ArrayList<MeiziNews.Question> list=new ArrayList<>();
     //当前加载页数
     private int CurrentPagerNum;
 
-    private DatabaseHelper dbHelper;
+
 
     public MeiziPresenter(Context context,MeiziContract.View view){
         this.context=context;
@@ -32,22 +38,60 @@ public class MeiziPresenter implements MeiziContract.Presenter {
     }
 
     @Override
-    public void loadPosts(int PagerNum, boolean cleaing) {
+    public void loadPosts(int PagerNum, final boolean cleaing) {
+        CurrentPagerNum=PagerNum;
+        if (cleaing){
+            view.showLoading();
+        }
+        if (Network.networkConnected(context)){
+            mode.load(Api.Gank_Meizi + PagerNum, new OnStringListener() {
+                @Override
+                public void onSuccess(String result) {
+                    try {
+                        MeiziNews news =gson.fromJson(result,MeiziNews.class);
+                        if (cleaing){
+                            list.clear();
+                        }
+                        for (MeiziNews.Question item :news.getResults()){
+                            list.add(item);
+                        }
+                        App.DbLiteOrm.insert(list, ConflictAlgorithm.Replace);
+                        view.showResult(list);
+                    }catch (JsonSyntaxException e){
+                        view.showError();
+                    }
+                    view.Stoploading();
+                }
 
+                @Override
+                public void onError(VolleyError error) {
+
+                }
+            });
+        }else {
+            if (cleaing){
+                ArrayList<MeiziNews.Question> arrayList=App.DbLiteOrm.query(MeiziNews.Question.class);
+                list=arrayList;
+                view.showResult(list);
+            }else {
+                view.showNotNetError();
+            }
+        }
     }
 
     @Override
     public void reflush() {
-
+        loadPosts(CurrentPagerNum,true);
     }
 
     @Override
     public void loadMore(int PagerNum) {
-
+        loadPosts(CurrentPagerNum+PagerNum,false);
     }
 
     @Override
     public void StartReading(int positon) {
+        MeiziNews.Question item=list.get(positon);
 
     }
 
@@ -56,8 +100,9 @@ public class MeiziPresenter implements MeiziContract.Presenter {
 
     }
 
+    //开始只加载一页内容
     @Override
     public void start() {
-
+        loadPosts(1,true);
     }
 }

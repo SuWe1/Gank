@@ -159,8 +159,9 @@ public class FrontPresenter implements GankContract.Presenter {
         StartReading(new Random().nextInt(list.size()));
     }
 
+    //开始只加载一页内容
     @Override
     public void start() {
-        loadPosts(currentPagerNum,true);
+        loadPosts(1,true);
     }
 }

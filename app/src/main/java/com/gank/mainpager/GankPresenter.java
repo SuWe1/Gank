@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.gank.bean.BeanTeype;
@@ -21,8 +20,6 @@ import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by 11033 on 2017/3/4.
@@ -76,7 +73,7 @@ public class GankPresenter implements GankContract.Presenter {
                         for (GankNews.Question item : news.getResults()) {
 //                            Log.i(TAG, "onSuccess: item.getImages()"+item.getImages().size());
                             list.add(item);
-                            Log.i(TAG, "onSuccess: list.size"+list.size());
+//                            Log.i(TAG, "onSuccess: list.size"+list.size());
                             if (!queryIfIdExists(item.get_id())) {
                                 db.beginTransaction();
                                 //因为详情页都是用webView呈现 所以缓存content为空
@@ -86,14 +83,14 @@ public class GankPresenter implements GankContract.Presenter {
                                     values.put("gank_content", "");
                                     values.put("gank_url", item.getUrl());
                                     long addResult=db.insert("Gank", null, values);
-                                    Log.i(TAG, "onSuccess: addResult "+addResult);
+//                                    Log.i(TAG, "onSuccess: addResult "+addResult);
                                 } finally {
                                     db.endTransaction();
                                 }
                             }
 
                         }
-                        Log.i(TAG, "gankpresenter.model.load list.size="+list.size());
+//                        Log.i(TAG, "gankpresenter.model.load list.size="+list.size());
                         view.showResult(list);
                     }catch (JsonSyntaxException e){
                         view.showError();
@@ -177,8 +174,9 @@ public class GankPresenter implements GankContract.Presenter {
         StartReading(new Random().nextInt(list.size()));
     }
 
+    //开始只加载一页内容
     @Override
     public void start() {
-        loadPosts(CurrentPagerNum,true);
+        loadPosts(1,true);
     }
 }

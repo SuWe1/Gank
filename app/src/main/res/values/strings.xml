@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Gank</string>
     <!--nav_head -->
-    <string name="nav_home">Home</string>
-    <string name="nav_mark">Mark</string>
-    <string name="nav_change_theme">Night Mode</string>
-    <string name="nac_setting">Setting</string>
-    <string name="nav_anout">About Me</string>
+    <string name="nav_home">主页</string>
+    <string name="nav_mark">收藏</string>
+    <string name="nav_change_theme">夜间模式</string>
+    <string name="nac_setting">设置</string>
+    <string name="nav_anout">关于</string>
 
     <!-- -->
     <string name="look_around">Look Around</string>

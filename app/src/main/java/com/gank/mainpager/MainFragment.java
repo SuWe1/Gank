@@ -30,8 +30,10 @@ public class MainFragment extends Fragment {
     private MainPagerAdapter adapter;
     private GankFragment gankFragment;
     private FrontFragment frontFragment;
+    private MeiziFragment meiziFragment;
     private GankPresenter gankPresenter;
     private FrontPresenter frontPresenter;
+    private MeiziPresenter meiziPresenter;
 
     private TabLayout tabLayout;
 
@@ -58,12 +60,15 @@ public class MainFragment extends Fragment {
             FragmentManager manager=getChildFragmentManager();
             gankFragment= (GankFragment) manager.getFragment(savedInstanceState,"gank");
             frontFragment= (FrontFragment) manager.getFragment(savedInstanceState,"front");
+            meiziFragment= (MeiziFragment) manager.getFragment(savedInstanceState,"meizi");
         }else {
             frontFragment=FrontFragment.newInstance();
             gankFragment=GankFragment.newInstance();
+            meiziFragment=meiziFragment.newInstance();
         }
         gankPresenter=new GankPresenter(context,gankFragment);
         frontPresenter=new FrontPresenter(context,frontFragment);
+        meiziPresenter=new MeiziPresenter(context,meiziFragment);
     }
 
     @Nullable
@@ -102,7 +107,7 @@ public class MainFragment extends Fragment {
         tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) v.findViewById(R.id.view_pager);
         viewPager.setOffscreenPageLimit(3);
-        adapter=new MainPagerAdapter(getChildFragmentManager(),context,gankFragment,frontFragment);
+        adapter=new MainPagerAdapter(getChildFragmentManager(),context,gankFragment,frontFragment,meiziFragment);
         viewPager.setAdapter(adapter);
         //当我们的tab选择时，让viewpager选中对应的item。
         //setupWithViewPager必须在ViewPager.setAdapter()之后调用
@@ -124,6 +129,7 @@ public class MainFragment extends Fragment {
             FragmentManager manager=getChildFragmentManager();
             manager.putFragment(outState,"gank",gankFragment);
             manager.putFragment(outState,"front",frontFragment);
+            manager.putFragment(outState,"meizi",meiziFragment);
         }
 
     }
@@ -135,7 +141,7 @@ public class MainFragment extends Fragment {
         }
         return true;
     }
-    //考虑要不要随机读取android ios 前端 目前默认只是android
+    //随机读取android  前端
     public void lookAround(){
         Random random=new Random();
         //0-2的随机数 不包括2

@@ -47,8 +47,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType){
             case TYPE_NORMTAL:
-            View view=inflater.inflate(R.layout.home_list_item_meizi,parent,false);
-            return new MeiziViewHolder(view,listener);
+            return new MeiziViewHolder(inflater.inflate(R.layout.home_list_item_meizi,parent,false),listener);
             case TYPE_FOOTER:
                 return new FooterViewHolder(inflater.inflate(R.layout.list_footer,parent,false));
         }
@@ -57,13 +56,14 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (!(holder instanceof GankNewsAdapter.FooterViewHolder)){
+        if (!(holder instanceof FooterViewHolder)){
             MeiziNews.Question item=list.get(position);
             Glide.with(context)
                     .load(item.getUrl())
                     .asBitmap()
                     .placeholder(R.mipmap.loading)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .fitCenter()
                     .error(R.mipmap.loading)
                     .into(((MeiziViewHolder)holder).imageView);
         }
@@ -78,9 +78,8 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public int getItemViewType(int position) {
         if (position==getItemCount()-1){
             return TYPE_FOOTER;
-        }else {
-            return TYPE_NORMTAL;
         }
+        return TYPE_NORMTAL;
     }
 
 

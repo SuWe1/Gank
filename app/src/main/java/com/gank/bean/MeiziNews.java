@@ -1,5 +1,9 @@
 package com.gank.bean;
 
+import com.litesuits.orm.db.annotation.Column;
+import com.litesuits.orm.db.annotation.PrimaryKey;
+import com.litesuits.orm.db.annotation.Table;
+
 import java.util.ArrayList;
 
 /**
@@ -26,10 +30,17 @@ public class MeiziNews {
         this.results = results;
     }
 
+    @Table("Meizi")
     public class Question{
+        @PrimaryKey(PrimaryKey.AssignType.AUTO_INCREMENT)
+        private int id;
+        @Column("-id")
         private String _id;
+        @Column("desc")
         private String desc;
+        @Column("type")
         private String type;
+        @Column("url")
         private String url;
 
         public String get_id() {
