@@ -56,8 +56,8 @@ public class MainFragment extends Fragment {
             frontFragment=FrontFragment.newInstance();
             gankFragment=GankFragment.newInstance();
         }
-        gankPresenter=new GankPresenter(getActivity(),gankFragment);
-        frontPresenter=new FrontPresenter(getActivity(),frontFragment);
+        gankPresenter=new GankPresenter(context,gankFragment);
+        frontPresenter=new FrontPresenter(context,frontFragment);
     }
 
     @Nullable

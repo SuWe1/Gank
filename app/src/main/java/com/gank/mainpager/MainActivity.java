@@ -1,5 +1,6 @@
 package com.gank.mainpager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -136,18 +137,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 @Override
                 public void onDrawerClosed(View drawerView) {
-                    SharedPreferences sp=getSharedPreferences("user_settings",MODE_PRIVATE);
+                    SharedPreferences sp=getSharedPreferences("user_settings", Context.MODE_PRIVATE);
                     //检测当前主题模式
                     int mode=getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
                     if (mode==Configuration.UI_MODE_NIGHT_YES){
                         sp.edit().putInt("theme",0).apply();
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    }else {
+                    }else if (mode==Configuration.UI_MODE_NIGHT_NO){
                         sp.edit().putInt("theme",1).apply();
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     }
                     getWindow().setWindowAnimations(R.style.WindowsAnimationonChange);
-                    recreate();
+//                    MainActivity.this.recreate();
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
                 }
 
                 @Override
@@ -161,6 +165,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(this, AboutPreferenceActivity.class));
         }
         return true;
+    }
+
+    @Override
+    public void recreate() {
+        super.recreate();
     }
 
     //存储fragment的状态
