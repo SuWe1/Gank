@@ -2,7 +2,6 @@ package com.gank.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +82,7 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        Log.i(TAG, "getItemViewType: "+list.size());
+//        Log.i(TAG, "getItemViewType: "+list.size());
         if (position==getItemCount()-1){
             return TYPE_FOOTER;
         }if (list.get(position).getImages()==null){

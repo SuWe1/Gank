@@ -2,7 +2,7 @@ package com.gank.mainpager;
 
 import com.gank.BasePresenter;
 import com.gank.BaseView;
-import com.gank.bean.GankNews;
+import com.gank.bean.MeiziNews;
 
 import java.util.ArrayList;
 
@@ -11,11 +11,11 @@ import java.util.ArrayList;
  */
 
 public interface MeiziContract {
-    interface View extends BaseView<GankContract.Presenter> {
+    interface View extends BaseView<MeiziContract.Presenter> {
         void showError();
         void showLoading();
         void Stoploading();
-        void showResult(ArrayList<GankNews.Question> list);
+        void showResult(ArrayList<MeiziNews.Question> list);
         void showNotNetError();
 
     }

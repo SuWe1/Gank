@@ -3,7 +3,7 @@ package com.gank.mainpager;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.gank.bean.GankNews;
+import com.gank.bean.MeiziNews;
 
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
     }
 
     @Override
-    public void showResult(ArrayList<GankNews.Question> list) {
+    public void showResult(ArrayList<MeiziNews.Question> list) {
 
     }
 
@@ -44,7 +44,7 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
     }
 
     @Override
-    public void setPresenter(GankContract.Presenter presenter) {
+    public void setPresenter(MeiziContract.Presenter presenter) {
 
     }
 
