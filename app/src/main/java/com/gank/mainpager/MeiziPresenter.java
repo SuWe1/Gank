@@ -11,6 +11,7 @@ import com.gank.util.Api;
 import com.gank.util.Network;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.litesuits.orm.db.assit.QueryBuilder;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
 
 import java.util.ArrayList;
@@ -54,8 +55,8 @@ public class MeiziPresenter implements MeiziContract.Presenter {
                         }
                         for (MeiziNews.Question item :news.getResults()){
                             list.add(item);
+                            App.DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
                         }
-                        App.DbLiteOrm.insert(list, ConflictAlgorithm.Replace);
                         view.showResult(list);
                     }catch (JsonSyntaxException e){
                         view.showError();
@@ -70,8 +71,10 @@ public class MeiziPresenter implements MeiziContract.Presenter {
             });
         }else {
             if (cleaing){
-                ArrayList<MeiziNews.Question> arrayList=App.DbLiteOrm.query(MeiziNews.Question.class);
-                list=arrayList;
+                QueryBuilder query=new QueryBuilder(MeiziNews.Question.class);
+                query.appendOrderDescBy("_id");
+                query.limit(0,10*CurrentPagerNum);
+                list.addAll(App.DbLiteOrm.<MeiziNews.Question>query(query));
                 view.showResult(list);
             }else {
                 view.showNotNetError();

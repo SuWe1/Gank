@@ -48,12 +48,12 @@ public class MainFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context=context;
+//        this.context=context;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-//        this.context=getActivity().getApplicationContext();
+        this.context=getActivity().getApplicationContext();
         super.onCreate(savedInstanceState);
         // Fragment状态恢复
         if (savedInstanceState!=null){

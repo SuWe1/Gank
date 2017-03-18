@@ -72,11 +72,11 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 isScrollState=dy>0;
-                //隐藏或者显示fab
+                //妹子页面不显示fab
                 if (dy>0){
                     fab.hide();
                 }else {
-                    fab.show();
+                    fab.hide();
                 }
             }
         });

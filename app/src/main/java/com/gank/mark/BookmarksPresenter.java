@@ -2,16 +2,15 @@ package com.gank.mark;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.gank.adapter.BookMarksAdapter;
+import com.gank.app.App;
 import com.gank.bean.BeanTeype;
+import com.gank.bean.FrontNews;
 import com.gank.bean.GankNews;
-import com.gank.db.DatabaseHelper;
 import com.gank.detail.DetailActivity;
 import com.google.gson.Gson;
+import com.litesuits.orm.db.assit.QueryBuilder;
 
 import java.util.ArrayList;
 
@@ -26,22 +25,22 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
     private Gson gson;
 
     private ArrayList<GankNews.Question> gankList;
-    private ArrayList<GankNews.Question> frontList;
+    private ArrayList<FrontNews.Question> frontList;
 
     private ArrayList<Integer> types;
 
-    private DatabaseHelper dbHelper;
-    private SQLiteDatabase db;
+    /*private DatabaseHelper dbHelper;
+    private SQLiteDatabase db;*/
     public BookmarksPresenter(Context context ,BookmarksContract.View view) {
         this.context=context;
         this.view=view;
         this.view.setPresenter(this);
         gson=new Gson();
-        dbHelper=new DatabaseHelper(context,"Histroy.db",null,9);
-        db=dbHelper.getWritableDatabase();
+        /*dbHelper=new DatabaseHelper(context,"Histroy.db",null,9);
+        db=dbHelper.getWritableDatabase();*/
 
         gankList=new ArrayList<GankNews.Question>();
-        frontList=new ArrayList<GankNews.Question>();
+        frontList=new ArrayList<FrontNews.Question>();
         types=new ArrayList<>();
     }
 
@@ -77,7 +76,7 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
                 }
                 break;
             case TYPE_Front:
-                GankNews.Question question=frontList.get(position-2-gankList.size());
+                FrontNews.Question question=frontList.get(position-2-gankList.size());
                 intent.putExtra("type", BeanTeype.TYPE_Front);
                 intent  .putExtra("id", question.get_id());
                 intent  .putExtra("url",question.getUrl());
@@ -89,13 +88,18 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
                 }
                 break;
         }
+        /**
+         * Content的startActivity方法，需要开启一个新的task。如果使用 Activity的startActivity方法，
+         * 不会有任何限制，因为Activity继承自Context，重载了startActivity方法。
+         */
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
     @Override
     public void checkForFreshData() {
         types.add(BookMarksAdapter.TYPE_Gank_WITH_HEADER);
-        Cursor cursor=db.rawQuery("select * from Gank where bookmark = ?",new String[]{"1"});
+        /*Cursor cursor=db.rawQuery("select * from Gank where bookmark = ?",new String[]{"1"});
         if (cursor.moveToNext()){
             do {
                 //将收藏的每组数据存放在一个列表中
@@ -104,19 +108,26 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
                 gankList.add(gq);
                 types.add(BookMarksAdapter.TYPE_Gank_NORMAL);
             }while (cursor.moveToNext());
-        }
+        }*/
+        //模糊查找所有mark为true的
+        QueryBuilder gankqb =new QueryBuilder(GankNews.Question.class)
+                .where(GankNews.Question.COL_MARK,new String[]{"true"});
+        gankList= App.DbLiteOrm.query(gankqb);
         types.add(BookMarksAdapter.TYPE_Front_WITH_HEADER);
-        cursor=db.rawQuery("select * from Front where bookmark = ?",new String[]{"1"});
+        /*cursor=db.rawQuery("select * from Front where bookmark = ?",new String[]{"1"});
         if (cursor.moveToNext()){
             do {
                 //将收藏的每组数据存放在一个列表中
                 Log.i(TAG, "checkForFreshData: "+cursor.getString(cursor.getColumnIndex("front_news")));
-                GankNews.Question gq=gson.fromJson(cursor.getString(cursor.getColumnIndex("front_news")),GankNews.Question.class);
-                gankList.add(gq);
+                FrontNews.Question gq=gson.fromJson(cursor.getString(cursor.getColumnIndex("front_news")),FrontNews.Question.class);
+                frontList.add(gq);
                 types.add(BookMarksAdapter.TYPE_Gank_NORMAL);
             }while (cursor.moveToNext());
         }
-        cursor.close();
+        cursor.close();*/
+        QueryBuilder frontqb=new QueryBuilder(FrontNews.Question.class)
+                .where(FrontNews.Question.COL_MARK,new String[]{"true"});
+        frontList=App.DbLiteOrm.query(frontqb);
     }
 
     @Override

@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gank.R;
-import com.gank.adapter.GankNewsAdapter;
-import com.gank.bean.GankNews;
+import com.gank.adapter.FrontNewsAdapter;
+import com.gank.bean.FrontNews;
 import com.gank.interfaze.OnRecyclerViewOnClickListener;
 
 import java.util.ArrayList;
@@ -23,14 +23,14 @@ import java.util.ArrayList;
  * Created by 11033 on 2017/3/11.
  */
 
-public class FrontFragment extends Fragment implements GankContract.View {
+public class FrontFragment extends Fragment implements FrontContract.View {
     private static final String TAG = "FrontFragment";
 
-    private GankNewsAdapter adapter;
+    private FrontNewsAdapter adapter;
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private SwipeRefreshLayout refrehLayout;
-    private GankContract.Presenter presenter;
+    private FrontContract.Presenter presenter;
 
     public FrontFragment() {
     }
@@ -126,9 +126,9 @@ public class FrontFragment extends Fragment implements GankContract.View {
     }
 
     @Override
-    public void showResult(ArrayList<GankNews.Question> list) {
+    public void showResult(ArrayList<FrontNews.Question> list) {
         if (adapter==null){
-            adapter=new GankNewsAdapter(list,getContext());
+            adapter=new FrontNewsAdapter(list,getContext());
             adapter.setItemOnClickListener(new OnRecyclerViewOnClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
@@ -147,7 +147,7 @@ public class FrontFragment extends Fragment implements GankContract.View {
     }
 
     @Override
-    public void setPresenter(GankContract.Presenter presenter) {
+    public void setPresenter(FrontContract.Presenter presenter) {
 
         if (presenter!=null){
             this.presenter=presenter;

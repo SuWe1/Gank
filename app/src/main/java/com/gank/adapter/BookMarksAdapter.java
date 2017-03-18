@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.R;
+import com.gank.bean.FrontNews;
 import com.gank.bean.GankNews;
 import com.gank.interfaze.OnRecyclerViewOnClickListener;
 
@@ -25,7 +26,7 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Context context;
     private LayoutInflater inflater;
     private List<GankNews.Question> gankList;
-    private List<GankNews.Question> frontList;
+    private List<FrontNews.Question> frontList;
 
 
     private OnRecyclerViewOnClickListener listener;
@@ -35,7 +36,7 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static final int TYPE_Front_NORMAL = 2;
     public static final int TYPE_Front_WITH_HEADER = 3;
     private List<Integer> types;
-    public BookMarksAdapter(Context context, ArrayList<GankNews.Question> gankList,ArrayList<GankNews.Question> frontList ,ArrayList<Integer> types) {
+    public BookMarksAdapter(Context context, ArrayList<GankNews.Question> gankList, ArrayList<FrontNews.Question> frontList , ArrayList<Integer> types) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.gankList = gankList;
@@ -88,7 +89,7 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 break;
             case TYPE_Front_NORMAL:
                 if (!frontList.isEmpty()){
-                    GankNews.Question question=frontList.get(position-gankList.size()-2);
+                    FrontNews.Question question=frontList.get(position-gankList.size()-2);
                     if (question.getImages()==null){
                         ((GankViewHolder)holder).imageView.setVisibility(View.VISIBLE);
                     }else {

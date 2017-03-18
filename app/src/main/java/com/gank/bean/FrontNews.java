@@ -8,12 +8,12 @@ import com.litesuits.orm.db.annotation.Table;
 import java.util.ArrayList;
 
 /**
- * Created by 11033 on 2017/3/4.
+ * Created by 11033 on 2017/3/18.
  */
 
-public class GankNews  {
+public class FrontNews {
     private String error;
-    private ArrayList<Question> results;
+    private ArrayList<FrontNews.Question> results;
 
     public String getError() {
         return error;
@@ -23,22 +23,21 @@ public class GankNews  {
         this.error = error;
     }
 
-    public ArrayList<Question> getResults() {
+    public ArrayList<FrontNews.Question> getResults() {
         return results;
     }
 
-    public void setResults(ArrayList<Question> results) {
+    public void setResults(ArrayList<FrontNews.Question> results) {
         this.results = results;
     }
 
-    @Table("Gank") public class Question{
+    @Table("Front") public class Question{
         public static final String COL_MARK= "mark";
-        public static final String COL_ID= "_id";
         @PrimaryKey(PrimaryKey.AssignType.AUTO_INCREMENT)
         private int id;
         @Column("images")
         private ArrayList<String> images;
-        @Column(COL_ID)
+        @Column("_id")
         private String _id;
         @Column("desc")
         private String desc;

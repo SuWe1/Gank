@@ -1,22 +1,21 @@
 package com.gank.mainpager;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.android.volley.VolleyError;
+import com.gank.app.App;
 import com.gank.bean.BeanTeype;
 import com.gank.bean.GankNews;
 import com.gank.bean.StringModeImpl;
-import com.gank.db.DatabaseHelper;
 import com.gank.detail.DetailActivity;
 import com.gank.interfaze.OnStringListener;
 import com.gank.util.Api;
 import com.gank.util.Network;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.litesuits.orm.db.assit.QueryBuilder;
+import com.litesuits.orm.db.model.ConflictAlgorithm;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -31,8 +30,8 @@ public class GankPresenter implements GankContract.Presenter {
     private GankContract.View view;
     private StringModeImpl model;
 
-    private DatabaseHelper dbHelper;
-    private SQLiteDatabase db;
+//    private DatabaseHelper dbHelper;
+//    private SQLiteDatabase db;
     private Gson gson = new Gson();
     private ArrayList<GankNews.Question> list = new ArrayList<>();
 
@@ -47,8 +46,8 @@ public class GankPresenter implements GankContract.Presenter {
         this.view=view;
         this.view.setPresenter(this);
         model=new StringModeImpl(context);
-        dbHelper=new DatabaseHelper(context,"Histroy.db",null,9);
-        db=dbHelper.getWritableDatabase();
+//        dbHelper=new DatabaseHelper(context,"Histroy.db",null,9);
+//        db=dbHelper.getWritableDatabase();
     }
 
 
@@ -66,28 +65,29 @@ public class GankPresenter implements GankContract.Presenter {
 //                        Log.i(TAG, "gankpresenter.model.load.result"+result);
                         GankNews news = gson.fromJson(result, GankNews.class);
                         //contenvalues只能存储基本类型的数据，像string，int之类的，不能存储对象这种东西，而HashTable却可以存储对象。
-                        ContentValues values = new ContentValues();
+//                        ContentValues values = new ContentValues();
                         if (cleaing) {
                             list.clear();
                         }
                         for (GankNews.Question item : news.getResults()) {
 //                            Log.i(TAG, "onSuccess: item.getImages()"+item.getImages().size());
                             list.add(item);
+                            App.DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
 //                            Log.i(TAG, "onSuccess: list.size"+list.size());
-                            if (!queryIfIdExists(item.get_id())) {
-                                db.beginTransaction();
-                                //因为详情页都是用webView呈现 所以缓存content为空
-                                try {
-                                    values.put("gank_id", item.get_id());
-                                    values.put("gank_news", gson.toJson(item));
-                                    values.put("gank_content", "");
-                                    values.put("gank_url", item.getUrl());
-                                    long addResult=db.insert("Gank", null, values);
-//                                    Log.i(TAG, "onSuccess: addResult "+addResult);
-                                } finally {
-                                    db.endTransaction();
-                                }
-                            }
+//                            if (!queryIfIdExists(item.get_id())) {
+//                                db.beginTransaction();
+//                                //因为详情页都是用webView呈现 所以缓存content为空
+//                                try {
+//                                    values.put("gank_id", item.get_id());
+//                                    values.put("gank_news", gson.toJson(item));
+//                                    values.put("gank_content", "");
+//                                    values.put("gank_url", item.getUrl());
+//                                    long addResult=db.insert("Gank", null, values);
+////                                    Log.i(TAG, "onSuccess: addResult "+addResult);
+//                                } finally {
+//                                    db.endTransaction();
+//                                }
+//                            }
 
                         }
 //                        Log.i(TAG, "gankpresenter.model.load list.size="+list.size());
@@ -108,7 +108,7 @@ public class GankPresenter implements GankContract.Presenter {
             //暂时没做缓存加载
             //更新列表缓存 因为详情页都是用webView呈现 所以缓存content为空
             if (cleaing){
-                list.clear();
+                /*list.clear();
                 Cursor cursor=db.query("Gank",null,null,null,null,null,null);
                 if (cursor.moveToNext()){
                     do {
@@ -118,6 +118,11 @@ public class GankPresenter implements GankContract.Presenter {
                 }
                 cursor.close();
                 view.Stoploading();
+                view.showResult(list);*/
+                QueryBuilder query=new QueryBuilder(GankNews.Question.class);
+                query.appendOrderDescBy("_id");
+                query.limit(0,10*CurrentPagerNum);
+                list.addAll(App.DbLiteOrm.<GankNews.Question>query(query));
                 view.showResult(list);
             }else {
                 view.showNotNetError();
@@ -125,7 +130,7 @@ public class GankPresenter implements GankContract.Presenter {
         }
     }
 
-    //查询是否存在数据库缓存中
+    /*//查询是否存在数据库缓存中
     public boolean queryIfIdExists(String id) {
         Cursor cursor = db.query("Gank", null, null, null, null, null, null);
         if (cursor.moveToNext()) {
@@ -136,7 +141,7 @@ public class GankPresenter implements GankContract.Presenter {
         }
         cursor.close();
         return false;
-    }
+    }*/
 
     @Override
     public void reflush() {
@@ -162,6 +167,11 @@ public class GankPresenter implements GankContract.Presenter {
         }else {
             intent.putExtra("imgUrl", list.get(positon).getImages().get(0));
         }
+        /**
+         * Content的startActivity方法，需要开启一个新的task。如果使用 Activity的startActivity方法，
+         * 不会有任何限制，因为Activity继承自Context，重载了startActivity方法。
+         */
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 

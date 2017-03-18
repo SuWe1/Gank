@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.gank.R;
 import com.gank.adapter.BookMarksAdapter;
 import com.gank.bean.BeanTeype;
+import com.gank.bean.FrontNews;
 import com.gank.bean.GankNews;
 import com.gank.interfaze.OnRecyclerViewOnClickListener;
 
@@ -59,7 +60,7 @@ public class BookmarksFragment extends Fragment implements BookmarksContract.Vie
     }
 
     @Override
-    public void showResults(ArrayList<GankNews.Question> ganklist,ArrayList<GankNews.Question> frontList,ArrayList<Integer> types) {
+    public void showResults(ArrayList<GankNews.Question> ganklist, ArrayList<FrontNews.Question> frontList, ArrayList<Integer> types) {
         if (adapter==null){
             adapter=new BookMarksAdapter(getActivity(),ganklist,frontList,types);
             adapter.setItemOnClickListener(new OnRecyclerViewOnClickListener() {

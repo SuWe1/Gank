@@ -2,19 +2,20 @@ package com.gank.detail;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
+import com.gank.app.App;
 import com.gank.bean.BeanTeype;
+import com.gank.bean.FrontNews;
+import com.gank.bean.GankNews;
 import com.gank.bean.StringModeImpl;
-import com.gank.db.DatabaseHelper;
 import com.gank.util.Network;
 import com.google.gson.Gson;
+import com.litesuits.orm.log.OrmLog;
 
 /**
  * Created by 11033 on 2017/3/5.
@@ -28,13 +29,13 @@ public class DetailPresenter implements  DetailContract.Presenter {
 
 
     private SharedPreferences sp;
-    private DatabaseHelper dbHelper;
+//    private DatabaseHelper dbHelper;
 
     private Gson gson;
 
     //从acticity提供来的数据
     private BeanTeype type;
-    private String id;
+    private String _id;
     //标题
     private String title;
     //文章链接
@@ -54,8 +55,8 @@ public class DetailPresenter implements  DetailContract.Presenter {
         this.url = url;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public void setType(BeanTeype type) {
@@ -68,7 +69,7 @@ public class DetailPresenter implements  DetailContract.Presenter {
         this.view.setPresenter(this);
         model=new StringModeImpl(context);
         sp=context.getSharedPreferences("user_settings",Context.MODE_PRIVATE);
-        dbHelper=new DatabaseHelper(context,"Histroy.db",null,9);
+//        dbHelper=new DatabaseHelper(context,"Histroy.db",null,9);
         gson=new Gson();
     }
 
@@ -120,69 +121,102 @@ public class DetailPresenter implements  DetailContract.Presenter {
             case TYPE_Gank:
                 tmpTable="Gank";
                 tmpID="gank_id";
+                GankNews.Question gank= App.DbLiteOrm.queryById(_id,GankNews.Question.class);
+                if (queryIsBooksMarks()){
+                    gank.mark=true;
+                    view.showAddedToBookmarks();
+                }else {
+                    gank.mark=false;
+                    view.showDeletedFromBookmarks();
+                }
+                App.DbLiteOrm.update(gank);
                 break;
             case TYPE_Front:
                 tmpTable="Front";
                 tmpID="front_id";
+                FrontNews.Question front=App.DbLiteOrm.queryById(_id,FrontNews.Question.class);
+                if (queryIsBooksMarks()){
+                    front.mark=true;
+                    view.showAddedToBookmarks();
+                }else {
+                    front.mark=false;
+                    view.showDeletedFromBookmarks();
+                }
+                App.DbLiteOrm.update(front);
                 break;
         }
-        Log.i(TAG, "addToOrDeleteFromBookMarks: tmpTable:"+tmpTable+" tmpID:"+tmpID+" id:"+id+" queryIsBooksMarks():"+queryIsBooksMarks());
-        if (queryIsBooksMarks()){
+        Log.i(TAG, "addToOrDeleteFromBookMarks: tmpTable:"+tmpTable+" tmpID:"+tmpID+" _id:"+ _id +" queryIsBooksMarks():"+queryIsBooksMarks());
+        /*if (queryIsBooksMarks()){
             //从收藏列表删除
             ContentValues values=new ContentValues();
             values.put("bookmark",0);
-            dbHelper.getWritableDatabase().update(tmpTable,values,tmpID+" = ? ",new String[]{String.valueOf(id)});
+            dbHelper.getWritableDatabase().update(tmpTable,values,tmpID+" = ? ",new String[]{String.valueOf(_id)});
             values.clear();
             view.showDeletedFromBookmarks();
         }else {
             //添加到收藏
             ContentValues values=new ContentValues();
             values.put("bookmark",1);
-            dbHelper.getWritableDatabase().update(tmpTable,values,tmpID+" = ? ",new String[]{String.valueOf(id)});
+            dbHelper.getWritableDatabase().update(tmpTable,values,tmpID+" = ? ",new String[]{String.valueOf(_id)});
             values.clear();
             view.showAddedToBookmarks();
-        }
+        }*/
     }
 
     @Override
     public boolean queryIsBooksMarks() {
-        if (id==null || type==null){
+        if (_id ==null || type==null){
             view.showLoadingError();
             return false;
         }
         //表和id'
         String tempTable = "";
         String tempId = "";
-
+        //true为已经收藏 false未收藏
         switch (type){
             case TYPE_Gank:
                 tempTable="Gank";
                 tempId="gank_id";
-                break;
+                GankNews.Question gank= App.DbLiteOrm.queryById(_id,GankNews.Question.class);
+                OrmLog.i(TAG,gank);
+                Log.i(TAG, "queryIsBooksMarks: "+gank);
+                boolean isMark=gank.mark;
+                if (isMark){
+                    return true;
+                }else {
+                    return false;
+                }
+//                return  true;
             case  TYPE_Front:
                 tempTable="Front";
                 tempId="front_id";
-                break;
+                FrontNews.Question front=App.DbLiteOrm.queryById(_id,FrontNews.Question.class);
+                if (front.mark){
+                    return true;
+                }else {
+                    return false;
+                }
         }
         //这里SQL语句没写好 卡了我三天的bug啊！！！ 一定要注意空格
-        String sql="select * from "+tempTable+" where "+tempId+" = ? ";
-        Cursor cursor=dbHelper.getReadableDatabase()
-                .rawQuery(sql,new String[]{String.valueOf(id)});
-        if (cursor.moveToNext()){
-            do {
-                int isBookMarked=cursor.getInt(cursor.getColumnIndex("bookmark"));
-                if (isBookMarked==1){
-                    return true;
-                }
-            }while (cursor.moveToNext());
-        }
-        cursor.close();
+//        String sql="select * from "+tempTable+" where "+tempId+" = ? ";
+//        Cursor cursor=dbHelper.getReadableDatabase()
+//                .rawQuery(sql,new String[]{String.valueOf(_id)});
+//        if (cursor.moveToNext()){
+//            do {
+//                int isBookMarked=cursor.getInt(cursor.getColumnIndex("bookmark"));
+//                if (isBookMarked==1){
+//                    return true;
+//                }
+//            }while (cursor.moveToNext());
+//        }
+//        cursor.close();
+
         return false;
     }
 
     @Override
     public void requestData() {
-        if (id==null || type==null){
+        if (_id ==null || type==null){
             view.showLoadingError();
             return;
         }
@@ -202,7 +236,7 @@ public class DetailPresenter implements  DetailContract.Presenter {
                     .query("Gank",null,null,null,null,null,null);
                 if (cursor.moveToNext()){
                     do {
-                        if (cursor.getInt(cursor.getColumnIndex("gank_id"))==id){
+                        if (cursor.getInt(cursor.getColumnIndex("gank_id"))==_id){
                             String content=cursor.getString(cursor.getColumnIndex("gank_content"));
 //                                //没有写完
                         }
