@@ -26,6 +26,7 @@ import java.util.Random;
 
 public class GankPresenter implements GankContract.Presenter {
 
+    private static final String TAG = "GankPresenter";
     private Context context;
     private GankContract.View view;
     private StringModeImpl model;
@@ -153,13 +154,15 @@ public class GankPresenter implements GankContract.Presenter {
         loadPosts(CurrentPagerNum+PagerNum,false);
     }
 
+    //ID为自增长
     @Override
     public void StartReading(int positon) {
         //每个item就是一组数据
         GankNews.Question item=list.get(positon);
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra("type", BeanTeype.TYPE_Gank);
-        intent  .putExtra("id", list.get(positon).get_id());
+        intent.putExtra("id",list.get(positon).getId());
+        intent  .putExtra("_id", list.get(positon).get_id());
         intent  .putExtra("url",list.get(positon).getUrl());
         intent   .putExtra("title", list.get(positon).getDesc());
         if (item.getImages()==null){

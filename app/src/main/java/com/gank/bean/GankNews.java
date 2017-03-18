@@ -50,6 +50,14 @@ public class GankNews  {
         @Column(COL_MARK)
         public boolean mark=false;
 
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
         public String get_id() {
             return _id;
         }

@@ -29,7 +29,8 @@ public class DetailActivity extends AppCompatActivity{
         Intent intent=getIntent();
         DetailPresenter presenter=new DetailPresenter(detailFragment,DetailActivity.this);
         presenter.setType((BeanTeype) intent.getSerializableExtra("type"));
-        presenter.set_id(intent.getStringExtra("id"));
+        presenter.setId(intent.getIntExtra("id",0));
+        presenter.set_id(intent.getStringExtra("_id"));
         presenter.setTitle(intent.getStringExtra("title"));
         presenter.setUrl(intent.getStringExtra("url"));
         presenter.setImgUrl(intent.getStringExtra("imgUrl"));

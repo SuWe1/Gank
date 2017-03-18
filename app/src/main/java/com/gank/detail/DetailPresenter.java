@@ -35,6 +35,7 @@ public class DetailPresenter implements  DetailContract.Presenter {
 
     //从acticity提供来的数据
     private BeanTeype type;
+    private int id;
     private String _id;
     //标题
     private String title;
@@ -42,6 +43,10 @@ public class DetailPresenter implements  DetailContract.Presenter {
     private String url;
     //图片链接
     private String imgUrl;
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -121,26 +126,26 @@ public class DetailPresenter implements  DetailContract.Presenter {
             case TYPE_Gank:
                 tmpTable="Gank";
                 tmpID="gank_id";
-                GankNews.Question gank= App.DbLiteOrm.queryById(_id,GankNews.Question.class);
+                GankNews.Question gank= App.DbLiteOrm.queryById(id,GankNews.Question.class);
                 if (queryIsBooksMarks()){
-                    gank.mark=true;
-                    view.showAddedToBookmarks();
-                }else {
-                    gank.mark=false;
                     view.showDeletedFromBookmarks();
+                    gank.mark=false;
+                }else {
+                    view.showAddedToBookmarks();
+                    gank.mark=true;
                 }
                 App.DbLiteOrm.update(gank);
                 break;
             case TYPE_Front:
                 tmpTable="Front";
                 tmpID="front_id";
-                FrontNews.Question front=App.DbLiteOrm.queryById(_id,FrontNews.Question.class);
+                FrontNews.Question front=App.DbLiteOrm.queryById(id,FrontNews.Question.class);
                 if (queryIsBooksMarks()){
-                    front.mark=true;
-                    view.showAddedToBookmarks();
-                }else {
-                    front.mark=false;
                     view.showDeletedFromBookmarks();
+                    front.mark=false;
+                }else {
+                    view.showAddedToBookmarks();
+                    front.mark=true;
                 }
                 App.DbLiteOrm.update(front);
                 break;
@@ -177,10 +182,13 @@ public class DetailPresenter implements  DetailContract.Presenter {
             case TYPE_Gank:
                 tempTable="Gank";
                 tempId="gank_id";
-                GankNews.Question gank= App.DbLiteOrm.queryById(_id,GankNews.Question.class);
+                GankNews.Question gank= App.DbLiteOrm.queryById(id,GankNews.Question.class);
+                /*ArrayList<GankNews.Question> list= App.DbLiteOrm.query(new QueryBuilder(GankNews.Question.class).where(GankNews.Question.COL_ID
+                ,new String[]{_id}));
+                Log.i(TAG, "queryIsBooksMarks: "+list.size());
+                GankNews.Question gank=list.get(0);*/
                 OrmLog.i(TAG,gank);
-                Log.i(TAG, "queryIsBooksMarks: "+gank);
-                boolean isMark=gank.mark;
+                    boolean isMark=gank.mark;
                 if (isMark){
                     return true;
                 }else {
@@ -190,7 +198,7 @@ public class DetailPresenter implements  DetailContract.Presenter {
             case  TYPE_Front:
                 tempTable="Front";
                 tempId="front_id";
-                FrontNews.Question front=App.DbLiteOrm.queryById(_id,FrontNews.Question.class);
+                FrontNews.Question front=App.DbLiteOrm.queryById(id,FrontNews.Question.class);
                 if (front.mark){
                     return true;
                 }else {
@@ -210,7 +218,6 @@ public class DetailPresenter implements  DetailContract.Presenter {
 //            }while (cursor.moveToNext());
 //        }
 //        cursor.close();
-
         return false;
     }
 

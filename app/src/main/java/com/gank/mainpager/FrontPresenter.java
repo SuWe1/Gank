@@ -138,12 +138,14 @@ public class FrontPresenter implements FrontContract.Presenter {
         loadPosts(currentPagerNum+1,false);
     }
 
+    //ID为自增长
     @Override
     public void StartReading(int positon) {
         //当前列表信息传递给Detail页面处理
         FrontNews.Question item=list.get(positon);
         Intent intent=new Intent(context, DetailActivity.class);
-        intent.putExtra("id",item.get_id());
+        intent.putExtra("id",item.getId());
+        intent.putExtra("_id",item.get_id());
         intent.putExtra("type", BeanTeype.TYPE_Front);
         intent.putExtra("url",item.getUrl());
         intent.putExtra("title",item.getDesc());
