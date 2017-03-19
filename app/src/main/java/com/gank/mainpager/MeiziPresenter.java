@@ -1,6 +1,7 @@
 package com.gank.mainpager;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.gank.app.App;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
  */
 
 public class MeiziPresenter implements MeiziContract.Presenter {
+    private static final String TAG = "MeiziPresenter";
     private Context context;
     private MeiziContract.View view;
     private StringModeImpl mode;
@@ -55,7 +57,9 @@ public class MeiziPresenter implements MeiziContract.Presenter {
                         }
                         for (MeiziNews.Question item :news.getResults()){
                             list.add(item);
-                            App.DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
+                            if (!queryIfIdExists(item.get_id())){
+                                App.DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
+                            }
                         }
                         view.showResult(list);
                     }catch (JsonSyntaxException e){
@@ -82,6 +86,15 @@ public class MeiziPresenter implements MeiziContract.Presenter {
         }
     }
 
+    public boolean queryIfIdExists(String _id){
+        ArrayList<MeiziNews.Question> questionArrayList=App.DbLiteOrm.query(new QueryBuilder(MeiziNews.Question.class)
+                .where(MeiziNews.Question.COL_ID+"=?",new String[]{_id}));
+        Log.i(TAG, "queryIfIdExists: questionArrayList.size():"+questionArrayList.size());
+        if (questionArrayList.size()==0){
+            return false;
+        }
+        return true;
+    }
     @Override
     public void reflush() {
         loadPosts(CurrentPagerNum,true);

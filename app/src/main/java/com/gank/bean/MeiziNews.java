@@ -32,10 +32,10 @@ public class MeiziNews {
     }
 
     @Table("Meizi")public class Question{
-
+        public static final String COL_ID= "_id";
         @PrimaryKey(PrimaryKey.AssignType.AUTO_INCREMENT)
         private int id;
-        @Column("_id")
+        @Column(COL_ID)
         private String _id;
         @Column("desc")
         private String desc;
@@ -45,7 +45,16 @@ public class MeiziNews {
         private String url;
         @Default("false")
         @Column("mark")
-        public boolean mark;
+        public boolean mark=false;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
         public String get_id() {
             return _id;
         }

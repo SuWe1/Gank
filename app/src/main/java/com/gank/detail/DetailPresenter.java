@@ -188,7 +188,7 @@ public class DetailPresenter implements  DetailContract.Presenter {
                 Log.i(TAG, "queryIsBooksMarks: "+list.size());
                 GankNews.Question gank=list.get(0);*/
                 OrmLog.i(TAG,gank);
-                    boolean isMark=gank.mark;
+                boolean isMark=gank.mark;
                 if (isMark){
                     return true;
                 }else {

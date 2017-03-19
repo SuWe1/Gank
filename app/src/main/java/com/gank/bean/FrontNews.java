@@ -33,11 +33,12 @@ public class FrontNews {
 
     @Table("Front") public class Question{
         public static final String COL_MARK= "mark";
+        public static final String COL_ID= "_id";
         @PrimaryKey(PrimaryKey.AssignType.AUTO_INCREMENT)
         private int id;
         @Column("images")
         private ArrayList<String> images;
-        @Column("_id")
+        @Column(COL_ID)
         private String _id;
         @Column("desc")
         private String desc;

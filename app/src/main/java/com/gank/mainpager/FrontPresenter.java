@@ -2,6 +2,7 @@ package com.gank.mainpager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.gank.app.App;
@@ -25,6 +26,7 @@ import java.util.Random;
  */
 
 public class FrontPresenter implements FrontContract.Presenter {
+    private static final String TAG = "FrontPresenter";
     private Context context;
     private FrontContract.View view;
 //    private DatabaseHelper dbHelper;
@@ -62,8 +64,11 @@ public class FrontPresenter implements FrontContract.Presenter {
                             list.clear();
                         }
                         for (FrontNews.Question item : news.getResults()){
+                            item.setId(list.size()+1);
                             list.add(item);
-                            App.DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
+                            if (!queryIfIdExists(item.get_id())){
+                                App.DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
+                            }
 //                            if (!queryIfIdExists(item.get_id())){
 //                                db.beginTransaction();
 //                                try {
@@ -116,6 +121,15 @@ public class FrontPresenter implements FrontContract.Presenter {
         }
     }
 
+    public boolean queryIfIdExists(String _id){
+        ArrayList<FrontNews.Question> questionArrayList=App.DbLiteOrm.query(new QueryBuilder(FrontNews.Question.class)
+                .where(FrontNews.Question.COL_ID+"=?",new String[]{_id}));
+        Log.i(TAG, "queryIfIdExists: questionArrayList.size():"+questionArrayList.size());
+        if (questionArrayList.size()==0){
+            return false;
+        }
+        return true;
+    }
     /*private boolean queryIfIdExists(String id){
         Cursor cursor=db.query("Front",null,null,null,null,null,null);
         if (cursor.moveToNext()){

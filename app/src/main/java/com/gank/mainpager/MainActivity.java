@@ -101,6 +101,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.hide(mainFragment);
         fragmentTransaction.commit();
         toolbar.setTitle(getResources().getString(R.string.nav_mark));
+        if (bookmarksfragment.isAdded()){
+            bookmarksfragment.notifyDataChanged();
+        }
     }
 
     @Override

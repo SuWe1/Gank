@@ -65,7 +65,7 @@ public class FrontNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         .centerCrop()
                         .into(((FrontNewsAdapter.NormalViewHolder) holder).imageView);
                 ((FrontNewsAdapter.NormalViewHolder) holder).textView.setText(item.getDesc());
-            }else if (holder instanceof GankNewsAdapter.NoImageViewHolder){
+            }else if (holder instanceof FrontNewsAdapter.NoImageViewHolder){
                 ((FrontNewsAdapter.NoImageViewHolder) holder).textViewNoImg.setText(item.getDesc());
             }
         }

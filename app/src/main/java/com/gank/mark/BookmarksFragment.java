@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Created by 11033 on 2017/3/4.
  */
 
-public class BookmarksFragment extends Fragment implements BookmarksContract.View {
+public class  BookmarksFragment extends Fragment implements BookmarksContract.View {
     private BookMarksAdapter adapter;
 
     private RecyclerView recyclerView;

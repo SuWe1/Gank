@@ -2,6 +2,7 @@ package com.gank.mainpager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.gank.app.App;
@@ -16,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.litesuits.orm.db.assit.QueryBuilder;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
+import com.litesuits.orm.log.OrmLog;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -74,8 +76,11 @@ public class GankPresenter implements GankContract.Presenter {
                         }
                         for (GankNews.Question item : news.getResults()) {
 //                            Log.i(TAG, "onSuccess: item.getImages()"+item.getImages().size());
+                            item.setId(list.size()+1);
                             list.add(item);
-                            DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
+                            if (!queryIfIdExists(item.get_id())){
+                                DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
+                            }
 //                            Log.i(TAG, "onSuccess: list.size"+list.size());
 //                            if (!queryIfIdExists(item.get_id())) {
 //                                db.beginTransaction();
@@ -123,7 +128,7 @@ public class GankPresenter implements GankContract.Presenter {
                 view.Stoploading();
                 view.showResult(list);*/
                 QueryBuilder query=new QueryBuilder(GankNews.Question.class);
-                query.appendOrderDescBy("_id");
+                query.appendOrderDescBy("id");
                 query.limit(0,10*CurrentPagerNum);
                 list.addAll(DbLiteOrm.<GankNews.Question>query(query));
                 view.showResult(list);
@@ -134,8 +139,11 @@ public class GankPresenter implements GankContract.Presenter {
     }
 
     public boolean queryIfIdExists(String _id){
-        GankNews.Question ganknews= (GankNews.Question) App.DbLiteOrm.query(new QueryBuilder(GankNews.Question.class).where(GankNews.Question.COL_ID+"= ?",new String[]{_id})).get(0);
-        if (ganknews!=null){
+        ArrayList<GankNews.Question> questionArrayList=App.DbLiteOrm.query(new QueryBuilder(GankNews.Question.class)
+                .where(GankNews.Question.COL_ID+"=?",new String[]{_id}));
+//        GankNews.Question ganknews= questionArrayList.get(0);
+        Log.i(TAG, "queryIfIdExists: questionArrayList.size():"+questionArrayList.size());
+        if (questionArrayList.size()==0){
             return false;
         }
         return true;
@@ -171,9 +179,11 @@ public class GankPresenter implements GankContract.Presenter {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra("type", BeanTeype.TYPE_Gank);
         intent.putExtra("id",list.get(positon).getId());
-        intent  .putExtra("_id", list.get(positon).get_id());
-        intent  .putExtra("url",list.get(positon).getUrl());
-        intent   .putExtra("title", list.get(positon).getDesc());
+//        int id=list.get(positon).getId();
+//        Log.i(TAG, "StartReading: "+id);
+        intent.putExtra("_id", list.get(positon).get_id());
+        intent.putExtra("url",list.get(positon).getUrl());
+        intent.putExtra("title", list.get(positon).getDesc());
         if (item.getImages()==null){
             intent.putExtra("imgUrl", "");
         }else {
@@ -194,6 +204,10 @@ public class GankPresenter implements GankContract.Presenter {
             return;
         }
         StartReading(new Random().nextInt(list.size()));
+        QueryBuilder gankqb =new QueryBuilder(GankNews.Question.class)
+                .where(GankNews.Question.COL_MARK+"=?",new String[]{"true"});
+        ArrayList<GankNews.Question> gklist= App.DbLiteOrm.query(gankqb);
+        OrmLog.i(TAG,gklist);
     }
 
     //开始只加载一页内容
