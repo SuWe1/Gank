@@ -20,6 +20,8 @@ import com.litesuits.orm.db.model.ConflictAlgorithm;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.gank.app.App.DbLiteOrm;
+
 /**
  * Created by 11033 on 2017/3/4.
  */
@@ -73,7 +75,7 @@ public class GankPresenter implements GankContract.Presenter {
                         for (GankNews.Question item : news.getResults()) {
 //                            Log.i(TAG, "onSuccess: item.getImages()"+item.getImages().size());
                             list.add(item);
-                            App.DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
+                            DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
 //                            Log.i(TAG, "onSuccess: list.size"+list.size());
 //                            if (!queryIfIdExists(item.get_id())) {
 //                                db.beginTransaction();
@@ -123,7 +125,7 @@ public class GankPresenter implements GankContract.Presenter {
                 QueryBuilder query=new QueryBuilder(GankNews.Question.class);
                 query.appendOrderDescBy("_id");
                 query.limit(0,10*CurrentPagerNum);
-                list.addAll(App.DbLiteOrm.<GankNews.Question>query(query));
+                list.addAll(DbLiteOrm.<GankNews.Question>query(query));
                 view.showResult(list);
             }else {
                 view.showNotNetError();
@@ -131,6 +133,13 @@ public class GankPresenter implements GankContract.Presenter {
         }
     }
 
+    public boolean queryIfIdExists(String _id){
+        GankNews.Question ganknews= (GankNews.Question) App.DbLiteOrm.query(new QueryBuilder(GankNews.Question.class).where(GankNews.Question.COL_ID+"= ?",new String[]{_id})).get(0);
+        if (ganknews!=null){
+            return false;
+        }
+        return true;
+    }
     /*//查询是否存在数据库缓存中
     public boolean queryIfIdExists(String id) {
         Cursor cursor = db.query("Gank", null, null, null, null, null, null);

@@ -11,6 +11,7 @@ import com.gank.bean.GankNews;
 import com.gank.detail.DetailActivity;
 import com.google.gson.Gson;
 import com.litesuits.orm.db.assit.QueryBuilder;
+import com.litesuits.orm.log.OrmLog;
 
 import java.util.ArrayList;
 
@@ -111,8 +112,9 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
         }*/
         //模糊查找所有mark为true的
         QueryBuilder gankqb =new QueryBuilder(GankNews.Question.class)
-                .where(GankNews.Question.COL_MARK,new String[]{"true"});
+                .where(GankNews.Question.COL_MARK+"= ?",new String[]{"true"});
         gankList= App.DbLiteOrm.query(gankqb);
+        OrmLog.i(TAG,gankList);
         types.add(BookMarksAdapter.TYPE_Front_WITH_HEADER);
         /*cursor=db.rawQuery("select * from Front where bookmark = ?",new String[]{"1"});
         if (cursor.moveToNext()){
@@ -126,7 +128,7 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
         }
         cursor.close();*/
         QueryBuilder frontqb=new QueryBuilder(FrontNews.Question.class)
-                .where(FrontNews.Question.COL_MARK,new String[]{"true"});
+                .where(FrontNews.Question.COL_MARK+"= ?",new String[]{"true"});
         frontList=App.DbLiteOrm.query(frontqb);
     }
 
