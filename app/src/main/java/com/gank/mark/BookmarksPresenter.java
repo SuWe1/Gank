@@ -2,6 +2,7 @@ package com.gank.mark;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.gank.adapter.BookMarksAdapter;
 import com.gank.app.App;
@@ -11,7 +12,6 @@ import com.gank.bean.GankNews;
 import com.gank.detail.DetailActivity;
 import com.google.gson.Gson;
 import com.litesuits.orm.db.assit.QueryBuilder;
-import com.litesuits.orm.log.OrmLog;
 
 import java.util.ArrayList;
 
@@ -40,8 +40,8 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
         /*dbHelper=new DatabaseHelper(context,"Histroy.db",null,9);
         db=dbHelper.getWritableDatabase();*/
 
-        gankList=new ArrayList<GankNews.Question>();
-        frontList=new ArrayList<FrontNews.Question>();
+        gankList=new ArrayList< >();
+        frontList=new ArrayList<>();
         types=new ArrayList<>();
     }
 
@@ -67,9 +67,10 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
                 //gq就是一组数据
                 GankNews.Question gq=gankList.get(position-1);
                 intent.putExtra("type", BeanTeype.TYPE_Gank);
-                intent  .putExtra("id", gq.get_id());
-                intent  .putExtra("url",gq.getUrl());
-                intent   .putExtra("title", gq.getDesc());
+                intent.putExtra("id",gq.getId());
+                intent.putExtra("_id", gq.get_id());
+                intent.putExtra("url",gq.getUrl());
+                intent.putExtra("title", gq.getDesc());
                 if (gq.getImages()==null){
                     intent.putExtra("imgUrl", "");
                 }else {
@@ -79,6 +80,7 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
             case TYPE_Front:
                 FrontNews.Question question=frontList.get(position-2-gankList.size());
                 intent.putExtra("type", BeanTeype.TYPE_Front);
+                intent.putExtra("id",question.getId());
                 intent  .putExtra("id", question.get_id());
                 intent  .putExtra("url",question.getUrl());
                 intent   .putExtra("title", question.getDesc());
@@ -111,10 +113,15 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
             }while (cursor.moveToNext());
         }*/
         //模糊查找所有mark为true的
+        String markSign="true";
         QueryBuilder gankqb =new QueryBuilder(GankNews.Question.class)
-                .where(GankNews.Question.COL_MARK+"=?",new String[]{"true"});
-        gankList= App.DbLiteOrm.query(gankqb);
-        OrmLog.i(TAG,gankList);
+                .where(GankNews.Question.COL_MARK+"=?",new String[]{markSign});
+        ArrayList<GankNews.Question> gklist= App.DbLiteOrm.query(gankqb);
+        for (int i=0;i<gklist.size();i++){
+            gankList.add(gklist.get(i));
+            types.add(BookMarksAdapter.TYPE_Gank_NORMAL);
+        }
+        Log.i(TAG, "checkForFreshData: gankList.size(): "+gankList.size());
         types.add(BookMarksAdapter.TYPE_Front_WITH_HEADER);
         /*cursor=db.rawQuery("select * from Front where bookmark = ?",new String[]{"1"});
         if (cursor.moveToNext()){
@@ -128,8 +135,13 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
         }
         cursor.close();*/
         QueryBuilder frontqb=new QueryBuilder(FrontNews.Question.class)
-                .where(FrontNews.Question.COL_MARK+"= ?",new String[]{"true"});
-        frontList=App.DbLiteOrm.query(frontqb);
+                .where(FrontNews.Question.COL_MARK+"= ?",new String[]{markSign});
+        ArrayList<FrontNews.Question> ftlist=App.DbLiteOrm.query(frontqb);
+        for (int i=0;i<ftlist.size();i++){
+            frontList.add(ftlist.get(i));
+            types.add(BookMarksAdapter.TYPE_Front_NORMAL);
+        }
+        Log.i(TAG, "checkForFreshData: frontList.size(): "+frontList.size());
     }
 
     @Override

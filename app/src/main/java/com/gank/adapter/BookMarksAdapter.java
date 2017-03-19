@@ -25,8 +25,8 @@ import java.util.List;
 public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private LayoutInflater inflater;
-    private List<GankNews.Question> gankList;
-    private List<FrontNews.Question> frontList;
+    private ArrayList<GankNews.Question> gankList;
+    private ArrayList<FrontNews.Question> frontList;
 
 
     private OnRecyclerViewOnClickListener listener;
@@ -53,8 +53,7 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         switch (viewType){
             case TYPE_Front_NORMAL:
             case TYPE_Gank_NORMAL:
-                View view=inflater.inflate(R.layout.home_list_item_layout,parent,false);
-                return new GankViewHolder(view,this.listener);
+                return new GankViewHolder(inflater.inflate(R.layout.home_list_item_layout,parent,false),this.listener);
         }
         return new GankTitleViewHolder(inflater.inflate(R.layout.bookmark_header,parent,false));
     }

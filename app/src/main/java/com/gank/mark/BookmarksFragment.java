@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 public class  BookmarksFragment extends Fragment implements BookmarksContract.View {
     private BookMarksAdapter adapter;
-
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
     private BookmarksContract.Presenter presenter;
