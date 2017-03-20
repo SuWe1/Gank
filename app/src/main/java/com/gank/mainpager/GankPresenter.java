@@ -77,6 +77,12 @@ public class GankPresenter implements GankContract.Presenter {
                         for (GankNews.Question item : news.getResults()) {
 //                            Log.i(TAG, "onSuccess: item.getImages()"+item.getImages().size());
 //                            item.setId(list.size()+1);
+                            QueryBuilder query=new QueryBuilder(GankNews.Question.class);
+                            query.appendOrderDescBy("id");
+                            ArrayList<GankNews.Question> ganklist=new ArrayList<GankNews.Question>();
+                            ganklist.addAll(DbLiteOrm.<GankNews.Question>query(query));
+                            Log.i(TAG, "onSuccess: "+ganklist.size());
+                            item.setId(ganklist.size()+1);
                             list.add(item);
                             if (!queryIfIdExists(item.get_id())){
                                 DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
@@ -179,8 +185,8 @@ public class GankPresenter implements GankContract.Presenter {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra("type", BeanTeype.TYPE_Gank);
         intent.putExtra("id",list.get(positon).getId());
-//        int id=list.get(positon).getId();
-//        Log.i(TAG, "StartReading: "+id);
+        int id=list.get(positon).getId();
+        Log.i(TAG, "StartReading: "+id);
         intent.putExtra("_id", list.get(positon).get_id());
         intent.putExtra("url",list.get(positon).getUrl());
         intent.putExtra("title", list.get(positon).getDesc());

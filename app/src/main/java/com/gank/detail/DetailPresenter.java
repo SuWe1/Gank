@@ -183,10 +183,6 @@ public class DetailPresenter implements  DetailContract.Presenter {
                 tempTable="Gank";
                 tempId="gank_id";
                 GankNews.Question gank= App.DbLiteOrm.queryById(id,GankNews.Question.class);
-                /*ArrayList<GankNews.Question> list= App.DbLiteOrm.query(new QueryBuilder(GankNews.Question.class).where(GankNews.Question.COL_ID
-                ,new String[]{_id}));
-                Log.i(TAG, "queryIsBooksMarks: "+list.size());
-                GankNews.Question gank=list.get(0);*/
                 OrmLog.i(TAG,gank);
                 boolean isMark=gank.mark;
                 if (isMark){

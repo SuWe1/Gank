@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
-import com.gank.app.App;
 import com.gank.bean.BeanTeype;
 import com.gank.bean.FrontNews;
 import com.gank.bean.StringModeImpl;
@@ -20,6 +19,8 @@ import com.litesuits.orm.db.model.ConflictAlgorithm;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import static com.gank.app.App.DbLiteOrm;
 
 /**
  * Created by 11033 on 2017/3/11.
@@ -65,9 +66,15 @@ public class FrontPresenter implements FrontContract.Presenter {
                         }
                         for (FrontNews.Question item : news.getResults()){
 //                            item.setId(list.size()+1);
+                            QueryBuilder query=new QueryBuilder(FrontNews.Question.class);
+                            query.appendOrderDescBy("id");
+                            ArrayList<FrontNews.Question> frontlist=new ArrayList<FrontNews.Question>();
+                            frontlist.addAll(DbLiteOrm.<FrontNews.Question>query(query));
+                            Log.i(TAG, "onSuccess: "+frontlist.size());
+                            item.setId(frontlist.size()+1);
                             list.add(item);
                             if (!queryIfIdExists(item.get_id())){
-                                App.DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
+                                DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
                             }
 //                            if (!queryIfIdExists(item.get_id())){
 //                                db.beginTransaction();
@@ -113,7 +120,7 @@ public class FrontPresenter implements FrontContract.Presenter {
                 QueryBuilder query=new QueryBuilder(FrontNews.Question.class);
                 query.appendOrderDescBy("_id");
                 query.limit(0,10*currentPagerNum);
-                list.addAll(App.DbLiteOrm.<FrontNews.Question>query(query));
+                list.addAll(DbLiteOrm.<FrontNews.Question>query(query));
                 view.showResult(list);
             }else {
                 view.showNotNetError();
@@ -122,7 +129,7 @@ public class FrontPresenter implements FrontContract.Presenter {
     }
 
     public boolean queryIfIdExists(String _id){
-        ArrayList<FrontNews.Question> questionArrayList=App.DbLiteOrm.query(new QueryBuilder(FrontNews.Question.class)
+        ArrayList<FrontNews.Question> questionArrayList= DbLiteOrm.query(new QueryBuilder(FrontNews.Question.class)
                 .where(FrontNews.Question.COL_ID+"=?",new String[]{_id}));
         Log.i(TAG, "queryIfIdExists: questionArrayList.size():"+questionArrayList.size());
         if (questionArrayList.size()==0){
