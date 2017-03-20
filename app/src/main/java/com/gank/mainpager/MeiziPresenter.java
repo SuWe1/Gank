@@ -108,6 +108,9 @@ public class MeiziPresenter implements MeiziContract.Presenter {
     @Override
     public void StartReading(int positon) {
         MeiziNews.Question item=list.get(positon);
+        /*Bitmap bitmap= Glide.with(context)
+                .load(item.getUrl())
+                .asBitmap();*/
 
     }
 

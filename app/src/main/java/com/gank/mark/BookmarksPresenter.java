@@ -81,9 +81,9 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
                 FrontNews.Question question=frontList.get(position-2-gankList.size());
                 intent.putExtra("type", BeanTeype.TYPE_Front);
                 intent.putExtra("id",question.getId());
-                intent  .putExtra("id", question.get_id());
-                intent  .putExtra("url",question.getUrl());
-                intent   .putExtra("title", question.getDesc());
+                intent.putExtra("_id", question.get_id());
+                intent.putExtra("url",question.getUrl());
+                intent.putExtra("title", question.getDesc());
                 if (question.getImages()==null){
                     intent.putExtra("imgUrl", "");
                 }else {

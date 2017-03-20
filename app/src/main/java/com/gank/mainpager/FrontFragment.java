@@ -134,6 +134,11 @@ public class FrontFragment extends Fragment implements FrontContract.View {
                 public void onItemClick(View v, int position) {
                     presenter.StartReading(position);
                 }
+
+                @Override
+                public void onItemLongClick(View v, int position) {
+
+                }
             });
             recyclerView.setAdapter(adapter);
         }else {

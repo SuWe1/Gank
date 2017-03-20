@@ -72,6 +72,11 @@ public class  BookmarksFragment extends Fragment implements BookmarksContract.Vi
                         presenter.startReading(BeanTeype.TYPE_Front,position);
                     }
                 }
+
+                @Override
+                public void onItemLongClick(View v, int position) {
+
+                }
             });
             recyclerView.setAdapter(adapter);
         }else {

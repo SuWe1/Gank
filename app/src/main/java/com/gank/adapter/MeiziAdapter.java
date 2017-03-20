@@ -83,7 +83,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
 
-    class MeiziViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MeiziViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         ImageView imageView;
         OnRecyclerViewOnClickListener onRecyclerViewOnClickListener;
 
@@ -93,6 +93,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             this.onRecyclerViewOnClickListener=listener;
             imageView= (ImageView) itemView.findViewById(R.id.meiziImg);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -100,6 +101,16 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             if (onRecyclerViewOnClickListener!=null){
                 onRecyclerViewOnClickListener.onItemClick(v,getLayoutPosition());
             }
+        }
+
+        //return的值决定是否在长按后再加一个短按动作
+        //true为不加短按,false为加入短按
+        @Override
+        public boolean onLongClick(View v) {
+            if (onRecyclerViewOnClickListener!=null){
+                onRecyclerViewOnClickListener.onItemLongClick(v,getLayoutPosition());
+            }
+            return true;
         }
     }
     class FooterViewHolder extends RecyclerView.ViewHolder{

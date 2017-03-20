@@ -6,6 +6,7 @@
     <string name="nav_change_theme">切换主题</string>
     <string name="nac_setting">设置</string>
     <string name="nav_anout">关于</string>
+    <string name="default_name">Ganker</string>
 
     <!-- -->
     <string name="look_around">Look Around</string>

@@ -122,6 +122,11 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
             adapter.setItemOnClickListener(new OnRecyclerViewOnClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
+
+                }
+
+                @Override
+                public void onItemLongClick(View v, int position) {
                     presenter.StartReading(position);
                 }
             });

@@ -64,7 +64,7 @@ public class FrontPresenter implements FrontContract.Presenter {
                             list.clear();
                         }
                         for (FrontNews.Question item : news.getResults()){
-                            item.setId(list.size()+1);
+//                            item.setId(list.size()+1);
                             list.add(item);
                             if (!queryIfIdExists(item.get_id())){
                                 App.DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
