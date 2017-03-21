@@ -66,16 +66,16 @@ public class FrontPresenter implements FrontContract.Presenter {
                         }
                         for (FrontNews.Question item : news.getResults()){
 //                            item.setId(list.size()+1);
-                            QueryBuilder query=new QueryBuilder(FrontNews.Question.class);
-                            query.appendOrderDescBy("id");
-                            ArrayList<FrontNews.Question> frontlist=new ArrayList<FrontNews.Question>();
-                            frontlist.addAll(DbLiteOrm.<FrontNews.Question>query(query));
-                            Log.i(TAG, "onSuccess: "+frontlist.size());
-                            item.setId(frontlist.size()+1);
-                            list.add(item);
                             if (!queryIfIdExists(item.get_id())){
+                                QueryBuilder query=new QueryBuilder(FrontNews.Question.class);
+                                query.appendOrderDescBy("id");
+                                ArrayList<FrontNews.Question> frontlist=new ArrayList<FrontNews.Question>();
+                                frontlist.addAll(DbLiteOrm.<FrontNews.Question>query(query));
+                                Log.i(TAG, "onSuccess: "+frontlist.size());
+                                item.setId(frontlist.size()+1);
                                 DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
                             }
+                            list.add(item);
 //                            if (!queryIfIdExists(item.get_id())){
 //                                db.beginTransaction();
 //                                try {

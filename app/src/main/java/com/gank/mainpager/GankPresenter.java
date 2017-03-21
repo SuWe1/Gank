@@ -77,16 +77,16 @@ public class GankPresenter implements GankContract.Presenter {
                         for (GankNews.Question item : news.getResults()) {
 //                            Log.i(TAG, "onSuccess: item.getImages()"+item.getImages().size());
 //                            item.setId(list.size()+1);
-//                            QueryBuilder query=new QueryBuilder(GankNews.Question.class);
-//                            query.appendOrderDescBy("id");
-//                            ArrayList<GankNews.Question> ganklist=new ArrayList<GankNews.Question>();
-//                            ganklist.addAll(DbLiteOrm.<GankNews.Question>query(query));
-//                            Log.i(TAG, "onSuccess: "+ganklist.size());
-//                            item.setId(ganklist.size()+1);
-                            list.add(item);
                             if (!queryIfIdExists(item.get_id())){
+                                QueryBuilder query=new QueryBuilder(GankNews.Question.class);
+                                query.appendOrderDescBy("id");
+                                ArrayList<GankNews.Question> ganklist=new ArrayList<GankNews.Question>();
+                                ganklist.addAll(DbLiteOrm.<GankNews.Question>query(query));
+                                Log.i(TAG, "onSuccess: "+ganklist.size());
+                                item.setId(ganklist.size()+1);
                                 DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
                             }
+                            list.add(item);
 //                            Log.i(TAG, "onSuccess: list.size"+list.size());
 //                            if (!queryIfIdExists(item.get_id())) {
 //                                db.beginTransaction();
@@ -147,8 +147,7 @@ public class GankPresenter implements GankContract.Presenter {
     public boolean queryIfIdExists(String _id){
         ArrayList<GankNews.Question> questionArrayList=App.DbLiteOrm.query(new QueryBuilder(GankNews.Question.class)
                 .where(GankNews.Question.COL_ID+"=?",new String[]{_id}));
-//        GankNews.Question ganknews= questionArrayList.get(0);
-        Log.i(TAG, "queryIfIdExists: questionArrayList.size():"+questionArrayList.size());
+//        Log.i(TAG, "queryIfIdExists: questionArrayList.size():"+questionArrayList.size());
         if (questionArrayList.size()==0){
             return false;
         }
