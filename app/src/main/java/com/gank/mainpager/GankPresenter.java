@@ -77,14 +77,18 @@ public class GankPresenter implements GankContract.Presenter {
                         for (GankNews.Question item : news.getResults()) {
 //                            Log.i(TAG, "onSuccess: item.getImages()"+item.getImages().size());
 //                            item.setId(list.size()+1);
+                            /**
+                             * issue1.数据库查重:首先检测数据库中是否已经储存过该条数据
+                             * issue2:因为每次重启后都是在网络上重新下载数据 如果是数据库已经存在的数据则不会重新加载，也导致了这些数据当前id值为空
+                             * ，所有要绑定队友的id值.
+                             */
                             if (!queryIfIdExists(item.get_id())){
-                                QueryBuilder query=new QueryBuilder(GankNews.Question.class);
-                                query.appendOrderDescBy("id");
-                                ArrayList<GankNews.Question> ganklist=new ArrayList<GankNews.Question>();
-                                ganklist.addAll(DbLiteOrm.<GankNews.Question>query(query));
-                                Log.i(TAG, "onSuccess: "+ganklist.size());
-                                item.setId(ganklist.size()+1);
                                 DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
+                            }else {
+                                ArrayList<GankNews.Question> ganklist=App.DbLiteOrm.query(new QueryBuilder<GankNews.Question>(GankNews.Question.class)
+                                        .where(GankNews.Question.COL_ID+"=?",new String[]{item.get_id()}));
+                                GankNews.Question gankitem=ganklist.get(0);
+                                item.setId(gankitem.getId());
                             }
                             list.add(item);
 //                            Log.i(TAG, "onSuccess: list.size"+list.size());

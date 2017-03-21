@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
+import com.gank.app.App;
 import com.gank.bean.BeanTeype;
 import com.gank.bean.FrontNews;
 import com.gank.bean.StringModeImpl;
@@ -67,13 +68,12 @@ public class FrontPresenter implements FrontContract.Presenter {
                         for (FrontNews.Question item : news.getResults()){
 //                            item.setId(list.size()+1);
                             if (!queryIfIdExists(item.get_id())){
-                                QueryBuilder query=new QueryBuilder(FrontNews.Question.class);
-                                query.appendOrderDescBy("id");
-                                ArrayList<FrontNews.Question> frontlist=new ArrayList<FrontNews.Question>();
-                                frontlist.addAll(DbLiteOrm.<FrontNews.Question>query(query));
-                                Log.i(TAG, "onSuccess: "+frontlist.size());
-                                item.setId(frontlist.size()+1);
                                 DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
+                            }else {
+                                ArrayList<FrontNews.Question> frontlist= App.DbLiteOrm.query(new QueryBuilder<FrontNews.Question>(FrontNews.Question.class)
+                                .where(FrontNews.Question.COL_ID+"=?",new String[]{item.get_id()}));
+                                FrontNews.Question frontitem=frontlist.get(0);
+                                item.setId(frontitem.getId());
                             }
                             list.add(item);
 //                            if (!queryIfIdExists(item.get_id())){

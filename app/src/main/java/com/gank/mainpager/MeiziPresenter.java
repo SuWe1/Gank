@@ -56,10 +56,15 @@ public class MeiziPresenter implements MeiziContract.Presenter {
                             list.clear();
                         }
                         for (MeiziNews.Question item :news.getResults()){
-                            list.add(item);
                             if (!queryIfIdExists(item.get_id())){
                                 App.DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
+                            }else {
+                                ArrayList<MeiziNews.Question> meizilist=App.DbLiteOrm.query(new QueryBuilder<MeiziNews.Question>(MeiziNews.Question.class)
+                                .where(MeiziNews.Question.COL_ID+"=?",new String[]{item.get_id()}));
+                                MeiziNews.Question meiziItem=meizilist.get(0);
+                                item.setId(meiziItem.getId());
                             }
+                            list.add(item);
                         }
                         view.showResult(list);
                     }catch (JsonSyntaxException e){
