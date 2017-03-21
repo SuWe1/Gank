@@ -4,6 +4,7 @@ import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.Default;
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
+import com.litesuits.orm.db.enums.AssignType;
 
 import java.util.ArrayList;
 
@@ -33,7 +34,7 @@ public class MeiziNews {
 
     @Table("Meizi")public class Question{
         public static final String COL_ID= "_id";
-        @PrimaryKey(PrimaryKey.AssignType.AUTO_INCREMENT)
+        @PrimaryKey(AssignType.AUTO_INCREMENT)
         private int id;
         @Column(COL_ID)
         private String _id;

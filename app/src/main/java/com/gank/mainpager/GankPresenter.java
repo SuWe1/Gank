@@ -77,12 +77,12 @@ public class GankPresenter implements GankContract.Presenter {
                         for (GankNews.Question item : news.getResults()) {
 //                            Log.i(TAG, "onSuccess: item.getImages()"+item.getImages().size());
 //                            item.setId(list.size()+1);
-                            QueryBuilder query=new QueryBuilder(GankNews.Question.class);
-                            query.appendOrderDescBy("id");
-                            ArrayList<GankNews.Question> ganklist=new ArrayList<GankNews.Question>();
-                            ganklist.addAll(DbLiteOrm.<GankNews.Question>query(query));
-                            Log.i(TAG, "onSuccess: "+ganklist.size());
-                            item.setId(ganklist.size()+1);
+//                            QueryBuilder query=new QueryBuilder(GankNews.Question.class);
+//                            query.appendOrderDescBy("id");
+//                            ArrayList<GankNews.Question> ganklist=new ArrayList<GankNews.Question>();
+//                            ganklist.addAll(DbLiteOrm.<GankNews.Question>query(query));
+//                            Log.i(TAG, "onSuccess: "+ganklist.size());
+//                            item.setId(ganklist.size()+1);
                             list.add(item);
                             if (!queryIfIdExists(item.get_id())){
                                 DbLiteOrm.insert(item, ConflictAlgorithm.Replace);

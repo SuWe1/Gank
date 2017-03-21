@@ -4,6 +4,7 @@ import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.Default;
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
+import com.litesuits.orm.db.enums.AssignType;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,7 @@ public class FrontNews {
     @Table("Front") public class Question{
         public static final String COL_MARK= "mark";
         public static final String COL_ID= "_id";
-        @PrimaryKey(PrimaryKey.AssignType.AUTO_INCREMENT)
+        @PrimaryKey(AssignType.AUTO_INCREMENT)
         private int id;
         @Column("images")
         private ArrayList<String> images;
