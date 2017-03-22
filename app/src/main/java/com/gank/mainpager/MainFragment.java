@@ -53,7 +53,11 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        this.context=getActivity().getApplicationContext();
+        /**
+         * 之前写成this.context=getActivity().getApplicationContext();是为了防止内存泄漏
+         * 这样在meizifragment的startReading中传入的context是不符合要求的所有该成如下了
+         */
+        this.context=getActivity();
         super.onCreate(savedInstanceState);
         // Fragment状态恢复
         if (savedInstanceState!=null){

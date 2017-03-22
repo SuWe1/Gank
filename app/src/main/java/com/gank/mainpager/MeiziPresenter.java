@@ -1,7 +1,10 @@
 package com.gank.mainpager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.util.Log;
 import android.view.View;
 
@@ -118,15 +121,13 @@ public class MeiziPresenter implements MeiziContract.Presenter {
         MeiziNews.Question item=list.get(positon);
         Intent intent= PictureActivity.newIntent(context,item.getUrl());
         //Material Designer  ActivityOptionsCompat，我们可以通过这个类来启动activity和添加动画
-        /*ActivityOptionsCompat optionsCompat= ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,transitView,PictureActivity.TRANSIT_PIC);
+        ActivityOptionsCompat optionsCompat= ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,transitView,PictureActivity.TRANSIT_PIC);
         try {
             ActivityCompat.startActivity(context,intent,optionsCompat.toBundle());
         }catch (IllegalArgumentException e){
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
-        }*/
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        }
     }
 
     @Override

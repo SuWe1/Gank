@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -46,6 +47,7 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
         presenter=new PicturePresenter(this,this);
         initView();
         parseIntent();
+        ViewCompat.setTransitionName(mImageView,TRANSIT_PIC);
         presenter.LoadPic(ImgUrl,mImageView);
     }
 
@@ -54,11 +56,14 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
          * 主题使用的是NoActionbar不设定setSupportActionBar是不会显示菜单栏的
          * 用 setSupportActionBar 设定，Toolbar即能取代原本的 actionbar
          * 然后就可以使用getSupportActionBar().setDisplayHomeAsUpEnabled(true);的办法来显示还回箭头
+         * issue:设置转场动画之前点击还回按钮默认是还回的 设置之后结果无效了 所有在onOptionsItemSelected重新判断了一下时间如果点击
+         * 了还回按钮则finish PictureActivity
+         * issue:toolbar.setTitle()需要在调用setSupportActionBar(toolbar)方法之前设置
          */
         mToolbar= (Toolbar) findViewById(R.id.picture_toolbar);
+        mToolbar.setTitle("妹子");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbar.setTitle("");
         coordinatorLayout= (CoordinatorLayout) findViewById(R.id.pic_coordinatorlayout);
         mImageView= (ImageView) findViewById(R.id.Img_Meizi);
         mAppBarLayout= (AppBarLayout) findViewById(R.id.pic_appbar);
@@ -83,6 +88,9 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
             case R.id.picture_menu:
                 presenter.SavePicTolocal(ImgUrl);
                 return true;
@@ -112,12 +120,12 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
 
     @Override
     public void showSaveSuccessful() {
-        Snackbar.make(coordinatorLayout,R.string.loaded_success,Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(coordinatorLayout,R.string.loaded_success,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showSavaFail() {
-//        Snackbar.make(coordinatorLayout,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
