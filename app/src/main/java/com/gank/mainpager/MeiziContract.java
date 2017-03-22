@@ -27,7 +27,7 @@ public interface MeiziContract {
         //加载更多
         void loadMore(int PagerNum);
         //显示详情
-        void StartReading(int positon);
+        void StartReading(int positon, android.view.View transitView);
         //随便看
         void LookAround();
     }

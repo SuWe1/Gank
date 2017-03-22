@@ -9,10 +9,11 @@ import java.util.Date;
  */
 
 public class DataForString {
-    public String GankDataFormat(long date){
+    public static String GetTimeToName(){
         String mDate;
-        Date d=new Date(date);
-        SimpleDateFormat format=new SimpleDateFormat("yy/MM/dd");
+        SimpleDateFormat format=new SimpleDateFormat("yyyy年MM月dd日   HH:mm:ss");
+        //获取当前时间
+        Date d=new Date(System.currentTimeMillis());
         mDate=format.format(d);
         return mDate;
     }

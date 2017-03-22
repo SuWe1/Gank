@@ -20,6 +20,7 @@
         <activity android:name=".detail.DetailActivity"/>
         <activity android:name=".settings.SettingsPreferenceActivity"/>
         <activity android:name=".about.AboutPreferenceActivity"/>
+        <activity android:name=".picture.PictureActivity"/>
     </application>
 
 </manifest>

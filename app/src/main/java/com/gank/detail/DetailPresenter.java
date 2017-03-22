@@ -29,7 +29,6 @@ public class DetailPresenter implements  DetailContract.Presenter {
 
 
     private SharedPreferences sp;
-//    private DatabaseHelper dbHelper;
 
     private Gson gson;
 
@@ -74,7 +73,6 @@ public class DetailPresenter implements  DetailContract.Presenter {
         this.view.setPresenter(this);
         model=new StringModeImpl(context);
         sp=context.getSharedPreferences("user_settings",Context.MODE_PRIVATE);
-//        dbHelper=new DatabaseHelper(context,"Histroy.db",null,9);
         gson=new Gson();
     }
 
@@ -151,21 +149,6 @@ public class DetailPresenter implements  DetailContract.Presenter {
                 break;
         }
         Log.i(TAG, "addToOrDeleteFromBookMarks: tmpTable:"+tmpTable+" tmpID:"+tmpID+" _id:"+ _id +" queryIsBooksMarks():"+queryIsBooksMarks());
-        /*if (queryIsBooksMarks()){
-            //从收藏列表删除
-            ContentValues values=new ContentValues();
-            values.put("bookmark",0);
-            dbHelper.getWritableDatabase().update(tmpTable,values,tmpID+" = ? ",new String[]{String.valueOf(_id)});
-            values.clear();
-            view.showDeletedFromBookmarks();
-        }else {
-            //添加到收藏
-            ContentValues values=new ContentValues();
-            values.put("bookmark",1);
-            dbHelper.getWritableDatabase().update(tmpTable,values,tmpID+" = ? ",new String[]{String.valueOf(_id)});
-            values.clear();
-            view.showAddedToBookmarks();
-        }*/
     }
 
     @Override
@@ -201,19 +184,6 @@ public class DetailPresenter implements  DetailContract.Presenter {
                     return false;
                 }
         }
-        //这里SQL语句没写好 卡了我三天的bug啊！！！ 一定要注意空格
-//        String sql="select * from "+tempTable+" where "+tempId+" = ? ";
-//        Cursor cursor=dbHelper.getReadableDatabase()
-//                .rawQuery(sql,new String[]{String.valueOf(_id)});
-//        if (cursor.moveToNext()){
-//            do {
-//                int isBookMarked=cursor.getInt(cursor.getColumnIndex("bookmark"));
-//                if (isBookMarked==1){
-//                    return true;
-//                }
-//            }while (cursor.moveToNext());
-//        }
-//        cursor.close();
         return false;
     }
 
@@ -234,17 +204,6 @@ public class DetailPresenter implements  DetailContract.Presenter {
                     view.showResultWithoutBody(url);
                 }else {
                     view.showNotNetError();
-                    //本是参考网上案列存储详情页数据的 但是详情页都是用webView呈现 所以缓存content为空
-                    /*Cursor cursor=dbHelper.getReadableDatabase()
-                    .query("Gank",null,null,null,null,null,null);
-                if (cursor.moveToNext()){
-                    do {
-                        if (cursor.getInt(cursor.getColumnIndex("gank_id"))==_id){
-                            String content=cursor.getString(cursor.getColumnIndex("gank_content"));
-//                                //没有写完
-                        }
-                    }while (cursor.moveToNext());
-                }*/
                     view.stopLoading();
         }
                 break;

@@ -35,8 +35,6 @@ public class GankPresenter implements GankContract.Presenter {
     private GankContract.View view;
     private StringModeImpl model;
 
-//    private DatabaseHelper dbHelper;
-//    private SQLiteDatabase db;
     private Gson gson = new Gson();
     private ArrayList<GankNews.Question> list = new ArrayList<>();
 
@@ -51,8 +49,6 @@ public class GankPresenter implements GankContract.Presenter {
         this.view=view;
         this.view.setPresenter(this);
         model=new StringModeImpl(context);
-//        dbHelper=new DatabaseHelper(context,"Histroy.db",null,9);
-//        db=dbHelper.getWritableDatabase();
     }
 
 
@@ -75,8 +71,6 @@ public class GankPresenter implements GankContract.Presenter {
                             list.clear();
                         }
                         for (GankNews.Question item : news.getResults()) {
-//                            Log.i(TAG, "onSuccess: item.getImages()"+item.getImages().size());
-//                            item.setId(list.size()+1);
                             /**
                              * issue1.数据库查重:首先检测数据库中是否已经储存过该条数据
                              * issue2:因为每次重启后都是在网络上重新下载数据 如果是数据库已经存在的数据则不会重新加载，也导致了这些数据当前id值为空
@@ -91,24 +85,7 @@ public class GankPresenter implements GankContract.Presenter {
                                 item.setId(gankitem.getId());
                             }
                             list.add(item);
-//                            Log.i(TAG, "onSuccess: list.size"+list.size());
-//                            if (!queryIfIdExists(item.get_id())) {
-//                                db.beginTransaction();
-//                                //因为详情页都是用webView呈现 所以缓存content为空
-//                                try {
-//                                    values.put("gank_id", item.get_id());
-//                                    values.put("gank_news", gson.toJson(item));
-//                                    values.put("gank_content", "");
-//                                    values.put("gank_url", item.getUrl());
-//                                    long addResult=db.insert("Gank", null, values);
-////                                    Log.i(TAG, "onSuccess: addResult "+addResult);
-//                                } finally {
-//                                    db.endTransaction();
-//                                }
-//                            }
-
                         }
-//                        Log.i(TAG, "gankpresenter.model.load list.size="+list.size());
                         view.showResult(list);
                     }catch (JsonSyntaxException e){
                         view.showError();
@@ -123,20 +100,8 @@ public class GankPresenter implements GankContract.Presenter {
                 }
             });
         } else {
-            //暂时没做缓存加载
             //更新列表缓存 因为详情页都是用webView呈现 所以缓存content为空
             if (cleaing){
-                /*list.clear();
-                Cursor cursor=db.query("Gank",null,null,null,null,null,null);
-                if (cursor.moveToNext()){
-                    do {
-                        GankNews.Question news=gson.fromJson(cursor.getString(cursor.getColumnIndex("gank_news")),GankNews.Question.class);
-                        list.add(news);
-                    }while (cursor.moveToNext());
-                }
-                cursor.close();
-                view.Stoploading();
-                view.showResult(list);*/
                 QueryBuilder query=new QueryBuilder(GankNews.Question.class);
                 query.appendOrderDescBy("id");
                 query.limit(0,10*CurrentPagerNum);
@@ -157,19 +122,6 @@ public class GankPresenter implements GankContract.Presenter {
         }
         return true;
     }
-    /*//查询是否存在数据库缓存中
-    public boolean queryIfIdExists(String id) {
-        Cursor cursor = db.query("Gank", null, null, null, null, null, null);
-        if (cursor.moveToNext()) {
-            do {
-                if (id == cursor.getString(cursor.getColumnIndex("gank_id"))) ;
-                return true;
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return false;
-    }*/
-
     @Override
     public void reflush() {
         loadPosts(CurrentPagerNum,true);

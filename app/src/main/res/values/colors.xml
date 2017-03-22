@@ -7,4 +7,5 @@
     <color name="viewBackground">@android:color/white</color>
     <color name="FloatingActionBarBackground">#337EE3  </color>
     <color name="BookMarkHeader">#F7F7F7 </color>
+    <color name="PicBackground">#000</color>
 </resources>

@@ -7,4 +7,5 @@
         <color name="viewBackground">#212a2f</color>
         <color name="FloatingActionBarBackground">#35464e </color>
         <color name="BookMarkHeader">#212a2f </color>
+        <color name="PicBackground">#000</color>
 </resources>

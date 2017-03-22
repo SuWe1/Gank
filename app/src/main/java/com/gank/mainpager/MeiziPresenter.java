@@ -1,13 +1,16 @@
 package com.gank.mainpager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.VolleyError;
 import com.gank.app.App;
 import com.gank.bean.MeiziNews;
 import com.gank.bean.StringModeImpl;
 import com.gank.interfaze.OnStringListener;
+import com.gank.picture.PictureActivity;
 import com.gank.util.Api;
 import com.gank.util.Network;
 import com.google.gson.Gson;
@@ -111,12 +114,19 @@ public class MeiziPresenter implements MeiziContract.Presenter {
     }
 
     @Override
-    public void StartReading(int positon) {
+    public void StartReading(int positon, View transitView) {
         MeiziNews.Question item=list.get(positon);
-        /*Bitmap bitmap= Glide.with(context)
-                .load(item.getUrl())
-                .asBitmap();*/
-
+        Intent intent= PictureActivity.newIntent(context,item.getUrl());
+        //Material Designer  ActivityOptionsCompat，我们可以通过这个类来启动activity和添加动画
+        /*ActivityOptionsCompat optionsCompat= ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,transitView,PictureActivity.TRANSIT_PIC);
+        try {
+            ActivityCompat.startActivity(context,intent,optionsCompat.toBundle());
+        }catch (IllegalArgumentException e){
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }*/
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     @Override

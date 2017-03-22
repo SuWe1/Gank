@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setCheckedItem(R.id.nav_home);
         }
 
-//        startService(new Intent(this, CacheService.class));
     }
 
     private void initView(){
@@ -109,12 +108,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        /*ActivityManager manager= (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service :manager.getRunningServices(Integer.MAX_VALUE)){
-            if (CacheService.class.getName().equals(service.service.getClassName())){
-                stopService(new Intent(this, CacheService.class));
-            }
-        }*/
     }
 
     @Override

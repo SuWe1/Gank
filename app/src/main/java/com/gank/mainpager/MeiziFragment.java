@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import com.gank.R;
 import com.gank.adapter.MeiziAdapter;
 import com.gank.bean.MeiziNews;
-import com.gank.interfaze.OnRecyclerViewOnClickListener;
+import com.gank.interfaze.OnMeiziRecyclerViewOnClickListener;
 
 import java.util.ArrayList;
 
@@ -119,15 +119,10 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
     public void showResult(ArrayList<MeiziNews.Question> list) {
         if (adapter==null){
             adapter=new MeiziAdapter(list,getContext());
-            adapter.setItemOnClickListener(new OnRecyclerViewOnClickListener() {
+            adapter.setItemOnClickListener(new OnMeiziRecyclerViewOnClickListener() {
                 @Override
-                public void onItemClick(View v, int position) {
-
-                }
-
-                @Override
-                public void onItemLongClick(View v, int position) {
-                    presenter.StartReading(position);
+                public void onItemClick(View v, View meizhiView, int position) {
+                    presenter.StartReading(position,meizhiView);
                 }
             });
             recyclerView.setAdapter(adapter);
