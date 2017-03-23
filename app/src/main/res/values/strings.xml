@@ -19,6 +19,8 @@
     <string name="action_copy_text">复制文本</string>
     <string name="loaded_failed">加载失败</string>
     <string name="loaded_success">加载成功</string>
+    <string name="save_success">保存成功</string>
+    <string name="save_fail">保存失败</string>
     <string name="retry">重新加载</string>
     <string name="share_error">分享失败</string>
     <string name="no_browser_found">没有找到浏览器</string>
@@ -64,5 +66,7 @@
     <string name="no_app_store_found">没有邮件类App</string>
     <string name="action_delete_from_bookmarks">取消收藏该编文章</string>
     <string name="bookmarks_Front_title">前端</string>
+    <string name="save_picture_to_local">保存图片到本地？</string>
+    <string name="save_picture_to_local_title">提示</string>
 
 </resources>

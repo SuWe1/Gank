@@ -1,6 +1,7 @@
 package com.gank.picture;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -67,6 +69,7 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
         coordinatorLayout= (CoordinatorLayout) findViewById(R.id.pic_coordinatorlayout);
         mImageView= (ImageView) findViewById(R.id.Img_Meizi);
         mAppBarLayout= (AppBarLayout) findViewById(R.id.pic_appbar);
+//        setupPhotoAttacher();
     }
 
     public static Intent newIntent(Context context,String url){
@@ -79,6 +82,39 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
         ImgUrl=getIntent().getStringExtra(Img_Url);
     }
 
+    private void setupPhotoAttacher(){
+        mPhotoViewAttacher=new PhotoViewAttacher(mImageView);
+        mPhotoViewAttacher.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
+            @Override
+            public void onViewTap(View view, float v, float v1) {
+                hideOrShowAppBar();
+            }
+        });
+        mPhotoViewAttacher.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(PictureActivity.this)
+                        .setTitle(R.string.save_picture_to_local_title)
+                        .setMessage(R.string.save_picture_to_local)
+                        .setPositiveButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                             dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                presenter.SavePicTolocal(ImgUrl);
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+
+                return true;
+            }
+        });
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.picture_menu,menu);
@@ -119,13 +155,13 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
     }
 
     @Override
-    public void showSaveSuccessful() {
-//        Snackbar.make(coordinatorLayout,R.string.loaded_success,Snackbar.LENGTH_SHORT).show();
+    public void showSaveSuccessful(String path) {
+        Snackbar.make(coordinatorLayout,R.string.save_success,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showSavaFail() {
-        Snackbar.make(coordinatorLayout,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout,R.string.save_fail,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

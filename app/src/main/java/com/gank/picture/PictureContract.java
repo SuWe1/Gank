@@ -16,7 +16,7 @@ public interface PictureContract {
     }
     interface  View extends BaseView<Presenter>{
         void showResult();
-        void showSaveSuccessful();
+        void showSaveSuccessful(String path);
         void showSavaFail();
     }
 }

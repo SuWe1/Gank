@@ -11,7 +11,7 @@ import java.util.Date;
 public class DataForString {
     public static String GetTimeToName(){
         String mDate;
-        SimpleDateFormat format=new SimpleDateFormat("yyyy年MM月dd日   HH:mm:ss");
+        SimpleDateFormat format=new SimpleDateFormat("yyyy/MM/ddHH:mm:ss");
         //获取当前时间
         Date d=new Date(System.currentTimeMillis());
         mDate=format.format(d);
