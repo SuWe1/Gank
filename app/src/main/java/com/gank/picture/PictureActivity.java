@@ -3,7 +3,9 @@ package com.gank.picture;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -21,6 +23,8 @@ import android.widget.ImageView;
 import com.gank.R;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
+
+import static com.gank.picture.PicturePresenter.MY_PERMISSIONS_REQUEST_CALL_PHONE;
 
 /**
  * Created by 11033 on 2017/3/22.
@@ -165,7 +169,27 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
     }
 
     @Override
+    public void showNoPermission() {
+        Snackbar.make(coordinatorLayout,R.string.save_fail_no_permission,Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void initView(View view) {
 
+    }
+
+    //用户对请求作出响应后的回调
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_CALL_PHONE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission Granted
+                presenter.SavePicTolocal(ImgUrl);
+            } else {
+                // Permission Denied
+                showNoPermission();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

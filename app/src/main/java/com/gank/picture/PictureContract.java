@@ -18,5 +18,6 @@ public interface PictureContract {
         void showResult();
         void showSaveSuccessful(String path);
         void showSavaFail();
+        void showNoPermission();
     }
 }
