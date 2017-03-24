@@ -8,10 +8,7 @@ MVP+Material Design实现的干货集中营文章阅读Android APP(目前只上�
 ### 预览
 **具体请看[art文件夹](https://github.com/yeshuwei/Gank/tree/master/art)下清晰大图**
 
-![](https://github.com/yeshuwei/Gank/blob/master/art/gank1.jpg)
-![](https://github.com/yeshuwei/Gank/blob/master/art/gank2.jpg)
-![](https://github.com/yeshuwei/Gank/blob/master/art/gank3.jpg)
-![](https://github.com/yeshuwei/Gank/blob/master/art/gank6.jpg)
-![](https://github.com/yeshuwei/Gank/blob/master/art/gank4.jpg)
-![](https://github.com/yeshuwei/Gank/blob/master/art/gank5.jpg)
+![](https://github.com/yeshuwei/Gank/blob/master/art/gank_1.png)
+![](https://github.com/yeshuwei/Gank/blob/master/art/gank_2.png)
+![](https://github.com/yeshuwei/Gank/blob/master/art/gank_3.png)
 
