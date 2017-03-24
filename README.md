@@ -1,5 +1,5 @@
 ### 介绍
-MVP+Material Design实现的干货集中营文章阅读Android APP(目前只上线了Android文章阅读，后续会继续加载其他类型文章)<br>
+MVP+Material Design实现的干货集中营文章阅读Android APP<br>
 ### 下载
 [蒲公英](https://www.pgyer.com/yZ4n)
 ### 时间轴
