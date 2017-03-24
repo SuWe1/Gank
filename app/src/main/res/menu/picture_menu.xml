@@ -7,6 +7,6 @@
         android:orderInCategory="1"
         android:title=""
         app:showAsAction="always"
-        android:icon="@drawable/ic_picture_black_24dp"
+        android:icon="@drawable/ic_file_download_black_24dp"
         />
 </menu>

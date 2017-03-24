@@ -115,13 +115,13 @@ public class PicturePresenter implements PictureContract.Presenter {
                     }
                 }
             }
+            view.showSaveSuccessful(appDir.getAbsolutePath());
         }else {
             // Permission Denied
             //申请权限
             ActivityCompat.requestPermissions((Activity) context,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     MY_PERMISSIONS_REQUEST_CALL_PHONE);
         }
-        view.showSaveSuccessful(appDir.getAbsolutePath());
     }
 
 }

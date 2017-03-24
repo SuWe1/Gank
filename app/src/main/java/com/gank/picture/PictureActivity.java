@@ -100,17 +100,17 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
                 new AlertDialog.Builder(PictureActivity.this)
                         .setTitle(R.string.save_picture_to_local_title)
                         .setMessage(R.string.save_picture_to_local)
-                        .setPositiveButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                             dialog.dismiss();
-                            }
-                        })
                         .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 presenter.SavePicTolocal(ImgUrl);
                                 dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                             dialog.dismiss();
                             }
                         })
                         .show();
