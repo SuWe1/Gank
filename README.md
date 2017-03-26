@@ -9,7 +9,7 @@ MVP+Material Design实现的干货集中营文章阅读Android APP<br>
 - **2017/03/17更新**<br>
 添加妹子页面
 ### 预览
-**具体请看[art文件夹](https://github.com/yeshuwei/Gank/tree/master/art)下清晰大图**
+**具体请看[art文件夹](https://github.com/yeshuwei/Gank/tree/master/art)下清晰大图**<br>
 ![](https://github.com/yeshuwei/Gank/blob/master/art/gank_1.png)
 ![](https://github.com/yeshuwei/Gank/blob/master/art/gank_2.png)
 ![](https://github.com/yeshuwei/Gank/blob/master/art/gank_3.png)
