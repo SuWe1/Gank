@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#337EE3 </color>
     <color name="colorAccent">#009688</color>
     <color name="textColorPrimary">#616161</color>
+    <color name="textColorReaded">#b4b4b4</color>
     <color name="viewBackground">@android:color/white</color>
     <color name="FloatingActionBarBackground">#337EE3  </color>
     <color name="BookMarkHeader">#F7F7F7 </color>
