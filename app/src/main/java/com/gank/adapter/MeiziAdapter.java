@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -66,6 +68,8 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     .fitCenter()
                     .error(R.mipmap.loading)
                     .into(((MeiziViewHolder)holder).imageView);
+            String time=item.getCreatedAt().substring(0,10);
+            ((MeiziViewHolder) holder).textView.setText(time);
         }
     }
 
@@ -85,6 +89,8 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     class MeiziViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imageView;
+        Button button;
+        TextView textView;
         OnMeiziRecyclerViewOnClickListener onRecyclerViewOnClickListener;
 
         //设置监听
@@ -92,7 +98,11 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             super(itemView);
             this.onRecyclerViewOnClickListener=listener;
             imageView= (ImageView) itemView.findViewById(R.id.meiziImg);
-            itemView.setOnClickListener(this);
+            button= (Button) itemView.findViewById(R.id.meiziBtn);
+            textView= (TextView) itemView.findViewById(R.id.meiziTextTime);
+//            itemView.setOnClickListener(this);
+            imageView.setOnClickListener(this);
+            button.setOnClickListener(this);
 //            itemView.setOnLongClickListener(this);
         }
 

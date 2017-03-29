@@ -16,6 +16,7 @@ import com.gank.R;
 import com.gank.adapter.MeiziAdapter;
 import com.gank.bean.MeiziNews;
 import com.gank.interfaze.OnMeiziRecyclerViewOnClickListener;
+import com.wx.goodview.GoodView;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private SwipeRefreshLayout refresh;
+    private GoodView goodView;
 
     private MeiziContract.Presenter presenter;
     public MeiziFragment() {     
@@ -122,7 +124,17 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
             adapter.setItemOnClickListener(new OnMeiziRecyclerViewOnClickListener() {
                 @Override
                 public void onItemClick(View v, View meizhiView, int position) {
-                    presenter.StartReading(position,meizhiView);
+                    switch (v.getId()){
+                        case R.id.meiziImg:
+                            presenter.StartReading(position,meizhiView);
+                            break;
+                        case R.id.meiziBtn:
+                            goodView.setText("+1");
+                            goodView.setImage(R.drawable.ic_love_red);
+                            goodView.show(v);
+                            break;
+                    }
+
                 }
             });
             recyclerView.setAdapter(adapter);
@@ -145,6 +157,7 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
 
     @Override
     public void initView(View view) {
+        goodView=new GoodView(getContext());
         recyclerView= (RecyclerView) view.findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

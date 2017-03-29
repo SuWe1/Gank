@@ -40,6 +40,16 @@ public class MeiziNews {
         private String _id;
         @Column("desc")
         private String desc;
+
+        @Column("createdAt")
+        private String createdAt;
+        public String getCreatedAt() {
+            return createdAt;
+        }
+        public void setCreatedAt(String createdAt) {
+            this.createdAt = createdAt;
+        }
+
         @Column("type")
         private String type;
         @Column("url")

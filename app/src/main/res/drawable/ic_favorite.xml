@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+    android:state_selected ：选中
+    android:state_focused  ：获得焦点
+    android:state_pressed  ：点击
+    android:state_enabled  ：设置是否响应事件,指所有事件
+    -->
+    <item android:drawable="@drawable/ic_love_black" android:state_enabled="true" android:state_window_focused="false"/>
+    <item android:drawable="@drawable/ic_love_black" android:state_enabled="false"/>
+    <item android:drawable="@drawable/ic_love_red" android:state_pressed="true"/>
+</selector>
