@@ -83,6 +83,9 @@ public class DetailPresenter implements  DetailContract.Presenter {
             switch (type){
                 case TYPE_Gank:
                     intent.setData(Uri.parse(url));
+                    break;
+                case TYPE_Front:
+                    intent.setData(Uri.parse(url));
             }
             context.startActivity(intent);
         }catch (Exception ex){

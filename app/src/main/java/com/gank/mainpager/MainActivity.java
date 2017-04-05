@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         initView();
         //回复fragment状态
+        /**
+         * 添加Fragment前检查是否有保存的。如果没有状态保存，说明Acitvity是第1次被创建，我们添加Fragment
+         */
         if (savedInstanceState!=null){
             mainFragment= (MainFragment) getSupportFragmentManager().getFragment(savedInstanceState,"MainFragment");
             bookmarksfragment=(BookmarksFragment) getSupportFragmentManager().getFragment(savedInstanceState,"BookmarksFragment");
@@ -48,9 +51,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             bookmarksfragment=BookmarksFragment.newInstance();
         }
         //Fragment事务
-        /**
-         * 添加Fragment前检查是否有保存的。如果没有状态保存，说明Acitvity是第1次被创建，我们添加Fragment
-         */
         if (savedInstanceState==null){
             getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,mainFragment,"MainFragment").commit();
             getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,bookmarksfragment,"BookmarksFragment").commit();
