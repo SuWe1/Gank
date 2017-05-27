@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
-    public static final String ACTION_BOOKMARKS = "com.gank.bookmarks";
+    public static final String ACTION_BOOKMARKS = "com.gank.mark";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

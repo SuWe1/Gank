@@ -1,36 +1,36 @@
-## Gank Android App
+## 干货私囊 Android App
 ![logo](https://github.com/yeshuwei/Gank/blob/master/art/book.png)<br>
-English | [中文版](https://github.com/yeshuwei/Gank/blob/master/README_CN.md)<br>
-Gank is a reading  App based on Android platform which contains Android,web,and beautiful girl picture.<br>
-API come from [gank-camp](http://gank.io/api)<br>
-If you want to test yourself , clone this repository to your computer
-
-##3 Download APk
-* [Dandelion](https://www.pgyer.com/yZ4n)
-* [fir.im](https://fir.im/x1yr)
-* [cool](http://www.coolapk.com/apk/com.gank)
-
-### Screenshots
+中文版 | [English](https://github.com/yeshuwei/Gank/blob/master/README.md)<br>
+干货私囊是一款基于干货集中营Api接口的资讯阅读类Android App，每日跟新Android、前端文章、每日跟新一张美女图片以供欣赏。<br>
+一个适合想自我练习测试的Android客户端。
+### 下载
+* [蒲公英](https://www.pgyer.com/yZ4n)(内侧)
+* [fir.im](https://fir.im/x1yr)(内侧)
+* 其他各大常用平台
+### 截图
 ![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE1.PNG)
 ![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE2.png)
 ![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE3.PNG)
-### Open in Android Studio
-Clone the repository：<br>
+### 在Android Studio中打开
+Clone仓库：<br>
 <br>
 ``
 git clone https://github.com/yeshuwei/Gank
 ``<br>
 <br>
-check out the Master branch：<br>
+获取Master分支：<br>
 <br>
 ``
-git checkout master 
+git checkout master
 ``<br>
 <br>
-Note:If you want to review a different branch,replace the **master** with the name you want to checout<br>
-Finally open the wuliao/ directory in Android Studio
+Note:如果需要查看其它分支，请将master替换为其它分支的名称.
 
-### Libraries used in this App
+最后在Android Studio中打开gank/目录。
+
+
+### 相关开源项目
+
 * [Material Design](https://material.io/guidelines/)
 * [Android Support Libraries](https://developer.android.com/topic/libraries/support-library/index.html)
 * [Glide](https://github.com/bumptech/glide)
@@ -38,12 +38,13 @@ Finally open the wuliao/ directory in Android Studio
 * [GoodView](https://github.com/venshine/GoodView)
 * [Volley](https://github.com/google/volley)
 * [android-lite-orm](https://github.com/litesuits/android-lite-orm)
-### Thanks to
-* [gank-camp](http://gank.io/)
+
+### 致谢
+* [干货集中营](http://gank.io/)
 * [Google](https://github.com/googlesamples)-[android-architecture
 ](https://github.com/googlesamples/android-architecture)
-* Other people who helped me solve the problem 
-* ### 开源许可
+* 开发过程中热心为我解答的人
+### 开源许可
 
     Copyright 2017 yeshuwei
 
