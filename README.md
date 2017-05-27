@@ -43,7 +43,7 @@ Finally open the wuliao/ directory in Android Studio
 * [Google](https://github.com/googlesamples)-[android-architecture
 ](https://github.com/googlesamples/android-architecture)
 * Other people who helped me solve the problem 
-* ### 开源许可
+### 开源许可
 
     Copyright 2017 yeshuwei
 
