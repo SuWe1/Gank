@@ -30,10 +30,12 @@ public class MainFragment extends Fragment {
     private MainPagerAdapter adapter;
     private GankFragment gankFragment;
     private FrontFragment frontFragment;
-    private MeiziFragment meiziFragment;
+//    private MeiziFragment meiziFragment;
+    private IosFragment iosFragment;
     private GankPresenter gankPresenter;
     private FrontPresenter frontPresenter;
-    private MeiziPresenter meiziPresenter;
+//    private MeiziPresenter meiziPresenter;
+    private IosPresenter iosPresenter;
 
     private TabLayout tabLayout;
 
@@ -64,15 +66,18 @@ public class MainFragment extends Fragment {
             FragmentManager manager=getChildFragmentManager();
             gankFragment= (GankFragment) manager.getFragment(savedInstanceState,"gank");
             frontFragment= (FrontFragment) manager.getFragment(savedInstanceState,"front");
-            meiziFragment= (MeiziFragment) manager.getFragment(savedInstanceState,"meizi");
+//            meiziFragment= (MeiziFragment) manager.getFragment(savedInstanceState,"meizi");
+            iosFragment= (IosFragment) manager.getFragment(savedInstanceState,"ios");
         }else {
             frontFragment=FrontFragment.newInstance();
             gankFragment=GankFragment.newInstance();
-            meiziFragment=meiziFragment.newInstance();
+//            meiziFragment=meiziFragment.newInstance();
+            iosFragment=IosFragment.newInstance();
         }
         gankPresenter=new GankPresenter(context,gankFragment);
         frontPresenter=new FrontPresenter(context,frontFragment);
-        meiziPresenter=new MeiziPresenter(context,meiziFragment);
+//        meiziPresenter=new MeiziPresenter(context,meiziFragment);
+        iosPresenter=new IosPresenter(iosFragment,context);
     }
 
     @Nullable
@@ -111,7 +116,7 @@ public class MainFragment extends Fragment {
         tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) v.findViewById(R.id.view_pager);
         viewPager.setOffscreenPageLimit(3);
-        adapter=new MainPagerAdapter(getChildFragmentManager(),context,gankFragment,frontFragment,meiziFragment);
+        adapter=new MainPagerAdapter(getChildFragmentManager(),context,gankFragment,frontFragment,iosFragment);
         viewPager.setAdapter(adapter);
         //当我们的tab选择时，让viewpager选中对应的item。
         //setupWithViewPager必须在ViewPager.setAdapter()之后调用
@@ -133,7 +138,8 @@ public class MainFragment extends Fragment {
             FragmentManager manager=getChildFragmentManager();
             manager.putFragment(outState,"gank",gankFragment);
             manager.putFragment(outState,"front",frontFragment);
-            manager.putFragment(outState,"meizi",meiziFragment);
+//            manager.putFragment(outState,"meizi",meiziFragment);
+            manager.putFragment(outState,"ios",iosFragment);
         }
 
     }
@@ -148,14 +154,18 @@ public class MainFragment extends Fragment {
     //随机读取android  前端
     public void lookAround(){
         Random random=new Random();
-        //0-2的随机数 不包括2
-        int who=random.nextInt(2);
+        //0-3的随机数 不包括3
+        int who=random.nextInt(3);
         switch (who){
             case 0:
                 gankPresenter.LookAround();
                 break;
             case 1:
                 frontPresenter.LookAround();
+                break;
+            case 2:
+                iosPresenter.LookAround();
+                break;
         }
 
     }

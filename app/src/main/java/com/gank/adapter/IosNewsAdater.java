@@ -71,7 +71,7 @@ public class IosNewsAdater extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-    private void setItemOnClickListener(OnRecyclerViewOnClickListener listener){
+    public void setItemOnClickListener(OnRecyclerViewOnClickListener listener){
         this.listener=listener;
     }
     @Override
@@ -107,7 +107,7 @@ public class IosNewsAdater extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         @Override
         public void onClick(View v) {
             if (listener!=null){
-                listener.onItemLongClick(v,getLayoutPosition());
+                listener.onItemClick(v,getLayoutPosition());
             }
         }
     }

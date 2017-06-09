@@ -23,7 +23,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.gank.mainpager.FrontFragment;
 import com.gank.mainpager.GankFragment;
-import com.gank.mainpager.MeiziFragment;
+import com.gank.mainpager.IosFragment;
 
 /**
  * Created by Lizhaotailang on 2016/8/10.
@@ -35,7 +35,8 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     private Context context;
     private GankFragment gankFragment;
     private FrontFragment frontFragment;
-    private MeiziFragment meiziFragment;
+//    private MeiziFragment meiziFragment;
+    private IosFragment iosFragment;
 
     public GankFragment getGankFragment() {
         return gankFragment;
@@ -45,13 +46,14 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         return frontFragment;
     }
 
-    public MainPagerAdapter(FragmentManager fm, Context context, GankFragment gankFragment, FrontFragment frontFragment,MeiziFragment meiziFragment) {
+    public MainPagerAdapter(FragmentManager fm, Context context, GankFragment gankFragment, FrontFragment frontFragment, IosFragment iosFragment) {
         super(fm);
         this.context = context;
-        titles = new String[]{"安卓", "前端","妹子"};
+        titles = new String[]{"安卓", "前端","IOS"};
         this.gankFragment = gankFragment;
         this.frontFragment = frontFragment;
-        this.meiziFragment=meiziFragment;
+//        this.meiziFragment=meiziFragment;
+        this.iosFragment=iosFragment;
     }
 
     @Override
@@ -60,7 +62,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         if (position == 1) {
             return frontFragment;
         }else if (position==2){
-            return meiziFragment;
+            return iosFragment;
         }
         return gankFragment;
     }

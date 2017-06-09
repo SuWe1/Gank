@@ -12,6 +12,7 @@ import com.gank.app.App;
 import com.gank.bean.BeanTeype;
 import com.gank.bean.FrontNews;
 import com.gank.bean.GankNews;
+import com.gank.bean.IosNews;
 import com.gank.bean.StringModeImpl;
 import com.gank.util.Network;
 import com.google.gson.Gson;
@@ -86,6 +87,10 @@ public class DetailPresenter implements  DetailContract.Presenter {
                     break;
                 case TYPE_Front:
                     intent.setData(Uri.parse(url));
+                    break;
+                case TYPE_IOS:
+                    intent.setData(Uri.parse(url));
+                    break;
             }
             context.startActivity(intent);
         }catch (Exception ex){
@@ -150,6 +155,17 @@ public class DetailPresenter implements  DetailContract.Presenter {
                 }
                 App.DbLiteOrm.update(front);
                 break;
+            case TYPE_IOS:
+                tmpTable="IOS";
+                tmpID="ios_id";
+                IosNews.Question ios=App.DbLiteOrm.queryById(id,IosNews.Question.class);
+                if (queryIsBooksMarks()){
+                    view.showDeletedFromBookmarks();
+                    ios.mark=false;
+                }else {
+                    view.showAddedToBookmarks();
+                    ios.mark=true;
+                }
         }
         Log.i(TAG, "addToOrDeleteFromBookMarks: tmpTable:"+tmpTable+" tmpID:"+tmpID+" _id:"+ _id +" queryIsBooksMarks():"+queryIsBooksMarks());
     }
@@ -160,14 +176,9 @@ public class DetailPresenter implements  DetailContract.Presenter {
             view.showLoadingError();
             return false;
         }
-        //表和id'
-        String tempTable = "";
-        String tempId = "";
         //true为已经收藏 false未收藏
         switch (type){
             case TYPE_Gank:
-                tempTable="Gank";
-                tempId="gank_id";
                 GankNews.Question gank= App.DbLiteOrm.queryById(id,GankNews.Question.class);
                 OrmLog.i(TAG,gank);
                 boolean isMark=gank.mark;
@@ -178,10 +189,16 @@ public class DetailPresenter implements  DetailContract.Presenter {
                 }
 //                return  true;
             case  TYPE_Front:
-                tempTable="Front";
-                tempId="front_id";
                 FrontNews.Question front=App.DbLiteOrm.queryById(id,FrontNews.Question.class);
                 if (front.mark){
+                    return true;
+                }else {
+                    return false;
+                }
+            case TYPE_IOS:
+                IosNews.Question ios=App.DbLiteOrm.queryById(id,IosNews.Question.class);
+                OrmLog.i(TAG,ios);
+                if (ios.mark){
                     return true;
                 }else {
                     return false;
@@ -211,6 +228,14 @@ public class DetailPresenter implements  DetailContract.Presenter {
         }
                 break;
             case TYPE_Front:
+                if (Network.networkConnected(context)){
+                    view.showResultWithoutBody(url);
+                }else {
+                    view.showNotNetError();
+                    view.stopLoading();
+                }
+                break;
+            case TYPE_IOS:
                 if (Network.networkConnected(context)){
                     view.showResultWithoutBody(url);
                 }else {

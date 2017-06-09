@@ -2,7 +2,7 @@ package com.gank.mainpager;
 
 import com.gank.BasePresenter;
 import com.gank.BaseView;
-import com.gank.bean.GankNews;
+import com.gank.bean.IosNews;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ public interface IosContract {
         void showError();
         void showLoading();
         void Stoploading();
-        void showResult(ArrayList<GankNews.Question> list);
+        void showResult(ArrayList<IosNews.Question> list);
         void showNotNetError();
 
     }

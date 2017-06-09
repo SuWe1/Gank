@@ -29,4 +29,7 @@ public class Api {
 
     //福利
     public static final String Gank_Meizi="http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/";
+
+    //Ios
+    public static final String Gank_IOS="http://gank.io/api/data/iOS/10/";
 }
