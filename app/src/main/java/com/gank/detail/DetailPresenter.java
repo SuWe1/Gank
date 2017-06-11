@@ -166,8 +166,9 @@ public class DetailPresenter implements  DetailContract.Presenter {
                     view.showAddedToBookmarks();
                     ios.mark=true;
                 }
+                App.DbLiteOrm.update(ios);
         }
-        Log.i(TAG, "addToOrDeleteFromBookMarks: tmpTable:"+tmpTable+" tmpID:"+tmpID+" _id:"+ _id +" queryIsBooksMarks():"+queryIsBooksMarks());
+//        Log.i(TAG, "addToOrDeleteFromBookMarks: tmpTable:"+tmpTable+" tmpID:"+tmpID+" _id:"+ _id +" queryIsBooksMarks():"+queryIsBooksMarks());
     }
 
     @Override
@@ -196,8 +197,13 @@ public class DetailPresenter implements  DetailContract.Presenter {
                     return false;
                 }
             case TYPE_IOS:
+                Log.i(TAG, "queryIsBooksMarks: "+id);
                 IosNews.Question ios=App.DbLiteOrm.queryById(id,IosNews.Question.class);
                 OrmLog.i(TAG,ios);
+                /*if (ios==null){
+                    Log.i(TAG, "queryIsBooksMarks:ios==null ");
+                    break;
+                }*/
                 if (ios.mark){
                     return true;
                 }else {

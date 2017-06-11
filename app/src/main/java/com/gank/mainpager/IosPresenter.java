@@ -2,6 +2,7 @@ package com.gank.mainpager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.gank.app.App;
@@ -24,6 +25,7 @@ import java.util.Random;
  */
 
 public class IosPresenter implements IosContract.Presenter {
+    private static final String TAG = "IosPresenter";
     private IosContract.View view;
     private Context context;
 
@@ -69,11 +71,13 @@ public class IosPresenter implements IosContract.Presenter {
                          */
                         if (!queryIfIdExists(item.get_id())){
                             App.DbLiteOrm.insert(item, ConflictAlgorithm.Replace);
+                            Log.i(TAG, "insert success");
                         }else {
+                            Log.i(TAG, "data is exist");
                             ArrayList<IosNews.Question> iosList=App.DbLiteOrm.query(new QueryBuilder<IosNews.Question>(IosNews.Question.class)
                                     .where(IosNews.Question.COL_ID+"=?",new String[]{item.get_id()}));
                             IosNews.Question iosItem=iosList.get(0);
-                            item.set_id(iosItem.get_id());
+                            item.setId(iosItem.getId());
                         }
                         list.add(item);
                     }
@@ -125,6 +129,8 @@ public class IosPresenter implements IosContract.Presenter {
         Intent intent=new Intent(context, DetailActivity.class);
         intent.putExtra("type", BeanTeype.TYPE_IOS);
         intent.putExtra("id",item.getId());
+        int id=list.get(positon).getId();
+        Log.i(TAG, "StartReading: "+id);
         intent.putExtra("_id",item.get_id());
         intent.putExtra("url",item.getUrl());
         intent.putExtra("title",item.getDesc());
