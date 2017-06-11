@@ -31,6 +31,8 @@
     <string name="deleted_from_bookmarks">删除成功</string>
     <string name="not_net_work">没有网络连接</string>
     <string name="bookmarks_Android_title">Android</string>
+    <string name="bookmarks_Front_title">前端</string>
+    <string name="bookmarks_Ios_title">IOS</string>
 
 
     <string name="about">关于</string>
@@ -66,7 +68,6 @@
     <string name="yes">必须</string>
     <string name="no_app_store_found">没有邮件类App</string>
     <string name="action_delete_from_bookmarks">取消收藏该编文章</string>
-    <string name="bookmarks_Front_title">前端</string>
     <string name="save_picture_to_local">保存图片到本地？</string>
     <string name="save_picture_to_local_title">提示</string>
 

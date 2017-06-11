@@ -13,6 +13,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.R;
 import com.gank.bean.FrontNews;
 import com.gank.bean.GankNews;
+import com.gank.bean.IosNews;
 import com.gank.interfaze.OnRecyclerViewOnClickListener;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private LayoutInflater inflater;
     private ArrayList<GankNews.Question> gankList;
     private ArrayList<FrontNews.Question> frontList;
+    private ArrayList<IosNews.Question> iosList;
 
 
     private OnRecyclerViewOnClickListener listener;
@@ -35,12 +37,16 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static final int TYPE_Gank_WITH_HEADER = 1;
     public static final int TYPE_Front_NORMAL = 2;
     public static final int TYPE_Front_WITH_HEADER = 3;
+    public static final int TYPE_IOS_NORMAL = 4;
+    public static final int TYPE_IOS_WITH_HEADER = 5;
+
     private List<Integer> types;
-    public BookMarksAdapter(Context context, ArrayList<GankNews.Question> gankList, ArrayList<FrontNews.Question> frontList , ArrayList<Integer> types) {
+    public BookMarksAdapter(Context context, ArrayList<GankNews.Question> gankList, ArrayList<FrontNews.Question> frontList , ArrayList<IosNews.Question> iosList,ArrayList<Integer> types) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.gankList = gankList;
         this.frontList=frontList;
+        this.iosList=iosList;
         this.types=types;
     }
 
@@ -53,6 +59,7 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         switch (viewType){
             case TYPE_Front_NORMAL:
             case TYPE_Gank_NORMAL:
+            case TYPE_IOS_NORMAL:
                 return new GankViewHolder(inflater.inflate(R.layout.home_list_item_layout,parent,false),this.listener);
         }
         return new GankTitleViewHolder(inflater.inflate(R.layout.bookmark_header,parent,false));
@@ -103,7 +110,27 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
                     ((GankViewHolder)holder).textView.setText(question.getDesc());
                 }
-
+                break;
+            case TYPE_IOS_WITH_HEADER:
+                ((GankTitleViewHolder)holder).textView.setText(context.getResources().getString(R.string.bookmarks_Ios_title));
+                break;
+            case TYPE_IOS_NORMAL:
+                if (!iosList.isEmpty()){
+                    IosNews.Question question=iosList.get(position-gankList.size()-frontList.size()-3);
+                    if (question.getImages()==null){
+                        ((GankViewHolder)holder).imageView.setVisibility(View.VISIBLE);
+                    }else {
+                        Glide.with(context)
+                                .load(question.getImages().get(0))
+                                .asBitmap()
+                                .centerCrop()
+                                .placeholder(R.mipmap.loading)
+                                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                                .error(R.mipmap.loading)
+                                .into(((GankViewHolder)holder).imageView);
+                    }
+                    ((GankViewHolder)holder).textView.setText(question.getDesc());
+                }
                 break;
         }
     }

@@ -15,6 +15,7 @@ import com.gank.adapter.BookMarksAdapter;
 import com.gank.bean.BeanTeype;
 import com.gank.bean.FrontNews;
 import com.gank.bean.GankNews;
+import com.gank.bean.IosNews;
 import com.gank.interfaze.OnRecyclerViewOnClickListener;
 
 import java.util.ArrayList;
@@ -59,9 +60,9 @@ public class  BookmarksFragment extends Fragment implements BookmarksContract.Vi
     }
 
     @Override
-    public void showResults(ArrayList<GankNews.Question> ganklist, ArrayList<FrontNews.Question> frontList, ArrayList<Integer> types) {
+    public void showResults(ArrayList<GankNews.Question> ganklist, ArrayList<FrontNews.Question> frontList, ArrayList<IosNews.Question> iosList, ArrayList<Integer> types) {
         if (adapter==null){
-            adapter=new BookMarksAdapter(getActivity(),ganklist,frontList,types);
+            adapter=new BookMarksAdapter(getActivity(),ganklist,frontList,iosList,types);
             adapter.setItemOnClickListener(new OnRecyclerViewOnClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
@@ -70,6 +71,8 @@ public class  BookmarksFragment extends Fragment implements BookmarksContract.Vi
                         presenter.startReading(BeanTeype.TYPE_Gank,position);
                     }else  if (type==BookMarksAdapter.TYPE_Front_NORMAL){
                         presenter.startReading(BeanTeype.TYPE_Front,position);
+                    }else if (type==BookMarksAdapter.TYPE_IOS_NORMAL){
+                        presenter.startReading(BeanTeype.TYPE_IOS,position);
                     }
                 }
 

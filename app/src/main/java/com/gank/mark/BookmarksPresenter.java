@@ -9,6 +9,7 @@ import com.gank.app.App;
 import com.gank.bean.BeanTeype;
 import com.gank.bean.FrontNews;
 import com.gank.bean.GankNews;
+import com.gank.bean.IosNews;
 import com.gank.detail.DetailActivity;
 import com.google.gson.Gson;
 import com.litesuits.orm.db.assit.QueryBuilder;
@@ -27,6 +28,7 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
 
     private ArrayList<GankNews.Question> gankList;
     private ArrayList<FrontNews.Question> frontList;
+    private ArrayList<IosNews.Question> iosList;
 
     private ArrayList<Integer> types;
 
@@ -38,6 +40,7 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
 
         gankList=new ArrayList< >();
         frontList=new ArrayList<>();
+        iosList=new ArrayList<>();
         types=new ArrayList<>();
     }
 
@@ -48,13 +51,19 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
         }else {
             gankList.clear();
             frontList.clear();
+            iosList.clear();
             types.clear();
         }
         checkForFreshData();
-        view.showResults(gankList,frontList,types);
+        view.showResults(gankList,frontList,iosList,types);
         view.stopLoading();
     }
 
+    /**
+     *
+     * @param type
+     * @param position item处于当前总列表的位置
+     */
     @Override
     public void startReading(BeanTeype type, int position) {
         Intent intent=new Intent(context, DetailActivity.class);
@@ -86,6 +95,19 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
                     intent.putExtra("imgUrl", question.getImages().get(0));
                 }
                 break;
+            case TYPE_IOS:
+                IosNews.Question iosQuestion=iosList.get(position-gankList.size()-frontList.size()-3);
+                intent.putExtra("type", BeanTeype.TYPE_IOS);
+                intent.putExtra("id",iosQuestion.getId());
+                intent.putExtra("_id", iosQuestion.get_id());
+                intent.putExtra("url",iosQuestion.getUrl());
+                intent.putExtra("title", iosQuestion.getDesc());
+                if (iosQuestion.getImages()==null){
+                    intent.putExtra("imgUrl", "");
+                }else {
+                    intent.putExtra("imgUrl", iosQuestion.getImages().get(0));
+                }
+                break;
         }
         /**
          * Content的startActivity方法，需要开启一个新的task。如果使用 Activity的startActivity方法，
@@ -108,6 +130,8 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
             types.add(BookMarksAdapter.TYPE_Gank_NORMAL);
         }
         Log.i(TAG, "checkForFreshData: gankList.size(): "+gankList.size());
+
+
         types.add(BookMarksAdapter.TYPE_Front_WITH_HEADER);
         QueryBuilder frontqb=new QueryBuilder(FrontNews.Question.class)
                 .where(FrontNews.Question.COL_MARK+"= ?",new String[]{markSign});
@@ -117,6 +141,16 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
             types.add(BookMarksAdapter.TYPE_Front_NORMAL);
         }
         Log.i(TAG, "checkForFreshData: frontList.size(): "+frontList.size());
+
+
+        types.add(BookMarksAdapter.TYPE_IOS_WITH_HEADER);
+        QueryBuilder iosqb=new QueryBuilder<>(IosNews.Question.class).where(IosNews.Question.COL_MARK+"=?",new String[]{markSign});
+        ArrayList<IosNews.Question> ioslist=App.DbLiteOrm.query(iosqb);
+        for (int i=0;i<ioslist.size();i++){
+            iosList.add(ioslist.get(i));
+            types.add(BookMarksAdapter.TYPE_IOS_NORMAL);
+        }
+        Log.i(TAG, "checkForFreshData: iosList.size(): "+iosList.size());
     }
 
     @Override

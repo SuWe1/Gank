@@ -5,6 +5,7 @@ import com.gank.BaseView;
 import com.gank.bean.BeanTeype;
 import com.gank.bean.FrontNews;
 import com.gank.bean.GankNews;
+import com.gank.bean.IosNews;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,7 @@ public interface BookmarksContract {
 
     interface View extends BaseView<Presenter>{
         //显示结果
-        void showResults(ArrayList<GankNews.Question> ganklist, ArrayList<FrontNews.Question> frontList, ArrayList<Integer> types);
+        void showResults(ArrayList<GankNews.Question> ganklist, ArrayList<FrontNews.Question> frontList, ArrayList<IosNews.Question> iosList, ArrayList<Integer> types);
         //刷新数据变化
         void notifyDataChanged();
         void showLoading();
