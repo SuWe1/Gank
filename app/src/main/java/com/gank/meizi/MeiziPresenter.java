@@ -1,4 +1,4 @@
-package com.gank.mainpager;
+package com.gank.meizi;
 
 import android.app.Activity;
 import android.content.Context;

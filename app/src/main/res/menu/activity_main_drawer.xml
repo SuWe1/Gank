@@ -6,6 +6,9 @@
         <item android:id="@+id/nav_home"
             android:icon="@drawable/ic_list_black_24dp"
             android:title="@string/nav_home"/>
+        <item android:id="@+id/nav_meizi"
+            android:icon="@drawable/ic_photo_library_black_24dp"
+            android:title="@string/nav_meizi"/>
         <item android:id="@+id/nav_bookmarks"
             android:icon="@drawable/ic_star_black_24dp"
             android:title="@string/nav_mark"/>

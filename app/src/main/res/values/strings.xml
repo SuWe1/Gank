@@ -2,6 +2,7 @@
     <string name="app_name">干货私囊</string>
     <!--nav_head -->
     <string name="nav_home">主页</string>
+    <string name="nav_meizi">福利图片</string>
     <string name="nav_mark">收藏</string>
     <string name="nav_change_theme">切换主题</string>
     <string name="nac_setting">设置</string>

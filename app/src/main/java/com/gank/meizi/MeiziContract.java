@@ -1,4 +1,4 @@
-package com.gank.mainpager;
+package com.gank.meizi;
 
 import com.gank.BasePresenter;
 import com.gank.BaseView;
@@ -17,7 +17,7 @@ public interface MeiziContract {
         void Stoploading();
         void showResult(ArrayList<MeiziNews.Question> list);
         void showNotNetError();
-
+        void notifyDataChanged();
     }
     interface Presenter extends BasePresenter {
         // 请求数据

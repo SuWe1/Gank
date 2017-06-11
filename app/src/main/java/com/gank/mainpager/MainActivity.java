@@ -22,17 +22,21 @@ import com.gank.R;
 import com.gank.about.AboutPreferenceActivity;
 import com.gank.mark.BookmarksFragment;
 import com.gank.mark.BookmarksPresenter;
+import com.gank.meizi.MeiziFragment;
+import com.gank.meizi.MeiziPresenter;
 import com.gank.settings.SettingsPreferenceActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private  MainFragment mainFragment;
     private BookmarksFragment bookmarksfragment;
+    private MeiziFragment meiziFragment;
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     public static final String ACTION_BOOKMARKS = "com.gank.mark";
+    public static final String ACTION_MEIZI = "com.gank.meizi";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,23 +50,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState!=null){
             mainFragment= (MainFragment) getSupportFragmentManager().getFragment(savedInstanceState,"MainFragment");
             bookmarksfragment=(BookmarksFragment) getSupportFragmentManager().getFragment(savedInstanceState,"BookmarksFragment");
+            meiziFragment= (MeiziFragment) getSupportFragmentManager().getFragment(savedInstanceState,"meiziFragment");
         }else {
             mainFragment=MainFragment.newInstance();
             bookmarksfragment=BookmarksFragment.newInstance();
+            meiziFragment=MeiziFragment.newInstance();
         }
         //Fragment事务
         if (savedInstanceState==null){
             getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,mainFragment,"MainFragment").commit();
             getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,bookmarksfragment,"BookmarksFragment").commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,meiziFragment,"meiziFragment").commit();
         }
         /*if (!bookmarksfragment.isAdded()){
             getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,bookmarksfragment,"BookmarksFragment").commit();
         }*/
         new BookmarksPresenter(MainActivity.this,bookmarksfragment);
+        new MeiziPresenter(MainActivity.this,meiziFragment);
         String action=getIntent().getAction();
         if (action.equals(ACTION_BOOKMARKS)){
             showBookMarksFragment();
             navigationView.setCheckedItem(R.id.nav_bookmarks);
+        }else if (action.equals(ACTION_MEIZI)){
+            showMeiziFragment();
+            navigationView.setCheckedItem(R.id.nav_meizi);
         }else {
             showMainFragment();
             navigationView.setCheckedItem(R.id.nav_home);
@@ -88,8 +99,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(mainFragment);
         fragmentTransaction.hide(bookmarksfragment);
+        fragmentTransaction.hide(meiziFragment);
         fragmentTransaction.commit();
-
         toolbar.setTitle(getResources().getString(R.string.app_name));
     }
 
@@ -98,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(bookmarksfragment);
         fragmentTransaction.hide(mainFragment);
+        fragmentTransaction.hide(meiziFragment);
         fragmentTransaction.commit();
         toolbar.setTitle(getResources().getString(R.string.nav_mark));
         if (bookmarksfragment.isAdded()){
@@ -105,6 +117,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    public void showMeiziFragment(){
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.show(meiziFragment);
+        fragmentTransaction.hide(mainFragment);
+        fragmentTransaction.hide(bookmarksfragment);
+        fragmentTransaction.commit();
+        toolbar.setTitle(getResources().getString(R.string.nav_meizi));
+        if (meiziFragment.isAdded()){
+            meiziFragment.notifyDataChanged();
+        }
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -118,6 +141,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showMainFragment();
         }else if (id==R.id.nav_bookmarks){
             showBookMarksFragment();
+        }else if (id==R.id.nav_meizi){
+            showMeiziFragment();
         }else if (id==R.id.nav_change_theme){
             //当DrawerLayout关闭后更改主题
             drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -180,6 +205,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (bookmarksfragment.isAdded()){
             getSupportFragmentManager().putFragment(outState,"BookmarksFragment",bookmarksfragment);
+        }
+        if (meiziFragment.isAdded()){
+            getSupportFragmentManager().putFragment(outState,"meiziFragment",meiziFragment);
         }
     }
 }

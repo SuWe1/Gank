@@ -1,4 +1,4 @@
-package com.gank.mainpager;
+package com.gank.meizi;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -115,6 +115,12 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
                 refresh.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public void notifyDataChanged() {
+        presenter.reflush();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
