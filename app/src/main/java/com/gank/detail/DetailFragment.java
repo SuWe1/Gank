@@ -191,7 +191,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
                 .asBitmap()
                 .placeholder(R.mipmap.loading)
                 .centerCrop()
-                .error(R.mipmap.fail)
+                .error(R.mipmap.zhanweitu)
                 .into(imageView);
     }
 
