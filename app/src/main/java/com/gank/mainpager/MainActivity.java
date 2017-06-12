@@ -68,10 +68,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         new BookmarksPresenter(MainActivity.this,bookmarksfragment);
         new MeiziPresenter(MainActivity.this,meiziFragment);
         String action=getIntent().getAction();
-        if (action.equals(ACTION_BOOKMARKS)){
+        /**
+         * issus:The action is grabbed from the Intent that started the activity,You didn't specify an action for the Intent  action可能为null
+         * https://stackoverflow.com/questions/15048883/intent-getaction-is-returning-null
+         */
+        if (action!=null&&action.equals(ACTION_BOOKMARKS)){
             showBookMarksFragment();
             navigationView.setCheckedItem(R.id.nav_bookmarks);
-        }else if (action.equals(ACTION_MEIZI)){
+        }else if (action!=null&&action.equals(ACTION_MEIZI)){
             showMeiziFragment();
             navigationView.setCheckedItem(R.id.nav_meizi);
         }else {

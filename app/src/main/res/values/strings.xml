@@ -2,7 +2,7 @@
     <string name="app_name">干货私囊</string>
     <!--nav_head -->
     <string name="nav_home">主页</string>
-    <string name="nav_meizi">福利图片</string>
+    <string name="nav_meizi">福利</string>
     <string name="nav_mark">收藏</string>
     <string name="nav_change_theme">切换主题</string>
     <string name="nac_setting">设置</string>
@@ -71,5 +71,19 @@
     <string name="action_delete_from_bookmarks">取消收藏该编文章</string>
     <string name="save_picture_to_local">保存图片到本地？</string>
     <string name="save_picture_to_local_title">提示</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+
+    <string name="welcome_pre">Pre</string>
+    <string name="welcome_next">Next</string>
+    <string name="welcome_finish">Finish</string>
+    <string name="welcoem_description_one_head">优质阅读</string>
+    <string name="welcoem_description_one_body">精选互联网科技技术文章</string>
+    <string name="welcoem_description_two_head">福利图片</string>
+    <string name="welcoem_description_two_body">每天一张福利饱饱眼福</string>
+    <string name="welcoem_description_three_head">坚持不懈</string>
+    <string name="welcoem_description_three_body">我想做的哪怕只能让世界发生一点点改变</string>
 
 </resources>
