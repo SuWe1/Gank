@@ -22,7 +22,7 @@ public class WelcomeAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a WelcomeFragment (defined as a static inner class below).
-        return WelcomeFragment.newInstance(position + 1);
+        return WelcomeFragment.newInstance(position);
     }
 
     @Override

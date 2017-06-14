@@ -149,7 +149,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void updateColor(int position){
         for (int i=0;i<indicators.length;i++){
-            indicators[i].setBackgroundResource(i==position?R.drawable.wel_onboarding_indicator_selected:R.drawable.wel_onboarding_indicator_unselected);
+            indicators[i].setBackgroundResource(i==position ? R.drawable.wel_onboarding_indicator_selected : R.drawable.wel_onboarding_indicator_unselected);
         }
     }
 
