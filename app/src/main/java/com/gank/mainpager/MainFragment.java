@@ -112,6 +112,11 @@ public class MainFragment extends Fragment {
         return view;
     }
 
+    /**
+     * TabLayout
+     * app:tabGravity="center"//居中，如果是fill，则是充满
+     * @param v
+     */
     private void initView(View v){
         tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) v.findViewById(R.id.view_pager);

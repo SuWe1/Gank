@@ -17,7 +17,8 @@
             android:background="@color/colorPrimary"
             app:tabIndicatorColor="@android:color/white"
             app:tabGravity="fill"
-            android:id="@+id/tab_layout" />
+            android:id="@+id/tab_layout"
+            />
 
     </android.support.design.widget.AppBarLayout>
 

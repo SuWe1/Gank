@@ -56,18 +56,21 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (!(holder instanceof FooterViewHolder)){
             GankNews.Question item=list.get(position);
-            if (holder instanceof NormalViewHolder){
-                Glide.with(context)
-                        .load(item.getImages().get(0))
-                        .asBitmap()
-                        .placeholder(R.mipmap.loading)
-                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                        .error(R.mipmap.loading)
-                        .centerCrop()
-                        .into(((NormalViewHolder) holder).imageView);
-                ((NormalViewHolder) holder).textView.setText(item.getDesc());
-            }else if (holder instanceof NoImageViewHolder){
-                ((NoImageViewHolder) holder).textViewNoImg.setText(item.getDesc());
+            if (item!=null){
+
+                if (holder instanceof NormalViewHolder){
+                    Glide.with(context)
+                            .load(item.getImages().get(0))
+                            .asBitmap()
+                            .placeholder(R.mipmap.loading)
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .error(R.mipmap.loading)
+                            .centerCrop()
+                            .into(((NormalViewHolder) holder).imageView);
+                    ((NormalViewHolder) holder).textView.setText(item.getDesc());
+                }else if (holder instanceof NoImageViewHolder){
+                    ((NoImageViewHolder) holder).textViewNoImg.setText(item.getDesc());
+                }
             }
         }
 
