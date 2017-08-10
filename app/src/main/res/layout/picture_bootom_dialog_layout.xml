@@ -12,7 +12,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_save_black_24dp"
+            android:src="@drawable/ic_save_pic"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
@@ -35,7 +35,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_wx"
+            android:src="@drawable/ic_share_wx"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
 
@@ -57,7 +57,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_share_wx_friend"
+            android:src="@drawable/ic_share_wx_comminity"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
 

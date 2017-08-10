@@ -11,6 +11,12 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+    <!--wx 所需权限-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -38,6 +44,7 @@
         <activity android:name=".settings.SettingsPreferenceActivity" />
         <activity android:name=".about.AboutPreferenceActivity" />
         <activity android:name=".picture.PictureActivity" />
+        <activity android:name=".wxpay.WXEntryActivity" android:exported="true"/>
     </application>
 
 </manifest>

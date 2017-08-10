@@ -1,25 +1,5 @@
-<!--
-  ~ Copyright 2017 lizhaotailang
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="24dp"
-        android:height="24dp"
-        android:viewportWidth="24.0"
-        android:viewportHeight="24.0">
-    <path
-        android:fillColor="#FF000000"
-        android:pathData="M16,1L4,1c-1.1,0 -2,0.9 -2,2v14h2L4,3h12L16,1zM19,5L8,5c-1.1,0 -2,0.9 -2,2v14c0,1.1 0.9,2 2,2h11c1.1,0 2,-0.9 2,-2L21,7c0,-1.1 -0.9,-2 -2,-2zM19,21L8,21L8,7h11v14z"/>
+<vector android:height="24dp" android:viewportHeight="1024.0"
+    android:viewportWidth="1024.0" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#2e6b9b" android:pathData="M229,714.6h-40.9v-81h40.9v-81h-40.9v-81h40.9v-81h-40.9v-81.6h40.9v-80.1h-41.8v-81.7H694.3v39.9h60.8V65.7H126.5v729.3h102.6"/>
+    <path android:fillColor="#2e6b9b" android:pathData="M268.9,229v729.3h628.7L897.5,229L268.9,229zM835.9,876.7L329.9,876.7v-81h505.9v81zM835.9,714.8L329.9,714.8v-81h505.9v81zM835.9,552.8L329.9,552.8v-81.6h505.9v81.6zM836.8,390.4L329.7,390.4v-81.7h507.1v81.7z"/>
 </vector>

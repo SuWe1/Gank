@@ -24,11 +24,35 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:src="@drawable/ic_star_black_24dp"
-            android:tint="@color/textColorPrimary" />
+            android:src="@drawable/ic_mark"/>
 
         <TextView
             android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center_vertical"
+            android:text="@string/action_add_to_bookmarks"
+            android:textColor="@color/textColorPrimary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_share"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_share"/>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
@@ -51,8 +75,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:src="@drawable/ic_insert_link_black_24dp"
-            android:tint="@color/textColorPrimary" />
+            android:src="@drawable/ic_insert_link_black_24dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -77,8 +100,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:src="@drawable/ic_open_in_browser_black_24dp"
-            android:tint="@color/textColorPrimary" />
+            android:src="@drawable/ic_open_in_browser_black_24dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -103,8 +125,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:src="@drawable/ic_content_copy_black_24dp"
-            android:tint="@color/textColorPrimary" />
+            android:src="@drawable/ic_content_copy_black_24dp" />
 
         <TextView
             android:layout_width="match_parent"
