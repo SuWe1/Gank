@@ -11,6 +11,7 @@
 ![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE1.PNG)
 ![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE2.png)
 ![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE3.PNG)
+![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE4.PNG)
 ### 在Android Studio中打开
 Clone仓库：<br>
 <br>
