@@ -14,7 +14,7 @@ If you want to test yourself , clone this repository to your computer
 ![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE1.PNG)
 ![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE2.png)
 ![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE3.PNG)
-![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE4.PNG)
+![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE4.png)
 ### Open in Android Studio
 Clone the repository：<br>
 <br>
