@@ -70,6 +70,11 @@
     <string name="no_app_store_found">没有邮件类App</string>
     <string name="action_delete_from_bookmarks">取消收藏该编文章</string>
     <string name="save_picture_to_local">保存图片到本地？</string>
+    <string name="save_picture_mes">保存图片到手机</string>
+    <string name="share_picture_to_wx">分享图片给微信好友</string>
+    <string name="share_picture_to_wx_friend_community">分享图片到朋友圈</string>
+    <string name="share_picture_to_QQ">分享图片给QQ好友</string>
+    <string name="share_picture_to_weibo">分享图片到微博</string>
     <string name="save_picture_to_local_title">提示</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="action_settings">Settings</string>

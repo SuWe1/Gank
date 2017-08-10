@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -121,7 +123,7 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.picture_menu,menu);
+        getMenuInflater().inflate(R.menu.menu_more,menu);
         return true;
     }
 
@@ -131,8 +133,36 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.picture_menu:
-                presenter.SavePicTolocal(ImgUrl);
+            case R.id.action_more:
+                final BottomSheetDialog dialog=new BottomSheetDialog(this);
+                View view= LayoutInflater.from(this).inflate(R.layout.picture_bootom_dialog_layout,null);
+                view.findViewById(R.id.save_picture).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        presenter.SavePicTolocal(ImgUrl);
+                    }
+                });
+                view.findViewById(R.id.share_picture_to_wx).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                view.findViewById(R.id.share_picture_to_wx_friend_community).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                view.findViewById(R.id.share_picture_to_qq).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                dialog.setContentView(view);
+                dialog.show();
                 return true;
         }
         return super.onOptionsItemSelected(item);

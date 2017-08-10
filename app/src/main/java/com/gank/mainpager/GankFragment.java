@@ -94,7 +94,7 @@ public class GankFragment extends Fragment implements GankContract.View {
         });
         // 按通常的做法，在每个fragment中去设置监听时间会导致先前设置的listener失效
         // 尝试将监听放置到main pager adapter中，这样做会引起fragment中recycler view和fab的监听冲突
-        //fab并不能获取到点击事件
+        // fab并不能获取到点击事件
         fab.hide();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
