@@ -11,7 +11,7 @@ import android.view.View;
 import com.android.volley.VolleyError;
 import com.gank.app.App;
 import com.gank.bean.MeiziNews;
-import com.gank.bean.StringModeImpl;
+import com.gank.model.StringModeImpl;
 import com.gank.interfaze.OnStringListener;
 import com.gank.picture.PictureActivity;
 import com.gank.util.Api;

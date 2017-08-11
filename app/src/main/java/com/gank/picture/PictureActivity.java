@@ -15,6 +15,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,9 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.gank.R;
+import com.gank.interfaze.MyQQListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -86,6 +90,7 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
 
     private void parseIntent(){
         ImgUrl=getIntent().getStringExtra(Img_Url);
+        Log.i("gank", "parseIntent: "+ImgUrl);
     }
 
     private void setupPhotoAttacher(){
@@ -146,7 +151,6 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
                 view.findViewById(R.id.share_picture_to_wx).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                     }
                 });
                 view.findViewById(R.id.share_picture_to_wx_friend_community).setOnClickListener(new View.OnClickListener() {
@@ -158,7 +162,8 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
                 view.findViewById(R.id.share_picture_to_qq).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        dialog.dismiss();
+                        presenter.sharePicToQQ(ImgUrl,myQQListener);
                     }
                 });
                 dialog.setContentView(view);
@@ -168,6 +173,7 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
         return super.onOptionsItemSelected(item);
     }
 
+    //是否隐藏appbar
     private void hideOrShowAppBar(){
         mAppBarLayout.animate()
                 .translationY(mIsHide?0:-mAppBarLayout.getHeight())
@@ -194,13 +200,28 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
     }
 
     @Override
-    public void showSavaFail() {
+    public void showSaveFail() {
         Snackbar.make(coordinatorLayout,R.string.save_fail,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showNoPermission() {
         Snackbar.make(coordinatorLayout,R.string.save_fail_no_permission,Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void shareSuccess() {
+        Snackbar.make(coordinatorLayout,R.string.share_success,Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void shareError() {
+        Snackbar.make(coordinatorLayout,R.string.share_onerror,Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void shareCancel() {
+        Snackbar.make(coordinatorLayout,R.string.share_cancel,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -222,4 +243,32 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Tencent.onActivityResultData(requestCode,resultCode,data,myQQListener);
+    }
+
+    MyQQListener myQQListener=new MyQQListener(){
+        //分享成功
+        @Override
+        public void onComplete(Object o) {
+            super.onComplete(o);
+            shareSuccess();
+        }
+
+        @Override
+        public void onCancel() {
+            super.onCancel();
+            shareCancel();
+        }
+
+        @Override
+        public void onError(UiError uiError) {
+            super.onError(uiError);
+            shareError();
+            Log.i("picture", "onError:errorCode: "+uiError.errorCode+" errorMessage: "+uiError.errorMessage+"  errorDetail "+uiError.errorDetail);
+        }
+    };
 }

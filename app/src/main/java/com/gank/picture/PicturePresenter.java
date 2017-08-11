@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -16,12 +19,20 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.gank.R;
+import com.gank.interfaze.MyQQListener;
+import com.gank.model.ShareSingleton;
 import com.gank.util.DataForString;
+import com.tencent.connect.share.QQShare;
+import com.tencent.mm.opensdk.modelmsg.WXImageObject;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import static android.content.ContentValues.TAG;
 
@@ -30,8 +41,14 @@ import static android.content.ContentValues.TAG;
  */
 
 public class PicturePresenter implements PictureContract.Presenter {
+    private static final int THUMB_SIZE = 0;
     private Context context;
     private PictureContract.View view;
+
+    private Bitmap shareBitmap;
+
+    private ShareSingleton shareSingleton;
+
     public static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     public PicturePresenter(Context context,PictureContract.View view) {
         this.context = context;
@@ -63,8 +80,10 @@ public class PicturePresenter implements PictureContract.Presenter {
                         }
                     }
                 });
-
     }
+
+
+
 
     /**
      * 不要忘记声明读写权限
@@ -102,9 +121,11 @@ public class PicturePresenter implements PictureContract.Presenter {
                         Uri.fromFile(new File(file.getPath()))));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+                view.showSaveFail();
                 Log.i(TAG, "FileNotFoundException: "+e.getLocalizedMessage());
             } catch (IOException e) {
                 e.printStackTrace();
+                view.showSaveFail();
                 Log.i(TAG, "IOException: "+e.getLocalizedMessage());
             } finally {
                 if (fos!=null){
@@ -121,6 +142,78 @@ public class PicturePresenter implements PictureContract.Presenter {
             //申请权限
             ActivityCompat.requestPermissions((Activity) context,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     MY_PERMISSIONS_REQUEST_CALL_PHONE);
+        }
+    }
+
+    Handler handler=new Handler(Looper.getMainLooper());
+
+    @Override
+    public void sharePicToQQ(final String imgUrl, final MyQQListener listener) {
+        shareSingleton=ShareSingleton.getInstance();
+        Log.i(TAG, "sharePicToQQ:imgUrl= "+imgUrl);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                //要在主线程中
+                shareSingleton.shareImgToQQ((Activity) context,imgUrl, R.string.app_name, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN,listener);
+            }
+        });
+
+    }
+
+    @Override
+    public void sharePicToWx(final String imgUrl) {
+        //从Glide缓存中获取Bitmap
+        new ImgAsyncTask(context).execute(imgUrl);
+    }
+
+
+    private void shareWx(Bitmap bmp, boolean isShareFriend){
+        //初始化WXImageObject和WXMediaMessage对象
+        WXImageObject imgObj=new WXImageObject(bmp);
+        WXMediaMessage bitmapMsg=new WXMediaMessage();
+        bitmapMsg.mediaObject=imgObj;
+
+        //设置缩略图
+        Bitmap thumbBmp=Bitmap.createScaledBitmap(bmp,THUMB_SIZE,THUMB_SIZE,true);
+        bmp.recycle();
+//        bitmapMsg.thumbData=
+
+    }
+
+    //glide downloadOnly方法需要在线程中执行
+    private class ImgAsyncTask extends AsyncTask<String,Void,Bitmap>{
+
+        private Context context;
+
+        public ImgAsyncTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            try {
+                File file= Glide.with(context).load(params[0]).downloadOnly(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if (bitmap==null){
+                shareBitmap=null;
+            }
+            shareBitmap =bitmap;
         }
     }
 

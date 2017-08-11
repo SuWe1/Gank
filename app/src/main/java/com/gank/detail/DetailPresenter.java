@@ -13,7 +13,7 @@ import com.gank.bean.BeanTeype;
 import com.gank.bean.FrontNews;
 import com.gank.bean.GankNews;
 import com.gank.bean.IosNews;
-import com.gank.bean.StringModeImpl;
+import com.gank.model.StringModeImpl;
 import com.gank.util.Network;
 import com.google.gson.Gson;
 import com.litesuits.orm.log.OrmLog;

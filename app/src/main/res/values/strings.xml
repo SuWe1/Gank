@@ -75,6 +75,9 @@
     <string name="share_picture_to_wx_friend_community">分享图片到朋友圈</string>
     <string name="share_picture_to_QQ">分享图片给QQ好友</string>
     <string name="share_picture_to_weibo">分享图片到微博</string>
+    <string name="share_success">分享成功</string>
+    <string name="share_onerror">分享失败</string>
+    <string name="share_cancel">取消分享</string>
     <string name="save_picture_to_local_title">提示</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="action_settings">Settings</string>

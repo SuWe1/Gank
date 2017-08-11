@@ -8,7 +8,7 @@ import com.android.volley.VolleyError;
 import com.gank.app.App;
 import com.gank.bean.BeanTeype;
 import com.gank.bean.GankNews;
-import com.gank.bean.StringModeImpl;
+import com.gank.model.StringModeImpl;
 import com.gank.detail.DetailActivity;
 import com.gank.interfaze.OnStringListener;
 import com.gank.util.Api;

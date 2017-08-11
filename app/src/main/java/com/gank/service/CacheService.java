@@ -12,7 +12,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.gank.app.VolleySingleton;
+import com.gank.model.VolleySingleton;
 import com.gank.db.DatabaseHelper;
 
 import java.util.Calendar;

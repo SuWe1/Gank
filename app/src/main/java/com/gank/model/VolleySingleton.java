@@ -1,4 +1,4 @@
-package com.gank.app;
+package com.gank.model;
 
 import android.content.Context;
 
