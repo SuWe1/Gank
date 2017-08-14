@@ -141,7 +141,7 @@ QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮�
     public void shareImgToWx(Context context,Bitmap bmp, boolean isShareFriend){
 //        注册操作也可以写死在Application中
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
-        api=WXAPIFactory.createWXAPI(context,Constants.WX_APP_ID,false);
+        api=WXAPIFactory.createWXAPI(context,Constants.WX_APP_ID,true);
         // 将该app注册到微信
         api.registerApp(Constants.WX_APP_ID);
 

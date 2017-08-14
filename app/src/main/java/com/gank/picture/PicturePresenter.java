@@ -3,10 +3,12 @@ package com.gank.picture;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -14,7 +16,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -28,6 +30,7 @@ import com.gank.model.ShareSingleton;
 import com.gank.util.DataForString;
 import com.tencent.connect.share.QQShare;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -49,10 +52,18 @@ public class PicturePresenter implements PictureContract.Presenter {
     //要分享的图片 保存在本地的路径
     private volatile String sharePath;
 
+    private boolean isShareWxOrCommunity=false;//false wx  true wxCommunity
+    private boolean isShareQQ=false;//false   true
+
+    private MyQQListener qqShareListener;
+
     private static final int SHARE_IMG_IS_READY = 200;
     private static final int SHARE_IMG_PATH_IS_READY = 300;
     private static final int SHARE_PIC_TO_WX_COMMUNITY =10;
     private static final int SHARE_PIC_TO_WX = 11;
+    private static final int SHARE_PIC_TO_QQ = 12;
+
+    public static final int IMAGE_SIZE=32768;//微信分享图片大小限制
 
 
     public static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
@@ -105,6 +116,7 @@ public class PicturePresenter implements PictureContract.Presenter {
         File appDir=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         Log.i(TAG, "appDis.path: "+appDir.getAbsolutePath()+"   filename: "+filename);
         File file=new File(appDir,filename);
+        sharePath=file.getPath();//要分享到QQ的图片地址
         Log.i(TAG, "file: "+file.canWrite());
         FileOutputStream fos=null;
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
@@ -152,7 +164,7 @@ public class PicturePresenter implements PictureContract.Presenter {
     }
 
     //isShareFriend true 分享到朋友，false分享到朋友圈
-    public Handler handler=new Handler(){
+    private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -165,11 +177,17 @@ public class PicturePresenter implements PictureContract.Presenter {
                     }
                     break;
                 case SHARE_PIC_TO_WX:
-
                     if(shareBitmap!=null){
                         ShareSingleton.getInstance().shareImgToWx(context,shareBitmap,true);
                     }else {
                         throw new  RuntimeException("The picture that  want to share cannot be empty!");
+                    }
+                    break;
+                case SHARE_PIC_TO_QQ:
+                    if (sharePath!=null){
+                        ShareSingleton.getInstance().shareLocalImgToQQ((Activity) context,sharePath, R.string.app_name, QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE,qqShareListener);
+                    }else {
+                        throw new  RuntimeException("The picture path is not exist!");
                     }
                     break;
                 default:
@@ -180,12 +198,27 @@ public class PicturePresenter implements PictureContract.Presenter {
 
     @Override
     public void sharePicToQQ(final String imgUrl, final MyQQListener listener) {
-        Log.i(TAG, "sharePicToQQ:imgUrl= "+imgUrl);
-        //要在主线程中
-        new ImgAsyncTask(context).execute(imgUrl);
-        String path=sharePath.concat(".jpg");
-        Log.i(TAG, "run: "+path);
-        ShareSingleton.getInstance().shareLocalImgToQQ((Activity) context,path, R.string.app_name, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN,listener);
+        isShareQQ=true;
+        qqShareListener=listener;
+        AlertDialog.Builder builder=new AlertDialog.Builder(context);
+        builder.setTitle("提示")
+                .setMessage("QQ只能分享本地图片,请确认是否同意保存图片到本地!")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        view.shareCancel();
+                    }
+                })
+                .setPositiveButton("同意", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SavePicToLocal(imgUrl);
+                        //要在主线程中
+                        new ImgAsyncTask(context).execute(imgUrl);
+                    }
+                })
+                .show();
 //        handler.post(new Runnable() {
 //            @Override
 //            public void run() {
@@ -196,24 +229,18 @@ public class PicturePresenter implements PictureContract.Presenter {
 
     //isShareFriend true 分享到朋友，false分享到朋友圈
     //注意AsyncTask要在主线程中执行
+    /**
+     * Issue
+     * String result = new AsyncTask().execute(...).get()
+     这种方法会不是异步方式，会出现ANR
+     * @param imgUrl
+     */
     @Override
-    public void sharePicToWx(final String imgUrl) {
+    public void sharePicToWx(final String imgUrl){
         //从Glide缓存中获取Bitmap
-//        handler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        });
-        try {
-            sharePath=new ImgAsyncTask(context).execute(imgUrl).get();
-            if (!TextUtils.isEmpty(sharePath)){
-                shareBitmap= BitmapFactory.decodeFile(sharePath);
-                handler.sendMessage(handler.obtainMessage(SHARE_PIC_TO_WX));
-            }
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        isShareWxOrCommunity=false;
+        isShareQQ=false;
+        new ImgAsyncTask(context).execute(imgUrl);
     }
 
     //isShareFriend true 分享到朋友，false分享到朋友圈
@@ -221,20 +248,9 @@ public class PicturePresenter implements PictureContract.Presenter {
     @Override
     public void sharePicToWxCommunity(final String imgUrl) {
         //从Glide缓存中获取Bitmap
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    sharePath=new ImgAsyncTask(context).execute(imgUrl).get();
-                    if (!TextUtils.isEmpty(sharePath)){
-                        shareBitmap= BitmapFactory.decodeFile(sharePath);
-                        handler.sendMessage(handler.obtainMessage(SHARE_PIC_TO_WX_COMMUNITY));
-                    }
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        isShareWxOrCommunity=true;
+        isShareQQ=false;
+        new ImgAsyncTask(context).execute(imgUrl);
     }
 
 
@@ -244,7 +260,7 @@ public class PicturePresenter implements PictureContract.Presenter {
      * void
      * string 本地图片路径
      */
-    private class ImgAsyncTask extends AsyncTask<String,Void,String>{
+    private class ImgAsyncTask extends AsyncTask<String,Void,Bitmap>{
 
         private Context context;
 
@@ -258,10 +274,11 @@ public class PicturePresenter implements PictureContract.Presenter {
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected Bitmap doInBackground(String... params) {
             try {
                 File file= Glide.with(context).load(params[0]).downloadOnly(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL).get();
-                return file.getAbsolutePath();
+                sharePath=file.getPath();
+                return BitmapFactory.decodeFile(sharePath);
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
@@ -269,18 +286,61 @@ public class PicturePresenter implements PictureContract.Presenter {
         }
 
         @Override
-        protected void onPostExecute(String path) {
-            super.onPostExecute(path);
-            if (path==null){
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if (bitmap==null){
                 shareBitmap=null;
             }
-//            sharePath=path;
-//            shareBitmap = BitmapFactory.decodeFile(path);
-//            Log.i(TAG, "sharePicToQQ:sharePath= "+sharePath);
-//            handler.sendMessage(handler.obtainMessage(SHARE_IMG_PTH_IS_READY));
-//            handler.sendMessage(handler.obtainMessage(SHARE_IMG_IS_READY));
+            shareBitmap=compressBitmap(bitmap);
+            Log.i(TAG, "onPostExecute:shareBitmap.size= "+shareBitmap.getByteCount());
+            //false分享微信好友  true分享朋友圈
+            if (isShareWxOrCommunity){
+                handler.sendMessage(handler.obtainMessage(SHARE_PIC_TO_WX_COMMUNITY));
+            }else {
+                handler.sendMessage(handler.obtainMessage(SHARE_PIC_TO_WX));
+            }
+            //true 分享到扣扣
+            if (isShareQQ){
+//                sharePath=sharePath.concat(".jpg");
+//                Log.i(TAG, "onPostExecute: "+sharePath );
+                handler.sendMessage(handler.obtainMessage(SHARE_PIC_TO_QQ));
+            }
 
         }
     }
 
+    /**
+     * 微信分享，分享图片大小不能大于32kb
+     * @param bmp
+     * @return
+     */
+    private Bitmap compressBitmap(Bitmap bmp){
+        // 首先进行一次大范围的压缩
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, output);
+        float zoom = (float)Math.sqrt(IMAGE_SIZE / (float)output.toByteArray().length); //获取缩放比例
+
+        // 设置矩阵数据
+        Matrix matrix = new Matrix();
+        matrix.setScale(zoom, zoom);
+
+        // 根据矩阵数据进行新bitmap的创建
+        Bitmap resultBitmap = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+
+        output.reset();
+
+        resultBitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+
+        // 如果进行了上面的压缩后，依旧大于32K，就进行小范围的微调压缩
+        while(output.toByteArray().length > IMAGE_SIZE){
+            matrix.setScale(0.9f, 0.9f);//每次缩小 1/10
+
+            resultBitmap = Bitmap.createBitmap(resultBitmap, 0, 0,resultBitmap.getWidth(), resultBitmap.getHeight(), matrix,true);
+            Log.i(TAG, "onPostExecute:resultBitmap.size= "+resultBitmap.getByteCount());
+            output.reset();
+            resultBitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+        }
+        return resultBitmap;
+    }
 }

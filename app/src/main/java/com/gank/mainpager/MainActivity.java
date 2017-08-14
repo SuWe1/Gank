@@ -57,14 +57,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             meiziFragment=MeiziFragment.newInstance();
         }
         //Fragment事务
-        if (savedInstanceState==null){
+//        if (savedInstanceState==null){
+//            getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,mainFragment,"MainFragment").commit();
+//            getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,bookmarksfragment,"BookmarksFragment").commit();
+//            getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,meiziFragment,"meiziFragment").commit();
+//        }
+        if(!mainFragment.isAdded()){
             getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,mainFragment,"MainFragment").commit();
+        }
+        if (!bookmarksfragment.isAdded()){
             getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,bookmarksfragment,"BookmarksFragment").commit();
+        }
+        if (!meiziFragment.isAdded()){
             getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,meiziFragment,"meiziFragment").commit();
         }
-        /*if (!bookmarksfragment.isAdded()){
-            getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,bookmarksfragment,"BookmarksFragment").commit();
-        }*/
         new BookmarksPresenter(MainActivity.this,bookmarksfragment);
         new MeiziPresenter(MainActivity.this,meiziFragment);
         String action=getIntent().getAction();

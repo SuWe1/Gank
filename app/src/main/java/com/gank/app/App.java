@@ -21,7 +21,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         //Bugly初始化
-        CrashReport.initCrashReport(getApplicationContext(), "88ad7546e1", false);
+        CrashReport.initCrashReport(getApplicationContext(), "88ad7546e1", true);
         // the 'theme' has two values, 0 and 1
         // 0 --> day theme, 1 --> night theme
         if (getSharedPreferences("user_settings",MODE_PRIVATE).getInt("theme", 0) == 0) {

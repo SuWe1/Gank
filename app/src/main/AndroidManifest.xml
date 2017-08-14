@@ -67,6 +67,8 @@
         <activity android:name=".settings.SettingsPreferenceActivity" />
         <activity android:name=".about.AboutPreferenceActivity" />
         <activity android:name=".picture.PictureActivity" />
+
+
         <activity android:name=".wxpay.WXEntryActivity" android:exported="true"/>
 
         <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
@@ -85,6 +87,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"
             />
+
     </application>
 
 </manifest>
