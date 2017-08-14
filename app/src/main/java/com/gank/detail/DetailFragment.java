@@ -252,6 +252,9 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         imageView = (ImageView) view.findViewById(R.id.image_view);
         scrollView = (NestedScrollView) view.findViewById(R.id.scrollView);
         toolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.toolbar_layout);
+        //扩张时候的title颜色
+//        toolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorPrimary));
+//        toolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
 
         //webview设置属性
         webview.getSettings().setJavaScriptEnabled(true);

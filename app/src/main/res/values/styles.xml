@@ -42,7 +42,7 @@
     <!-- 自定义CollapsingToolbarLayout-->
     <style name="ExpandedAppBar" parent="android:TextAppearance.Medium">
         <item name="android:textSize">21sp</item>
-        <item name="android:textColor">#fff</item>
+        <item name="android:textColor">@color/detailTitleColor</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -54,7 +54,7 @@
 
     <style name="ExpandedAppBarPlus1" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">21sp</item>
-        <item name="android:textColor">#fff</item>
+        <item name="android:textColor">@color/detailTitleColor</item>
         <item name="android:textStyle">bold</item>
     </style>
 

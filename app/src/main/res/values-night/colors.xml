@@ -3,6 +3,7 @@
         <color name="colorPrimary">#35464e</color>
         <color name="colorPrimaryDark">#212a2f</color>
         <color name="colorAccent">#212a2f</color>
+        <color name="detailTitleColor">#000</color>
         <color name="textColorPrimary">#616161</color>
         <color name="viewBackground">#212a2f</color>
         <color name="FloatingActionBarBackground">#35464e </color>

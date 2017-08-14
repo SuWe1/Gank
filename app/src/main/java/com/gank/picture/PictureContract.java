@@ -13,9 +13,10 @@ import com.gank.interfaze.MyQQListener;
 public interface PictureContract {
     interface Presenter extends BasePresenter{
         void LoadPic(String url, ImageView imageView);
-        void SavePicTolocal(String url);
+        void SavePicToLocal(String url);
         void sharePicToQQ(final String imgUrl,final MyQQListener listener);
         void sharePicToWx(final String imgUrl);
+        void sharePicToWxCommunity(final String imgUrl);
     }
     interface  View extends BaseView<Presenter>{
         void showResult();

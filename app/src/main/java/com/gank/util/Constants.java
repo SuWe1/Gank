@@ -5,6 +5,6 @@ package com.gank.util;
  */
 
 public class Constants {
-    public static final String WX_APP_ID = "";
+    public static final String WX_APP_ID = "wxfb60c0bd0ae189b6";
     public static final String QQ_APP_ID = "1106052160";
 }

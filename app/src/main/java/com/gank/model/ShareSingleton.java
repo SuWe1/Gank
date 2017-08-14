@@ -1,13 +1,21 @@
 package com.gank.model;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
 import com.gank.interfaze.MyQQListener;
 import com.gank.util.Constants;
+import com.gank.util.wxUtil.Util;
 import com.tencent.connect.share.QQShare;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXImageObject;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.tauth.Tencent;
 
 /**
@@ -17,7 +25,9 @@ import com.tencent.tauth.Tencent;
 public class ShareSingleton {
 
     private Tencent mTencent;
+    public static IWXAPI api;
 
+    private static final int THUMB_SIZE = 150;
     /**
      * 纯图片分享 传送网络图片url
      * !! 分享操作要在主线程中完成
@@ -58,7 +68,7 @@ QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮�
         }
         Bundle params=new Bundle();
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE);
-        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,localUrl);
+        params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL,localUrl);
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, activity.getString(appName));
         params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, shareToQQExtInt);
         mTencent.shareToQQ(activity,params,listener);
@@ -115,13 +125,57 @@ QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮�
         params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,targetUrl);
         params.putString(QQShare.SHARE_TO_QQ_TITLE, shareTitle);
         params.putString(QQShare.SHARE_TO_QQ_SUMMARY, shareSummary );
-        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,  localImgUrl);
+        params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL,  localImgUrl);
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME,activity.getString(appName));
         params.putInt(QQShare.SHARE_TO_QQ_EXT_INT,  shareToQQExtInt);
         mTencent.shareToQQ(activity, params, listener);
     }
 
 
+    /**
+     * 分享图片到微信或者
+     * @param context
+     * @param bmp 分享的图片
+     * @param isShareFriend isShareFriend true 分享到朋友，false分享到朋友圈
+     */
+    public void shareImgToWx(Context context,Bitmap bmp, boolean isShareFriend){
+//        注册操作也可以写死在Application中
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        api=WXAPIFactory.createWXAPI(context,Constants.WX_APP_ID,false);
+        // 将该app注册到微信
+        api.registerApp(Constants.WX_APP_ID);
+
+        //初始化WXImageObject和WXMediaMessage对象
+        WXImageObject imgObj=new WXImageObject(bmp);
+        WXMediaMessage bitmapMsg=new WXMediaMessage();
+        bitmapMsg.mediaObject=imgObj;
+
+        //设置缩略图
+        Bitmap thumbBmp=Bitmap.createScaledBitmap(bmp,THUMB_SIZE,THUMB_SIZE,true);
+        bmp.recycle();
+        bitmapMsg.thumbData= Util.bmpToByteArray(thumbBmp,true);
+
+        //构造一个Req
+        SendMessageToWX.Req req=new SendMessageToWX.Req();
+        req.transaction=buildTransaction("img");//transaction 字段用于唯一标识一个请求
+        req.message=bitmapMsg;
+        req.scene=isShareFriend ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+        api.sendReq(req);
+    }
+
+    private String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+    }
+
+    private String getTransaction() {
+        try {
+//            final GetMessageFromWX.Req req = new GetMessageFromWX.Req(bundle);
+//            return req.transaction;
+            return "";
+        } catch (Exception e) {
+            return "";
+        }
+    }
 
     private ShareSingleton() {
     }

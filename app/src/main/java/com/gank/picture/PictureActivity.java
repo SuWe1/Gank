@@ -110,7 +110,7 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
                         .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                presenter.SavePicTolocal(ImgUrl);
+                                presenter.SavePicToLocal(ImgUrl);
                                 dialog.dismiss();
                             }
                         })
@@ -145,25 +145,33 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        presenter.SavePicTolocal(ImgUrl);
+                        presenter.SavePicToLocal(ImgUrl);
                     }
                 });
                 view.findViewById(R.id.share_picture_to_wx).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        dialog.dismiss();
+                        presenter.sharePicToWx(ImgUrl);
                     }
                 });
                 view.findViewById(R.id.share_picture_to_wx_friend_community).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        dialog.dismiss();
+                        presenter.sharePicToWxCommunity(ImgUrl);
                     }
                 });
                 view.findViewById(R.id.share_picture_to_qq).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        presenter.sharePicToQQ(ImgUrl,myQQListener);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                presenter.sharePicToQQ(ImgUrl,myQQListener);
+                            }
+                        });
                     }
                 });
                 dialog.setContentView(view);
@@ -235,7 +243,7 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
         if (requestCode == MY_PERMISSIONS_REQUEST_CALL_PHONE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission Granted
-                presenter.SavePicTolocal(ImgUrl);
+                presenter.SavePicToLocal(ImgUrl);
             } else {
                 // Permission Denied
                 showNoPermission();

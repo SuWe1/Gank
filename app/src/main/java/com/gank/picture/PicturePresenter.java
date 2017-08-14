@@ -6,13 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -25,8 +28,6 @@ import com.gank.interfaze.MyQQListener;
 import com.gank.model.ShareSingleton;
 import com.gank.util.DataForString;
 import com.tencent.connect.share.QQShare;
-import com.tencent.mm.opensdk.modelmsg.WXImageObject;
-import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,13 +42,19 @@ import static android.content.ContentValues.TAG;
  */
 
 public class PicturePresenter implements PictureContract.Presenter {
-    private static final int THUMB_SIZE = 0;
     private Context context;
     private PictureContract.View view;
 
+    //要分享的图片 保存在本地的资源
     private Bitmap shareBitmap;
+    //要分享的图片 保存在本地的路径
+    private String sharePath;
 
-    private ShareSingleton shareSingleton;
+    private static final int SHARE_IMG_IS_READY = 200;
+    private static final int SHARE_IMG_PATH_IS_READY = 300;
+    private static final int SHARE_PIC_TO_WX_COMMUNITY =10;
+    private static final int SHARE_PIC_TO_WX = 11;
+
 
     public static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     public PicturePresenter(Context context,PictureContract.View view) {
@@ -68,7 +75,7 @@ public class PicturePresenter implements PictureContract.Presenter {
     }
 
     @Override
-    public void SavePicTolocal(final String url) {
+    public void SavePicToLocal(final String url) {
         Glide.with(context)
                 .load(url)
                 .asBitmap()
@@ -145,44 +152,99 @@ public class PicturePresenter implements PictureContract.Presenter {
         }
     }
 
-    Handler handler=new Handler(Looper.getMainLooper());
+    //isShareFriend true 分享到朋友，false分享到朋友圈
+    Handler handler=new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case SHARE_PIC_TO_WX_COMMUNITY:
+                    if(shareBitmap!=null){
+                        ShareSingleton.getInstance().shareImgToWx(context,shareBitmap,false);
+                    }else {
+                        throw new  RuntimeException("The picture that  want to share cannot be empty!");
+                    }
+                    break;
+                case SHARE_PIC_TO_WX:
+
+                    if(shareBitmap!=null){
+                        ShareSingleton.getInstance().shareImgToWx(context,shareBitmap,true);
+                    }else {
+                        throw new  RuntimeException("The picture that  want to share cannot be empty!");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     public void sharePicToQQ(final String imgUrl, final MyQQListener listener) {
-        shareSingleton=ShareSingleton.getInstance();
         Log.i(TAG, "sharePicToQQ:imgUrl= "+imgUrl);
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                //要在主线程中
-                shareSingleton.shareImgToQQ((Activity) context,imgUrl, R.string.app_name, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN,listener);
-            }
-        });
-
+        //要在主线程中
+        new ImgAsyncTask(context).execute(imgUrl);
+        String path=sharePath.concat(".jpg");
+        Log.i(TAG, "run: "+path);
+        ShareSingleton.getInstance().shareLocalImgToQQ((Activity) context,path, R.string.app_name, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN,listener);
+//        handler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
     }
 
+    //isShareFriend true 分享到朋友，false分享到朋友圈
+    //注意AsyncTask要在主线程中执行
     @Override
     public void sharePicToWx(final String imgUrl) {
         //从Glide缓存中获取Bitmap
-        new ImgAsyncTask(context).execute(imgUrl);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    sharePath=new ImgAsyncTask(context).execute(imgUrl).get();
+                    if (!TextUtils.isEmpty(sharePath)){
+                        shareBitmap= BitmapFactory.decodeFile(sharePath);
+                        handler.sendMessage(handler.obtainMessage(SHARE_PIC_TO_WX));
+                    }
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
-
-    private void shareWx(Bitmap bmp, boolean isShareFriend){
-        //初始化WXImageObject和WXMediaMessage对象
-        WXImageObject imgObj=new WXImageObject(bmp);
-        WXMediaMessage bitmapMsg=new WXMediaMessage();
-        bitmapMsg.mediaObject=imgObj;
-
-        //设置缩略图
-        Bitmap thumbBmp=Bitmap.createScaledBitmap(bmp,THUMB_SIZE,THUMB_SIZE,true);
-        bmp.recycle();
-//        bitmapMsg.thumbData=
-
+    //isShareFriend true 分享到朋友，false分享到朋友圈
+    //注意AsyncTask要在主线程中执行
+    @Override
+    public void sharePicToWxCommunity(final String imgUrl) {
+        //从Glide缓存中获取Bitmap
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    sharePath=new ImgAsyncTask(context).execute(imgUrl).get();
+                    if (!TextUtils.isEmpty(sharePath)){
+                        shareBitmap= BitmapFactory.decodeFile(sharePath);
+                        handler.sendMessage(handler.obtainMessage(SHARE_PIC_TO_WX_COMMUNITY));
+                    }
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
 
     //glide downloadOnly方法需要在线程中执行
-    private class ImgAsyncTask extends AsyncTask<String,Void,Bitmap>{
+    /**
+     * string 图片url
+     * void
+     * string 本地图片路径
+     */
+    private class ImgAsyncTask extends AsyncTask<String,Void,String>{
 
         private Context context;
 
@@ -196,24 +258,28 @@ public class PicturePresenter implements PictureContract.Presenter {
         }
 
         @Override
-        protected Bitmap doInBackground(String... params) {
+        protected String doInBackground(String... params) {
             try {
                 File file= Glide.with(context).load(params[0]).downloadOnly(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL).get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
+                return file.getAbsolutePath();
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
             return null;
         }
 
         @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            if (bitmap==null){
+        protected void onPostExecute(String path) {
+            super.onPostExecute(path);
+            if (path==null){
                 shareBitmap=null;
             }
-            shareBitmap =bitmap;
+//            sharePath=path;
+//            shareBitmap = BitmapFactory.decodeFile(path);
+//            Log.i(TAG, "sharePicToQQ:sharePath= "+sharePath);
+//            handler.sendMessage(handler.obtainMessage(SHARE_IMG_PTH_IS_READY));
+//            handler.sendMessage(handler.obtainMessage(SHARE_IMG_IS_READY));
+
         }
     }
 
