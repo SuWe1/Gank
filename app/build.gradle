@@ -38,6 +38,8 @@ dependencies {
     compile 'com.wx.goodview:goodview:1.0.0'
     //    微信sdk
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    //bugly
+    compile 'com.tencent.bugly:crashreport:latest.release'
     testCompile 'junit:junit:4.12'
     compile files('libs/open_sdk_r5793_lite.jar')
 }

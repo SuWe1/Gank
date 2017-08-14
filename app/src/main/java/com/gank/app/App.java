@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.appcompat.BuildConfig;
 
 import com.litesuits.orm.LiteOrm;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created by 11033 on 2017/3/8.
@@ -19,6 +20,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //Bugly初始化
+        CrashReport.initCrashReport(getApplicationContext(), "88ad7546e1", false);
         // the 'theme' has two values, 0 and 1
         // 0 --> day theme, 1 --> night theme
         if (getSharedPreferences("user_settings",MODE_PRIVATE).getInt("theme", 0) == 0) {

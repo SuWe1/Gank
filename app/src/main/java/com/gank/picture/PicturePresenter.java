@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -48,7 +47,7 @@ public class PicturePresenter implements PictureContract.Presenter {
     //要分享的图片 保存在本地的资源
     private Bitmap shareBitmap;
     //要分享的图片 保存在本地的路径
-    private String sharePath;
+    private volatile String sharePath;
 
     private static final int SHARE_IMG_IS_READY = 200;
     private static final int SHARE_IMG_PATH_IS_READY = 300;
@@ -153,7 +152,7 @@ public class PicturePresenter implements PictureContract.Presenter {
     }
 
     //isShareFriend true 分享到朋友，false分享到朋友圈
-    Handler handler=new Handler(Looper.getMainLooper()){
+    public Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -200,20 +199,21 @@ public class PicturePresenter implements PictureContract.Presenter {
     @Override
     public void sharePicToWx(final String imgUrl) {
         //从Glide缓存中获取Bitmap
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    sharePath=new ImgAsyncTask(context).execute(imgUrl).get();
-                    if (!TextUtils.isEmpty(sharePath)){
-                        shareBitmap= BitmapFactory.decodeFile(sharePath);
-                        handler.sendMessage(handler.obtainMessage(SHARE_PIC_TO_WX));
-                    }
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
+//        handler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
+        try {
+            sharePath=new ImgAsyncTask(context).execute(imgUrl).get();
+            if (!TextUtils.isEmpty(sharePath)){
+                shareBitmap= BitmapFactory.decodeFile(sharePath);
+                handler.sendMessage(handler.obtainMessage(SHARE_PIC_TO_WX));
             }
-        });
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     //isShareFriend true 分享到朋友，false分享到朋友圈
