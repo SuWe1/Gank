@@ -2,6 +2,7 @@ package com.gank.detail;
 
 import com.gank.BasePresenter;
 import com.gank.BaseView;
+import com.gank.interfaze.MyQQListener;
 
 /**
  * Created by 11033 on 2017/3/5.
@@ -23,6 +24,9 @@ public class DetailContract {
         void addToOrDeleteFromBookMarks();
         boolean queryIsBooksMarks();
         void requestData();
+        void shareArticleToQQ(final MyQQListener listener);
+        void shareArticleToWx();
+        void shareArticleToWxCommunity();
     }
     interface View extends BaseView<Presenter> {
         // 显示正在加载
@@ -54,5 +58,9 @@ public class DetailContract {
         // 显示已从收藏夹中移除
         void showDeletedFromBookmarks();
         void  showNotNetError();
+
+        void shareSuccess();
+        void shareError();
+        void shareCancel();
     }
 }

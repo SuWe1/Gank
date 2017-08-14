@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
@@ -14,6 +15,7 @@ import com.tencent.connect.share.QQShare;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.tauth.Tencent;
@@ -104,6 +106,32 @@ QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮�
     }
 
     /**
+     * 图文分享 图片来源网络
+     * !! 分享操作要在主线程中完成
+     * @param activity
+     * @param targetUrl  这条分享消息被好友点击后的跳转URL。
+     * @param shareTitle 	分享的标题, 最长30个字符。
+     * @param shareSummary 分享的消息摘要，最长40个字。
+     * @param appName 手Q客户端顶部，替换“返回”按钮文字，如果为空，用返回代替
+     * @param shareToQQExtInt 额外选项  是否自动打开分享到QZone的对话框
+     * @param listener 分享回调接口
+     */
+    public void shareToQQ(Activity activity,String targetUrl,String shareTitle,String shareSummary
+                          ,@StringRes int appName,int shareToQQExtInt,MyQQListener listener){
+        if (mTencent==null){
+            mTencent=Tencent.createInstance(Constants.QQ_APP_ID,activity.getApplicationContext());
+        }
+        final Bundle params = new Bundle();
+        params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,targetUrl);
+        params.putString(QQShare.SHARE_TO_QQ_TITLE, shareTitle);
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY, shareSummary );
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME,activity.getString(appName));
+        params.putInt(QQShare.SHARE_TO_QQ_EXT_INT,  shareToQQExtInt);
+        mTencent.shareToQQ(activity, params, listener);
+    }
+
+    /**
      * 图文分享 图片来源本地
      * !! 分享操作要在主线程中完成
      * @param activity
@@ -137,6 +165,9 @@ QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮�
      * @param context
      * @param bmp 分享的图片
      * @param isShareFriend isShareFriend true 分享到朋友，false分享到朋友圈
+    发送到聊天界面——WXSceneSession
+    发送到朋友圈——WXSceneTimeline
+    添加到微信收藏——WXSceneFavorite
      */
     public void shareImgToWx(Context context,Bitmap bmp, boolean isShareFriend){
 //        注册操作也可以写死在Application中
@@ -153,6 +184,7 @@ QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮�
         //设置缩略图
         Bitmap thumbBmp=Bitmap.createScaledBitmap(bmp,THUMB_SIZE,THUMB_SIZE,true);
         bmp.recycle();
+        //图片大小须在32kb一下  这里重新自定义的bmpToByteArray方法
         bitmapMsg.thumbData= Util.bmpToByteArray(thumbBmp,true);
 
         //构造一个Req
@@ -165,6 +197,36 @@ QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮�
 
     private String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+    }
+
+
+
+    public void shareWebToWx(Context context,@NonNull String webUrl,String webTitle,String webDesc,boolean isShareFriend){
+//        注册操作也可以写死在Application中
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        api=WXAPIFactory.createWXAPI(context,Constants.WX_APP_ID,true);
+        // 将该app注册到微信
+        api.registerApp(Constants.WX_APP_ID);
+
+        //初始化一个WXWebpageObject对象，填写url
+        WXWebpageObject webpag=new WXWebpageObject();
+        webpag.webpageUrl=webUrl;
+
+        //用WXWebpageObject对象初始化一个WXMediaMessage对象  填写标题和描述
+        WXMediaMessage msg=new WXMediaMessage(webpag);
+        msg.title=webTitle;
+        msg.description=webDesc;
+        //不知道官网中分享web 要加图片
+//        Bitmap bitmap= BitmapFactory.decodeResource(context.getResources(),R.drawable.send_music_thumb);
+//        msg.thumbData=Util.bmpToByteArray(bitmap,true);
+
+        //构造一个Req
+        SendMessageToWX.Req req=new SendMessageToWX.Req();
+        req.transaction=buildTransaction("webpage");//transaction 字段用于唯一标识一个请求
+        req.message= msg;
+        req.scene=isShareFriend ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+
+        api.sendReq(req);
     }
 
     private String getTransaction() {

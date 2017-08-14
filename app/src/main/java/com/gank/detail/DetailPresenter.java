@@ -1,22 +1,28 @@
 package com.gank.detail;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.gank.R;
 import com.gank.app.App;
 import com.gank.bean.BeanTeype;
 import com.gank.bean.FrontNews;
 import com.gank.bean.GankNews;
 import com.gank.bean.IosNews;
+import com.gank.interfaze.MyQQListener;
+import com.gank.model.ShareSingleton;
 import com.gank.model.StringModeImpl;
 import com.gank.util.Network;
 import com.google.gson.Gson;
 import com.litesuits.orm.log.OrmLog;
+import com.tencent.connect.share.QQShare;
 
 /**
  * Created by 11033 on 2017/3/5.
@@ -250,6 +256,28 @@ public class DetailPresenter implements  DetailContract.Presenter {
                 }
         }
         view.stopLoading();
+    }
+
+    @Override
+    public void shareArticleToQQ(MyQQListener listener) {
+        //title == desc
+        if (TextUtils.isEmpty(imgUrl)){
+            ShareSingleton.getInstance().shareToQQ((Activity) context,url,"推荐给你一篇文章",title, R.string.app_name, QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE,listener);
+        }else {
+            ShareSingleton.getInstance().shareToQQ((Activity) context,url,"推荐给你一篇文章",title,imgUrl,R.string.app_name, QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE,listener);
+        }
+    }
+
+    @Override
+    public void shareArticleToWx() {
+        //title == desc
+        ShareSingleton.getInstance().shareWebToWx(context,url,"",title,true);
+    }
+
+    @Override
+    public void shareArticleToWxCommunity() {
+        //title == desc
+        ShareSingleton.getInstance().shareWebToWx(context,url,"",title,false);
     }
 
     @Override

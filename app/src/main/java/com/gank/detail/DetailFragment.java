@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,13 +19,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gank.R;
+import com.gank.interfaze.MyQQListener;
+import com.tencent.tauth.UiError;
 
 /**
  * Created by 11033 on 2017/3/5.
@@ -36,6 +42,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     private WebView webview;
     private NestedScrollView scrollView;
     private CollapsingToolbarLayout toolbarLayout;
+    private CoordinatorLayout coordinatorLayout;
     private SwipeRefreshLayout refreshLayout;
 
     private Context context;
@@ -98,7 +105,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
             getActivity().onBackPressed();
         }else if (id==R.id.action_more){
             final BottomSheetDialog dialog=new BottomSheetDialog(getActivity());
-            View view=getActivity().getLayoutInflater().inflate(R.layout.detail_bar_detail,null);
+            final View view=getActivity().getLayoutInflater().inflate(R.layout.detail_bar_detail,null);
             if (presenter.queryIsBooksMarks()){
                 Log.i(TAG, "onOptionsItemSelected: "+presenter.queryIsBooksMarks());
                 ((TextView)view.findViewById(R.id.textView)).setText(R.string.action_delete_from_bookmarks);
@@ -137,10 +144,91 @@ public class DetailFragment extends Fragment implements DetailContract.View {
                     presenter.openInBrower();
                 }
             });
+            //分享文章
+            final LinearLayout shareLinearLayout= (LinearLayout) view.findViewById(R.id.layout_share);
+            shareLinearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    View shareLayout=LayoutInflater.from(getActivity()).inflate(R.layout.popup_share_layout,null);
+//                    PopupWindow popupWindow=new PopupWindow(getActivity());
+//                    popupWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
+//                    popupWindow.setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
+//                    popupWindow.setContentView(shareLayout);
+//                    popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+//                    popupWindow.setAnimationStyle(R.style.WindowsAnimationonChange);
+//                    popupWindow.showAsDropDown(coordinatorLayout, Gravity.CENTER,0,0);
+                    final AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                    builder.setTitle(R.string.choice_share_way)
+                            .setView(shareLayout);
+                    final AlertDialog shareDialog=builder.create();
+                    Window window=shareDialog.getWindow();
+                    window.setWindowAnimations(R.style.WindowsAnimationonChange);
+                    shareDialog.show();
+                    shareLayout.findViewById(R.id.QQRL).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            shareDialog.dismiss();
+                            presenter.shareArticleToQQ(myQQListener);
+                        }
+                    });
+                    shareLayout.findViewById(R.id.wxRL).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            shareDialog.dismiss();
+                            presenter.shareArticleToWx();
+                        }
+                    });
+                    shareLayout.findViewById(R.id.communityRL).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            shareDialog.dismiss();
+                            presenter.shareArticleToWxCommunity();
+                        }
+                    });
+                }
+            });
             dialog.setContentView(view);
             dialog.show();
         }
         return true;
+    }
+
+    private MyQQListener myQQListener=new MyQQListener(){
+        //分享成功
+        @Override
+        public void onComplete(Object o) {
+            super.onComplete(o);
+            shareSuccess();
+        }
+
+        @Override
+        public void onCancel() {
+            super.onCancel();
+            shareCancel();
+        }
+
+        @Override
+        public void onError(UiError uiError) {
+            super.onError(uiError);
+            shareError();
+            Log.i("picture", "onError:errorCode: "+uiError.errorCode+" errorMessage: "+uiError.errorMessage+"  errorDetail "+uiError.errorDetail);
+        }
+    };
+
+    @Override
+    public void shareSuccess() {
+        Snackbar.make(coordinatorLayout,R.string.share_success,Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void shareError() {
+        Snackbar.make(coordinatorLayout,R.string.share_onerror,Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void shareCancel() {
+        Snackbar.make(coordinatorLayout,R.string.share_cancel,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -251,6 +339,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
         imageView = (ImageView) view.findViewById(R.id.image_view);
         scrollView = (NestedScrollView) view.findViewById(R.id.scrollView);
+        coordinatorLayout= (CoordinatorLayout) view.findViewById(R.id.coordinatorlayout);
         toolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.toolbar_layout);
         //扩张时候的title颜色
 //        toolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorPrimary));
