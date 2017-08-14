@@ -47,6 +47,9 @@ public class PicturePresenter implements PictureContract.Presenter {
     private Context context;
     private PictureContract.View view;
 
+    //权限
+    private String [] permissions={Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE};
+
     //要分享的图片 保存在本地的资源
     private Bitmap shareBitmap;
     //要分享的图片 保存在本地的路径
@@ -66,7 +69,8 @@ public class PicturePresenter implements PictureContract.Presenter {
     public static final int IMAGE_SIZE=32768;//微信分享图片大小限制
 
 
-    public static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
+    public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    public static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATUS = 2;
     public PicturePresenter(Context context,PictureContract.View view) {
         this.context = context;
         this.view=view;
@@ -158,8 +162,8 @@ public class PicturePresenter implements PictureContract.Presenter {
         }else {
             // Permission Denied
             //申请权限
-            ActivityCompat.requestPermissions((Activity) context,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    MY_PERMISSIONS_REQUEST_CALL_PHONE);
+            ActivityCompat.requestPermissions((Activity) context,permissions,
+                    MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
         }
     }
 
@@ -201,16 +205,16 @@ public class PicturePresenter implements PictureContract.Presenter {
         isShareQQ=true;
         qqShareListener=listener;
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
-        builder.setTitle("提示")
-                .setMessage("QQ只能分享本地图片,请确认是否同意保存图片到本地!")
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.save_picture_to_local_title)
+                .setMessage(R.string.save_picture_to_local_message)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         view.shareCancel();
                     }
                 })
-                .setPositiveButton("同意", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.agreement, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         SavePicToLocal(imgUrl);
@@ -219,12 +223,6 @@ public class PicturePresenter implements PictureContract.Presenter {
                     }
                 })
                 .show();
-//        handler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        });
     }
 
     //isShareFriend true 分享到朋友，false分享到朋友圈
@@ -240,7 +238,11 @@ public class PicturePresenter implements PictureContract.Presenter {
         //从Glide缓存中获取Bitmap
         isShareWxOrCommunity=false;
         isShareQQ=false;
-        new ImgAsyncTask(context).execute(imgUrl);
+        if (ContextCompat.checkSelfPermission(context,Manifest.permission.READ_PHONE_STATE)==PackageManager.PERMISSION_GRANTED){
+            new ImgAsyncTask(context).execute(imgUrl);
+        }else {
+            ActivityCompat.requestPermissions((Activity) context,permissions,MY_PERMISSIONS_REQUEST_READ_PHONE_STATUS);
+        }
     }
 
     //isShareFriend true 分享到朋友，false分享到朋友圈
@@ -250,7 +252,11 @@ public class PicturePresenter implements PictureContract.Presenter {
         //从Glide缓存中获取Bitmap
         isShareWxOrCommunity=true;
         isShareQQ=false;
-        new ImgAsyncTask(context).execute(imgUrl);
+        if (ContextCompat.checkSelfPermission(context,Manifest.permission.READ_PHONE_STATE)==PackageManager.PERMISSION_GRANTED){
+            new ImgAsyncTask(context).execute(imgUrl);
+        }else {
+            ActivityCompat.requestPermissions((Activity) context,permissions,MY_PERMISSIONS_REQUEST_READ_PHONE_STATUS);
+        }
     }
 
 
@@ -277,8 +283,7 @@ public class PicturePresenter implements PictureContract.Presenter {
         protected Bitmap doInBackground(String... params) {
             try {
                 File file= Glide.with(context).load(params[0]).downloadOnly(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL).get();
-                sharePath=file.getPath();
-                return BitmapFactory.decodeFile(sharePath);
+                return BitmapFactory.decodeFile(file.getPath());
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
@@ -291,8 +296,7 @@ public class PicturePresenter implements PictureContract.Presenter {
             if (bitmap==null){
                 shareBitmap=null;
             }
-            shareBitmap=compressBitmap(bitmap);
-            Log.i(TAG, "onPostExecute:shareBitmap.size= "+shareBitmap.getByteCount());
+            shareBitmap=bitmap;
             //false分享微信好友  true分享朋友圈
             if (isShareWxOrCommunity){
                 handler.sendMessage(handler.obtainMessage(SHARE_PIC_TO_WX_COMMUNITY));
@@ -301,8 +305,6 @@ public class PicturePresenter implements PictureContract.Presenter {
             }
             //true 分享到扣扣
             if (isShareQQ){
-//                sharePath=sharePath.concat(".jpg");
-//                Log.i(TAG, "onPostExecute: "+sharePath );
                 handler.sendMessage(handler.obtainMessage(SHARE_PIC_TO_QQ));
             }
 

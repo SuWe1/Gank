@@ -30,7 +30,8 @@ import com.tencent.tauth.UiError;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-import static com.gank.picture.PicturePresenter.MY_PERMISSIONS_REQUEST_CALL_PHONE;
+import static com.gank.picture.PicturePresenter.MY_PERMISSIONS_REQUEST_READ_PHONE_STATUS;
+import static com.gank.picture.PicturePresenter.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE;
 
 /**
  * Created by 11033 on 2017/3/22.
@@ -240,7 +241,7 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
     //用户对请求作出响应后的回调
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == MY_PERMISSIONS_REQUEST_CALL_PHONE) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission Granted
                 presenter.SavePicToLocal(ImgUrl);
@@ -248,6 +249,8 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
                 // Permission Denied
                 showNoPermission();
             }
+        }else if (requestCode==MY_PERMISSIONS_REQUEST_READ_PHONE_STATUS){
+            Snackbar.make(coordinatorLayout,R.string.share_again,Snackbar.LENGTH_LONG).show();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }

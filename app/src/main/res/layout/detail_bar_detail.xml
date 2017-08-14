@@ -58,7 +58,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:gravity="center_vertical"
-            android:text="@string/action_add_to_bookmarks"
+            android:text="@string/action_share_article"
             android:textColor="@color/textColorPrimary" />
 
     </LinearLayout>
