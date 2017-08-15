@@ -271,13 +271,19 @@ public class DetailPresenter implements  DetailContract.Presenter {
     @Override
     public void shareArticleToWx() {
         //title == desc
-        ShareSingleton.getInstance().shareWebToWx(context,url,"",title,true);
+        ShareSingleton.getInstance().shareWebToWx(url,"",title,true);
     }
 
     @Override
     public void shareArticleToWxCommunity() {
         //title == desc
-        ShareSingleton.getInstance().shareWebToWx(context,url,"",title,false);
+        ShareSingleton.getInstance().shareWebToWx(url,"",title,false);
+    }
+
+    @Override
+    public void shareArticleToWxCollect() {
+        //title == desc
+        ShareSingleton.getInstance().shareWebToWxCollect(url,"干货",title);
     }
 
     @Override

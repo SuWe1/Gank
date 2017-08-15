@@ -16,10 +16,12 @@ public class App extends Application {
     private static final String DB_NAME = "liteorm.db";
     public static Context mContext;
     public static LiteOrm DbLiteOrm;
+    private static App app;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        app=this;
         //Bugly初始化
         CrashReport.initCrashReport(getApplicationContext(), "88ad7546e1", true);
         // the 'theme' has two values, 0 and 1
@@ -34,5 +36,12 @@ public class App extends Application {
         if (BuildConfig.DEBUG) {
             DbLiteOrm.setDebugged(true);
         }
+    }
+    public static App getInstance(){
+        return app;
+    }
+
+    public static Context getContext(){
+        return app.getApplicationContext();
     }
 }

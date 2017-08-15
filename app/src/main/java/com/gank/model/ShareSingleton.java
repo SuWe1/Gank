@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
+import com.gank.app.App;
 import com.gank.interfaze.MyQQListener;
 import com.gank.util.Constants;
 import com.gank.util.wxUtil.Util;
@@ -169,10 +170,10 @@ QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮�
     发送到朋友圈——WXSceneTimeline
     添加到微信收藏——WXSceneFavorite
      */
-    public void shareImgToWx(Context context,Bitmap bmp, boolean isShareFriend){
+    public void shareImgToWx(Bitmap bmp, boolean isShareFriend){
 //        注册操作也可以写死在Application中
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
-        api=WXAPIFactory.createWXAPI(context,Constants.WX_APP_ID,true);
+        api=WXAPIFactory.createWXAPI(App.getContext(),Constants.WX_APP_ID,true);
         // 将该app注册到微信
         api.registerApp(Constants.WX_APP_ID);
 
@@ -200,11 +201,17 @@ QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮�
     }
 
 
-
-    public void shareWebToWx(Context context,@NonNull String webUrl,String webTitle,String webDesc,boolean isShareFriend){
+    /**
+     * 分享文章到微信/朋友圈
+     * @param webUrl
+     * @param webTitle
+     * @param webDesc
+     * @param isShareFriend
+     */
+    public void shareWebToWx(@NonNull String webUrl,String webTitle,String webDesc,boolean isShareFriend){
 //        注册操作也可以写死在Application中
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
-        api=WXAPIFactory.createWXAPI(context,Constants.WX_APP_ID,true);
+        api=WXAPIFactory.createWXAPI(App.getContext(),Constants.WX_APP_ID,true);
         // 将该app注册到微信
         api.registerApp(Constants.WX_APP_ID);
 
@@ -225,6 +232,40 @@ QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮�
         req.transaction=buildTransaction("webpage");//transaction 字段用于唯一标识一个请求
         req.message= msg;
         req.scene=isShareFriend ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+
+        api.sendReq(req);
+    }
+
+    /**
+     * 分享文章到微信收藏
+     * @param webUrl
+     * @param webTitle
+     * @param webDesc
+     */
+    public void shareWebToWxCollect(@NonNull String webUrl, String webTitle, String webDesc){
+//        注册操作也可以写死在Application中
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        api=WXAPIFactory.createWXAPI(App.getContext(),Constants.WX_APP_ID,true);
+        // 将该app注册到微信
+        api.registerApp(Constants.WX_APP_ID);
+
+        //初始化一个WXWebpageObject对象，填写url
+        WXWebpageObject webpag=new WXWebpageObject();
+        webpag.webpageUrl=webUrl;
+
+        //用WXWebpageObject对象初始化一个WXMediaMessage对象  填写标题和描述
+        WXMediaMessage msg=new WXMediaMessage(webpag);
+        msg.title=webTitle;
+        msg.description=webDesc;
+        //不知道官网中分享web 要加图片
+//        Bitmap bitmap= BitmapFactory.decodeResource(context.getResources(),R.drawable.send_music_thumb);
+//        msg.thumbData=Util.bmpToByteArray(bitmap,true);
+
+        //构造一个Req
+        SendMessageToWX.Req req=new SendMessageToWX.Req();
+        req.transaction=buildTransaction("webpage");//transaction 字段用于唯一标识一个请求
+        req.message= msg;
+        req.scene=SendMessageToWX.Req.WXSceneFavorite;
 
         api.sendReq(req);
     }

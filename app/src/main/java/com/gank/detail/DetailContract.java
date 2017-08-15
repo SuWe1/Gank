@@ -27,6 +27,7 @@ public class DetailContract {
         void shareArticleToQQ(final MyQQListener listener);
         void shareArticleToWx();
         void shareArticleToWxCommunity();
+        void shareArticleToWxCollect();
     }
     interface View extends BaseView<Presenter> {
         // 显示正在加载

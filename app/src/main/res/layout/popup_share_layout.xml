@@ -47,7 +47,8 @@
     <RelativeLayout
         android:id="@+id/communityRL"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp">
         <ImageView
             android:id="@+id/img_community"
             android:layout_width="36dp"
@@ -61,6 +62,25 @@
             android:layout_below="@+id/img_community"
             android:layout_marginTop="5dp"
             android:text="@string/share_article_to_wx_friend_community"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/markRL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_mark"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_wx_mark_ios"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/txt_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_mark"
+            android:layout_marginTop="5dp"
+            android:text="@string/share_article_to_wxMark"
             android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 </LinearLayout>

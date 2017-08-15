@@ -175,14 +175,14 @@ public class PicturePresenter implements PictureContract.Presenter {
             switch (msg.what){
                 case SHARE_PIC_TO_WX_COMMUNITY:
                     if(shareBitmap!=null){
-                        ShareSingleton.getInstance().shareImgToWx(context,shareBitmap,false);
+                        ShareSingleton.getInstance().shareImgToWx(shareBitmap,false);
                     }else {
                         throw new  RuntimeException("The picture that  want to share cannot be empty!");
                     }
                     break;
                 case SHARE_PIC_TO_WX:
                     if(shareBitmap!=null){
-                        ShareSingleton.getInstance().shareImgToWx(context,shareBitmap,true);
+                        ShareSingleton.getInstance().shareImgToWx(shareBitmap,true);
                     }else {
                         throw new  RuntimeException("The picture that  want to share cannot be empty!");
                     }

@@ -78,6 +78,7 @@
     <string name="share_article_to_wx_friend_community">朋友圈</string>
     <string name="share_picture_to_QQ">分享图片给QQ好友</string>
     <string name="share_article_to_QQ">QQ好友</string>
+    <string name="share_article_to_wxMark">微信收藏</string>
     <string name="share_picture_to_weibo">分享图片到微博</string>
     <string name="share_success">分享成功</string>
     <string name="share_onerror">分享失败</string>

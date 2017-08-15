@@ -186,6 +186,13 @@ public class DetailFragment extends Fragment implements DetailContract.View {
                             presenter.shareArticleToWxCommunity();
                         }
                     });
+                    shareLayout.findViewById(R.id.markRL).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            shareDialog.dismiss();
+                            presenter.shareArticleToWxCollect();
+                        }
+                    });
                 }
             });
             dialog.setContentView(view);
