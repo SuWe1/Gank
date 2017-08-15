@@ -6,14 +6,13 @@ API come from [gank-camp](http://gank.io/api)<br>
 If you want to test yourself , clone this repository to your computer
 
 ##3 Download APk
-* [Dandelion](https://www.pgyer.com/yZ4n)
 * [fir.im](https://fir.im/x1yr)
 * [cool](http://www.coolapk.com/apk/com.gank)
 
 ### Screenshots
-![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE1.PNG)
+![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE1.png)
 ![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE2.png)
-![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE3.PNG)
+![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE3.png)
 ![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE4.png)
 ### Open in Android Studio
 Clone the repository：<br>

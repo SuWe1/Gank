@@ -73,7 +73,7 @@ public  class WelcomeFragment extends Fragment {
             case 2:
                 description_head.setText(R.string.welcoem_description_three_head);
                 description_body.setText(R.string.welcoem_description_three_body);
-                img_welcome_description.setBackgroundResource(R.drawable.welcome_page_three);
+                img_welcome_description.setBackgroundResource(R.drawable.ic_share_2);
         }
         return rootView;
     }
