@@ -7,9 +7,9 @@
 * [fir.im](https://fir.im/x1yr)(内侧)
 * 其他各大常用平台
 ### 截图
-![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE1.png)
-![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE2.png)
-![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE3.png)
+![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE1.PNG)
+![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE2.png) <br>
+![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE3.PNG)
 ![](https://github.com/yeshuwei/Gank/blob/master/art/%E6%88%AA%E5%9B%BE4.png)
 ### 在Android Studio中打开
 Clone仓库：<br>
