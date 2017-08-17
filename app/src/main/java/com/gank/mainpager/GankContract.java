@@ -12,10 +12,15 @@ import java.util.ArrayList;
 
 public interface GankContract {
     interface View extends BaseView<Presenter>{
+        //错误
         void showError();
+        //正在加载
         void showLoading();
+        //停止加载
         void Stoploading();
+        //显示数据列表
         void showResult(ArrayList<GankNews.Question> list);
+        //网络错误
         void showNotNetError();
 
     }
@@ -28,7 +33,7 @@ public interface GankContract {
         void loadMore(int PagerNum);
         //显示详情
         void StartReading(int positon);
-        //随便看
+        //随便看看
         void LookAround();
     }
 }

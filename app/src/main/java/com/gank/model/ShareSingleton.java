@@ -1,7 +1,6 @@
 package com.gank.model;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -107,7 +106,7 @@ QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮�
     }
 
     /**
-     * 图文分享 图片来源网络
+     * 文章分享 无图
      * !! 分享操作要在主线程中完成
      * @param activity
      * @param targetUrl  这条分享消息被好友点击后的跳转URL。
@@ -162,8 +161,7 @@ QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE，分享时隐藏分享到QZone按钮�
 
 
     /**
-     * 分享图片到微信或者
-     * @param context
+     * 分享图片到微信或者朋友圈
      * @param bmp 分享的图片
      * @param isShareFriend isShareFriend true 分享到朋友，false分享到朋友圈
     发送到聊天界面——WXSceneSession

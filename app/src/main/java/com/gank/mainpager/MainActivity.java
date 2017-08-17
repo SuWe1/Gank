@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private  MainFragment mainFragment;
     private BookmarksFragment bookmarksfragment;
     private MeiziFragment meiziFragment;
+    private Fragment currentFragment;
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -106,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     // 显示MainFragment并设置Title
     private void showMainFragment(){
+//        currentFragment=mainFragment;
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(mainFragment);
         fragmentTransaction.hide(bookmarksfragment);
@@ -116,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // 显示BookmarksFragment并设置Title
     private void showBookMarksFragment(){
+//        currentFragment=bookmarksfragment;
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(bookmarksfragment);
         fragmentTransaction.hide(mainFragment);
@@ -128,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void showMeiziFragment(){
+//        currentFragment=meiziFragment;
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(meiziFragment);
         fragmentTransaction.hide(mainFragment);
@@ -200,6 +205,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void recreate() {
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.remove(currentFragment);
+        fragmentTransaction.commitAllowingStateLoss();
         super.recreate();
     }
 

@@ -40,6 +40,9 @@ dependencies {
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     //bugly
     compile 'com.tencent.bugly:crashreport:latest.release'
+    //leakcanary
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.2'
     testCompile 'junit:junit:4.12'
     compile files('libs/open_sdk_r5793_lite.jar')
 }

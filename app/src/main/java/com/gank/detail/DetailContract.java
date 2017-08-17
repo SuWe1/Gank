@@ -17,6 +17,10 @@ public class DetailContract {
          * 添加收藏或取消收藏
          * 查询是否收藏
          * 请求数据
+         * 分享到QQ
+         * 分享到微信
+         * 分享到朋友圈
+         * 分享到微信收藏
          */
         void openInBrower();
         void copyText();
