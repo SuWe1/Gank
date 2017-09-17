@@ -205,9 +205,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void recreate() {
-        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.remove(currentFragment);
-        fragmentTransaction.commitAllowingStateLoss();
+//        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.remove(currentFragment);
+//        fragmentTransaction.commitAllowingStateLoss();
         super.recreate();
     }
 
@@ -215,9 +215,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-        /*FragmentManager manager = getSupportFragmentManager();
-        manager.putFragment(outState, "MainFragment", mainFragment);
-        manager.putFragment(outState,"BookmarksFragment",bookmarksfragment);*/
         if (mainFragment.isAdded()){
             getSupportFragmentManager().putFragment(outState,"MainFragment",mainFragment);
         }
@@ -227,5 +224,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (meiziFragment.isAdded()){
             getSupportFragmentManager().putFragment(outState,"meiziFragment",meiziFragment);
         }
+//        if (outState==null){
+//        FragmentManager manager = getSupportFragmentManager();
+//        manager.putFragment(outState, "MainFragment", mainFragment);
+//        manager.putFragment(outState,"BookmarksFragment",bookmarksfragment);
+//        manager.putFragment(outState,"meiziFragment",meiziFragment);
+//        }
+
     }
+
 }

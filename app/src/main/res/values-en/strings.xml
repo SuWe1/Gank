@@ -1,0 +1,116 @@
+<resources>
+    <string name="app_name">Gank</string>
+    <!--nav_head -->
+    <string name="nav_home">Home page</string>
+    <string name="nav_meizi">Welfare</string>
+    <string name="nav_mark">My Collection</string>
+    <string name="nav_change_theme">Switch Theme</string>
+    <string name="nac_setting">Setting</string>
+    <string name="nav_anout">About Me</string>
+    <string name="default_name">Ganker</string>
+
+    <!-- -->
+    <string name="look_around">Look Around</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_add_to_bookmarks">Add to collections list</string>
+    <string name="action_share_article">Share the article</string>
+    <string name="action_copy_link">Copy the link</string>
+    <string name="action_open_in_browser">Open in browser</string>
+    <string name="action_copy_text">Copy the text</string>
+    <string name="loaded_failed">Loading failed</string>
+    <string name="loaded_success">Loading success</string>
+    <string name="save_success">Save success</string>
+    <string name="save_fail">Save failed</string>
+    <string name="save_fail_no_permission">Permission denied</string>
+    <string name="retry">Reload</string>
+    <string name="share_error">Sharing failed</string>
+    <string name="no_browser_found">No browser installed</string>
+    <string name="copied_to_clipboard">Copy successful</string>
+    <string name="copied_to_clipboard_failed">Copy failed</string>
+    <string name="added_to_bookmarks">Added successfully</string>
+    <string name="deleted_from_bookmarks">Successfully deleted</string>
+    <string name="not_net_work">No network connection</string>
+    <string name="bookmarks_Android_title">Android</string>
+    <string name="bookmarks_Front_title">Web</string>
+    <string name="bookmarks_Ios_title">IOS</string>
+
+
+    <string name="about">About</string>
+    <string name="about_version">version:V1.0</string>
+    <string name="about_please">College Students</string>
+    <string name="about_name">Swy</string>
+    <string name="about_anthor">About me</string>
+    <string name="about_support">Feedback</string>
+    <string name="about_bug">Feedback Bug</string>
+    <string name="about_commit_bug">yeshuwei911@gmail.com</string>
+    <string name="about_email">My contact information</string>
+    <string name="about_thank">Thanks</string>
+    <string name="anout_thank_gank">Thanks to Gank.io</string>
+
+
+    <string name="basic_settings">Basic settings</string>
+    <string name="setting_no_pic">No pattern mode</string>
+    <string name="setting_no_pic_summary">Do not load pictures when reading</string>
+    <string name="setting_time_of_saving_article">Cache cycle</string>
+    <string name="setting_other">Other settings</string>
+    <string name="setting_clear_glide_cache">Clear cache</string>
+    <string name="clear_image_cache_successfully">Clean up successfully</string>
+    <string name="setting_title">Setting</string>
+
+
+    <string name="sendto">mailto:yeshuwei911@gmail.com</string>
+    <string name="mail_topic">Use feedback</string>
+    <string name="device_model">Phone model</string>
+    <string name="sdk_version">SDK version</string>
+    <string name="easter_egg">Egg</string>
+    <string name="easter_egg_content">Do you think I am handsome?</string>
+    <string name="sure">Sure</string>
+    <string name="yes">Yes</string>
+    <string name="no_app_store_found">没有邮件类App</string>
+    <string name="action_delete_from_bookmarks">No mail app is installed</string>
+    <string name="save_picture_to_local">Save the picture to the local？</string>
+    <string name="save_picture_mes">Save the picture to the phone</string>
+    <string name="share_picture_to_wx">Share pictures to WeChat friends</string>
+    <string name="share_article_to_wx">WeChat</string>
+    <string name="share_picture_to_wx_friend_community">Share pictures to WeChat circle</string>
+    <string name="share_article_to_wx_friend_community">WeChat circle</string>
+    <string name="share_picture_to_QQ">Share pictures to QQ friends</string>
+    <string name="share_article_to_QQ">QQ friends</string>
+    <string name="share_article_to_wxMark">WeChat collection</string>
+    <string name="share_picture_to_weibo">Share pictures to microblogging</string>
+    <string name="share_success">Sharing success</string>
+    <string name="share_onerror">Sharing failed</string>
+    <string name="share_cancel">Cancel sharing</string>
+    <string name="share_again">Return to the previous step</string>
+    <string name="save_picture_to_local_title">prompt</string>
+    <string name="save_picture_to_local_message">QQ can only share local pictures, please confirm whether you agree to save the picture to the local!</string>
+    <string name="agreement">Agree</string>
+    <string name="cancel">No</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="choice_share_way">Choose to share to:</string>
+    <string name="share_article">Share the article</string>
+
+
+    <string name="welcome_pre">Pre</string>
+    <string name="welcome_next">Next</string>
+    <string name="welcome_finish">Finish</string>
+    <string name="welcoem_description_one_head">Excellent article</string>
+    <string name="welcoem_description_one_body">Featured Internet technology technical articles</string>
+    <string name="welcoem_description_two_head">Nice picture</string>
+    <string name="welcoem_description_two_body">Share your favorite pictures</string>
+    <string name="welcoem_description_three_head">Good things to share</string>
+    <string name="welcoem_description_three_body">Added articles to share and collect</string>
+
+
+    <!--微信-->
+    <string name="errcode_success">Sent successfully</string>
+    <string name="errcode_cancel">Send Cancel</string>
+    <string name="errcode_deny">Send is rejected</string>
+    <string name="errcode_unsupported">Does not support errors</string>
+    <string name="errcode_unknown">Send back</string>
+
+</resources>

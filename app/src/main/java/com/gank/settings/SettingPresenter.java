@@ -44,6 +44,9 @@ public class SettingPresenter implements SettingsContract.Presenter {
             switch (msg.what){
                 case CLEAR_GLIDE_CACHE_SUCCESS:
                     view.showCleanGlideCacheSuccess();
+                    break;
+                default:
+                    break;
             }
         }
     };

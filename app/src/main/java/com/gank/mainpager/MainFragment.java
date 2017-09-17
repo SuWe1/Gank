@@ -177,4 +177,13 @@ public class MainFragment extends Fragment {
      public MainPagerAdapter getAdapter(){
         return adapter;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+//        FragmentTransaction fragmentTransaction=getChildFragmentManager().beginTransaction();
+//        for (Fragment fragment:adapter.getFragments()){
+//            fragmentTransaction.remove(fragment)
+//        }
+    }
 }

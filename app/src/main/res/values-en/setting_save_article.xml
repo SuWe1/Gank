@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="time_to_save_article">
+        <item>One Days</item>
+        <item>Three Days</item>
+        <item>Seven days</item>
+        <item>Fifteen days</item>
+    </string-array>
+</resources>

@@ -25,6 +25,9 @@ import com.gank.mainpager.FrontFragment;
 import com.gank.mainpager.GankFragment;
 import com.gank.mainpager.IosFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Lizhaotailang on 2016/8/10.
  * ViewPager适配器
@@ -38,6 +41,8 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 //    private MeiziFragment meiziFragment;
     private IosFragment iosFragment;
 
+    private List<Fragment> fragments=new ArrayList<>();
+
     public GankFragment getGankFragment() {
         return gankFragment;
     }
@@ -46,14 +51,25 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         return frontFragment;
     }
 
+    public IosFragment getIosFragment() {
+        return iosFragment;
+    }
+
+    public List<Fragment> getFragments() {
+        return fragments;
+    }
+
     public MainPagerAdapter(FragmentManager fm, Context context, GankFragment gankFragment, FrontFragment frontFragment, IosFragment iosFragment) {
         super(fm);
         this.context = context;
-        titles = new String[]{"安卓", "前端","IOS"};
+        titles = new String[]{"Android", "Web","IOS"};
         this.gankFragment = gankFragment;
         this.frontFragment = frontFragment;
 //        this.meiziFragment=meiziFragment;
         this.iosFragment=iosFragment;
+        fragments.add(gankFragment);
+        fragments.add(frontFragment);
+        fragments.add(iosFragment);
     }
 
     @Override
