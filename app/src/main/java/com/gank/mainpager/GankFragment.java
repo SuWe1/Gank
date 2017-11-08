@@ -1,5 +1,7 @@
 package com.gank.mainpager;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -34,6 +36,7 @@ public class GankFragment extends Fragment implements GankContract.View {
     private SwipeRefreshLayout refresh;
 
     private GankContract.Presenter presenter;
+    private Activity mActivity;
 
     public GankFragment() {
     }
@@ -43,6 +46,13 @@ public class GankFragment extends Fragment implements GankContract.View {
 
         return new GankFragment();
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity= (Activity) context;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,7 +192,7 @@ public class GankFragment extends Fragment implements GankContract.View {
         //设置下拉刷新的按钮的颜色
         refresh.setColorSchemeResources(R.color.colorPrimary);
 
-        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab = (FloatingActionButton) mActivity.findViewById(R.id.fab);
         fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 }

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.appcompat.BuildConfig;
 
 import com.litesuits.orm.LiteOrm;
-import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
 /**
@@ -23,12 +22,12 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         app=this;
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(this);
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            // This process is dedicated to LeakCanary for heap analysis.
+//            // You should not init your app in this process.
+//            return;
+//        }
+//        LeakCanary.install(this);
         //Bugly初始化
         CrashReport.initCrashReport(getApplicationContext(), "88ad7546e1", true);
         // the 'theme' has two values, 0 and 1

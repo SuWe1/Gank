@@ -28,7 +28,7 @@ import com.tencent.connect.share.QQShare;
  * Created by 11033 on 2017/3/5.
  */
 
-public class DetailPresenter implements  DetailContract.Presenter {
+public class DetailPresenter implements DetailContract.Presenter {
     private static final String TAG = "DetailPresenter";
     private DetailContract.View view;
     private StringModeImpl model;
@@ -78,16 +78,16 @@ public class DetailPresenter implements  DetailContract.Presenter {
         this.view = view;
         this.context = context;
         this.view.setPresenter(this);
-        model=new StringModeImpl(context);
-        sp=context.getSharedPreferences("user_settings",Context.MODE_PRIVATE);
-        gson=new Gson();
+        model = new StringModeImpl(context);
+        sp = context.getSharedPreferences("user_settings", Context.MODE_PRIVATE);
+        gson = new Gson();
     }
 
     @Override
     public void openInBrower() {
         try {
-            Intent intent=new Intent(Intent.ACTION_VIEW);
-            switch (type){
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            switch (type) {
                 case TYPE_Gank:
                     intent.setData(Uri.parse(url));
                     break;
@@ -99,7 +99,7 @@ public class DetailPresenter implements  DetailContract.Presenter {
                     break;
             }
             context.startActivity(intent);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             view.showBrowserNotFoundError();
         }
 
@@ -107,11 +107,14 @@ public class DetailPresenter implements  DetailContract.Presenter {
 
     @Override
     public void copyText() {
-        ClipboardManager manager= (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData data=null;
-        switch (type){
+        ClipboardManager manager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData data = null;
+        switch (type) {
             case TYPE_Gank:
 //                data=ClipData.newPlainText()
+                break;
+            default:
+                break;
         }
         manager.setPrimaryClip(data);
         view.showTextCopied();
@@ -119,11 +122,14 @@ public class DetailPresenter implements  DetailContract.Presenter {
 
     @Override
     public void copyLink() {
-        ClipboardManager manager= (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData data=null;
-        switch (type){
+        ClipboardManager manager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData data = null;
+        switch (type) {
             case TYPE_Gank:
-                data=ClipData.newPlainText("text",url);
+                data = ClipData.newPlainText("text", url);
+                break;
+            default:
+                break;
         }
         manager.setPrimaryClip(data);
         view.showTextCopied();
@@ -132,87 +138,90 @@ public class DetailPresenter implements  DetailContract.Presenter {
     @Override
     public void addToOrDeleteFromBookMarks() {
         //表名和id
-        String tmpTable="";
-        String tmpID="";
-        switch (type){
+        String tmpTable = "";
+        String tmpID = "";
+        switch (type) {
             case TYPE_Gank:
-                tmpTable="Gank";
-                tmpID="gank_id";
-                GankNews.Question gank= App.DbLiteOrm.queryById(id,GankNews.Question.class);
-                if (queryIsBooksMarks()){
+                tmpTable = "Gank";
+                tmpID = "gank_id";
+                GankNews.Question gank = App.DbLiteOrm.queryById(id, GankNews.Question.class);
+                if (queryIsBooksMarks()) {
                     view.showDeletedFromBookmarks();
-                    gank.mark=false;
-                }else {
+                    gank.mark = false;
+                } else {
                     view.showAddedToBookmarks();
-                    gank.mark=true;
+                    gank.mark = true;
                 }
                 App.DbLiteOrm.update(gank);
                 break;
             case TYPE_Front:
-                tmpTable="Front";
-                tmpID="front_id";
-                FrontNews.Question front=App.DbLiteOrm.queryById(id,FrontNews.Question.class);
-                if (queryIsBooksMarks()){
+                tmpTable = "Front";
+                tmpID = "front_id";
+                FrontNews.Question front = App.DbLiteOrm.queryById(id, FrontNews.Question.class);
+                if (queryIsBooksMarks()) {
                     view.showDeletedFromBookmarks();
-                    front.mark=false;
-                }else {
+                    front.mark = false;
+                } else {
                     view.showAddedToBookmarks();
-                    front.mark=true;
+                    front.mark = true;
                 }
                 App.DbLiteOrm.update(front);
                 break;
             case TYPE_IOS:
-                tmpTable="IOS";
-                tmpID="ios_id";
-                IosNews.Question ios=App.DbLiteOrm.queryById(id,IosNews.Question.class);
-                if (queryIsBooksMarks()){
+                tmpTable = "IOS";
+                tmpID = "ios_id";
+                IosNews.Question ios = App.DbLiteOrm.queryById(id, IosNews.Question.class);
+                if (queryIsBooksMarks()) {
                     view.showDeletedFromBookmarks();
-                    ios.mark=false;
-                }else {
+                    ios.mark = false;
+                } else {
                     view.showAddedToBookmarks();
-                    ios.mark=true;
+                    ios.mark = true;
                 }
                 App.DbLiteOrm.update(ios);
+                break;
+            default:
+                break;
         }
 //        Log.i(TAG, "addToOrDeleteFromBookMarks: tmpTable:"+tmpTable+" tmpID:"+tmpID+" _id:"+ _id +" queryIsBooksMarks():"+queryIsBooksMarks());
     }
 
     @Override
     public boolean queryIsBooksMarks() {
-        if (_id ==null || type==null){
+        if (_id == null || type == null) {
             view.showLoadingError();
             return false;
         }
         //true为已经收藏 false未收藏
-        switch (type){
+        switch (type) {
             case TYPE_Gank:
-                GankNews.Question gank= App.DbLiteOrm.queryById(id,GankNews.Question.class);
-                OrmLog.i(TAG,gank);
-                boolean isMark=gank.mark;
-                if (isMark){
+                GankNews.Question gank = App.DbLiteOrm.queryById(id, GankNews.Question.class);
+                OrmLog.i(TAG, gank);
+                boolean isMark = gank.mark;
+                if (isMark) {
                     return true;
-                }else {
+                } else {
                     return false;
                 }
 //                return  true;
-            case  TYPE_Front:
-                FrontNews.Question front=App.DbLiteOrm.queryById(id,FrontNews.Question.class);
-                if (front.mark){
+            case TYPE_Front:
+                FrontNews.Question front = App.DbLiteOrm.queryById(id, FrontNews.Question.class);
+                if (front.mark) {
                     return true;
-                }else {
+                } else {
                     return false;
                 }
             case TYPE_IOS:
-                Log.i(TAG, "queryIsBooksMarks: "+id);
-                IosNews.Question ios=App.DbLiteOrm.queryById(id,IosNews.Question.class);
-                OrmLog.i(TAG,ios);
+                Log.i(TAG, "queryIsBooksMarks: " + id);
+                IosNews.Question ios = App.DbLiteOrm.queryById(id, IosNews.Question.class);
+                OrmLog.i(TAG, ios);
                 /*if (ios==null){
                     Log.i(TAG, "queryIsBooksMarks:ios==null ");
                     break;
                 }*/
-                if (ios.mark){
+                if (ios.mark) {
                     return true;
-                }else {
+                } else {
                     return false;
                 }
         }
@@ -221,7 +230,7 @@ public class DetailPresenter implements  DetailContract.Presenter {
 
     @Override
     public void requestData() {
-        if (_id ==null || type==null){
+        if (_id == null || type == null) {
             view.showLoadingError();
             return;
         }
@@ -229,28 +238,28 @@ public class DetailPresenter implements  DetailContract.Presenter {
         view.setTitle(title);
         view.showCover(imgUrl);
 
-        view.setImageMode(sp.getBoolean("no_picture_mode",false));
-        switch (type){
+        view.setImageMode(sp.getBoolean("no_picture_mode", false));
+        switch (type) {
             case TYPE_Gank:
-                if (Network.networkConnected(context)){
+                if (Network.networkConnected(context)) {
                     view.showResultWithoutBody(url);
-                }else {
+                } else {
                     view.showNotNetError();
                     view.stopLoading();
-        }
+                }
                 break;
             case TYPE_Front:
-                if (Network.networkConnected(context)){
+                if (Network.networkConnected(context)) {
                     view.showResultWithoutBody(url);
-                }else {
+                } else {
                     view.showNotNetError();
                     view.stopLoading();
                 }
                 break;
             case TYPE_IOS:
-                if (Network.networkConnected(context)){
+                if (Network.networkConnected(context)) {
                     view.showResultWithoutBody(url);
-                }else {
+                } else {
                     view.showNotNetError();
                     view.stopLoading();
                 }
@@ -261,29 +270,29 @@ public class DetailPresenter implements  DetailContract.Presenter {
     @Override
     public void shareArticleToQQ(MyQQListener listener) {
         //title == desc
-        if (TextUtils.isEmpty(imgUrl)){
-            ShareSingleton.getInstance().shareToQQ((Activity) context,url,"推荐给你一篇文章",title, R.string.app_name, QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE,listener);
-        }else {
-            ShareSingleton.getInstance().shareToQQ((Activity) context,url,"推荐给你一篇文章",title,imgUrl,R.string.app_name, QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE,listener);
+        if (TextUtils.isEmpty(imgUrl)) {
+            ShareSingleton.getInstance().shareToQQ((Activity) context, url, "推荐给你一篇文章", title, R.string.app_name, QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE, listener);
+        } else {
+            ShareSingleton.getInstance().shareToQQ((Activity) context, url, "推荐给你一篇文章", title, imgUrl, R.string.app_name, QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE, listener);
         }
     }
 
     @Override
     public void shareArticleToWx() {
         //title == desc
-        ShareSingleton.getInstance().shareWebToWx(url,"",title,true);
+        ShareSingleton.getInstance().shareWebToWx(url, "", title, true);
     }
 
     @Override
     public void shareArticleToWxCommunity() {
         //title == desc
-        ShareSingleton.getInstance().shareWebToWx(url,"",title,false);
+        ShareSingleton.getInstance().shareWebToWx(url, "", title, false);
     }
 
     @Override
     public void shareArticleToWxCollect() {
         //title == desc
-        ShareSingleton.getInstance().shareWebToWxCollect(url,"干货",title);
+        ShareSingleton.getInstance().shareWebToWxCollect(url, "干货", title);
     }
 
     @Override

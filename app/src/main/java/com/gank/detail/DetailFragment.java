@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -363,13 +364,17 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         //开启application Cache功能
         webview.getSettings().setAppCacheEnabled(false);
 
-//        webview.setWebViewClient(new WebViewClient(){
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                presenter.
-//                return true;
-//            }
-//        });
+        webview.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //解决 net::ERR_UNKNOWN_URL_SCHEME
+                //屏蔽掉错误的重定向url
+                if (url.startsWith("http:") || url.startsWith("https:")){
+                    view.loadUrl(url);
+                }
+                return true;
+            }
+        });
 
     }
 
