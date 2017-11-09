@@ -9,7 +9,7 @@ import com.litesuits.orm.LiteOrm;
 import com.tencent.bugly.crashreport.CrashReport;
 
 /**
- * Created by 11033 on 2017/3/8.
+ * Created by Swy on 2017/3/8.
  */
 
 public class App extends Application {

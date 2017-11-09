@@ -33,7 +33,7 @@ import com.gank.interfaze.MyQQListener;
 import com.tencent.tauth.UiError;
 
 /**
- * Created by 11033 on 2017/3/5.
+ * Created by Swy on 2017/3/5.
  */
 
 public class DetailFragment extends Fragment implements DetailContract.View {

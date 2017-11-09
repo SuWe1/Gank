@@ -24,7 +24,7 @@ import com.litesuits.orm.db.model.ConflictAlgorithm;
 import java.util.ArrayList;
 
 /**
- * Created by 11033 on 2017/3/17.
+ * Created by Swy on 2017/3/17.
  */
 
 public class MeiziPresenter implements MeiziContract.Presenter {

@@ -7,7 +7,7 @@ import com.gank.bean.MeiziNews;
 import java.util.ArrayList;
 
 /**
- * Created by 11033 on 2017/3/15.
+ * Created by Swy on 2017/3/15.
  */
 
 public interface MeiziContract {

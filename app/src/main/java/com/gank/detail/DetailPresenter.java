@@ -25,7 +25,7 @@ import com.litesuits.orm.log.OrmLog;
 import com.tencent.connect.share.QQShare;
 
 /**
- * Created by 11033 on 2017/3/5.
+ * Created by Swy on 2017/3/5.
  */
 
 public class DetailPresenter implements DetailContract.Presenter {
@@ -96,6 +96,8 @@ public class DetailPresenter implements DetailContract.Presenter {
                     break;
                 case TYPE_IOS:
                     intent.setData(Uri.parse(url));
+                    break;
+                default:
                     break;
             }
             context.startActivity(intent);
@@ -224,6 +226,8 @@ public class DetailPresenter implements DetailContract.Presenter {
                 } else {
                     return false;
                 }
+            default:
+                break;
         }
         return false;
     }
@@ -263,6 +267,8 @@ public class DetailPresenter implements DetailContract.Presenter {
                     view.showNotNetError();
                     view.stopLoading();
                 }
+            default:
+                break;
         }
         view.stopLoading();
     }

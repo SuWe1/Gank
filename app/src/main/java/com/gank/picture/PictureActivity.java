@@ -34,7 +34,7 @@ import static com.gank.picture.PicturePresenter.MY_PERMISSIONS_REQUEST_READ_PHON
 import static com.gank.picture.PicturePresenter.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE;
 
 /**
- * Created by 11033 on 2017/3/22.
+ * Created by Swy on 2017/3/22.
  */
 
 public class PictureActivity extends AppCompatActivity implements PictureContract.View{
@@ -178,6 +178,8 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
                 dialog.setContentView(view);
                 dialog.show();
                 return true;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

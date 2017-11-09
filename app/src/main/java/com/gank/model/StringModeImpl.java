@@ -8,7 +8,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.gank.interfaze.OnStringListener;
 
 /**
- * Created by 11033 on 2017/3/4.
+ * Created by Swy on 2017/3/4.
  * onStringListener实现类
  */
 

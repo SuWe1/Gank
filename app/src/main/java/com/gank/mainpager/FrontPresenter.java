@@ -24,7 +24,7 @@ import java.util.Random;
 import static com.gank.app.App.DbLiteOrm;
 
 /**
- * Created by 11033 on 2017/3/11.
+ * Created by Swy on 2017/3/11.
  */
 
 public class FrontPresenter implements FrontContract.Presenter {

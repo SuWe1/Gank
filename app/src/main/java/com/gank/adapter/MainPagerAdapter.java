@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Lizhaotailang on 2016/8/10.
+ * Created by Swy on 2016/8/10.
  * ViewPager适配器
  */
 

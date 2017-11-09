@@ -17,7 +17,7 @@ import com.litesuits.orm.db.assit.QueryBuilder;
 import java.util.ArrayList;
 
 /**
- * Created by 11033 on 2017/3/4.
+ * Created by Swy on 2017/3/4.
  */
 
 public class BookmarksPresenter implements BookmarksContract.Presenter {
@@ -107,6 +107,8 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
                 }else {
                     intent.putExtra("imgUrl", iosQuestion.getImages().get(0));
                 }
+                break;
+            default:
                 break;
         }
         /**

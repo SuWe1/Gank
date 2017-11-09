@@ -10,7 +10,7 @@ import android.view.View;
 import com.gank.R;
 
 /**
- * Created by 11033 on 2017/3/7.
+ * Created by Swy on 2017/3/7.
  */
 
 public class SettingPreferenceFragment extends PreferenceFragmentCompat implements SettingsContract.View {

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 11033 on 2017/3/6.
+ * Created by Swy on 2017/3/6.
  */
 
 public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -132,6 +132,8 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     ((GankViewHolder)holder).textView.setText(question.getDesc());
                 }
                 break;
+                default:
+                    break;
         }
     }
 

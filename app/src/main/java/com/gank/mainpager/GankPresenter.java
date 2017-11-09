@@ -25,7 +25,7 @@ import java.util.Random;
 import static com.gank.app.App.DbLiteOrm;
 
 /**
- * Created by 11033 on 2017/3/4.
+ * Created by Swy on 2017/3/4.
  */
 
 public class GankPresenter implements GankContract.Presenter {

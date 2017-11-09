@@ -9,7 +9,7 @@ import com.litesuits.orm.db.enums.AssignType;
 import java.util.ArrayList;
 
 /**
- * Created by 11033 on 2017/3/17.
+ * Created by Swy on 2017/3/17.
  */
 
 public class MeiziNews {

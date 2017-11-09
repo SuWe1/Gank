@@ -20,7 +20,7 @@ import com.gank.interfaze.OnRecyclerViewOnClickListener;
 import java.util.ArrayList;
 
 /**
- * Created by 11033 on 2017/3/11.
+ * Created by Swy on 2017/3/11.
  */
 
 public class FrontFragment extends Fragment implements FrontContract.View {

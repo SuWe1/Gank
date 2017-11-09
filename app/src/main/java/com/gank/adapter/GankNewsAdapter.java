@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 11033 on 2017/3/4.
+ * Created by Swy on 2017/3/4.
  */
 
 public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -48,6 +48,8 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 return new FooterViewHolder(inflater.inflate(R.layout.list_footer,parent,false));
             case TYPE_NO_IMG:
                 return new NoImageViewHolder(inflater.inflate(R.layout.home_list_item_without_image,parent,false),listener);
+                default:
+                    break;
         }
         return null;
     }

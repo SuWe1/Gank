@@ -40,7 +40,7 @@ import java.util.concurrent.ExecutionException;
 import static android.content.ContentValues.TAG;
 
 /**
- * Created by 11033 on 2017/3/22.
+ * Created by Swy on 2017/3/22.
  */
 
 public class PicturePresenter implements PictureContract.Presenter {

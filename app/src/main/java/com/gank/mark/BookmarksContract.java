@@ -10,7 +10,7 @@ import com.gank.bean.IosNews;
 import java.util.ArrayList;
 
 /**
- * Created by 11033 on 2017/3/4.
+ * Created by SWy on 2017/3/4.
  */
 
 public interface BookmarksContract {

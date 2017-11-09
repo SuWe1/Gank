@@ -91,6 +91,8 @@ public class WelcomeActivity extends AppCompatActivity {
                             btnNext.setVisibility(View.GONE);
                             btnFinish.setVisibility(View.VISIBLE);
                             break;
+                        default:
+                            break;
                     }
                 }
 
@@ -167,6 +169,8 @@ public class WelcomeActivity extends AppCompatActivity {
                 case INIT_DATA_IN_FRIST_COME_APP_FINISH:
                     btnFinish.setText(R.string.welcome_finish);
                     btnFinish.setEnabled(true);
+                    break;
+                default:
                     break;
             }
         }

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 11033 on 2017/3/17.
+ * Created by Swy on 2017/3/17.
  */
 
 public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -52,6 +52,8 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             return new MeiziViewHolder(inflater.inflate(R.layout.home_list_item_meizi,parent,false),listener);
             case TYPE_FOOTER:
                 return new FooterViewHolder(inflater.inflate(R.layout.list_footer,parent,false));
+            default:
+                break;
         }
         return null;
     }

@@ -21,7 +21,7 @@ import com.wx.goodview.GoodView;
 import java.util.ArrayList;
 
 /**
- * Created by 11033 on 2017/3/15.
+ * Created by Swy on 2017/3/15.
  */
 
 public class MeiziFragment extends Fragment implements MeiziContract.View {
@@ -138,6 +138,8 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
                             goodView.setText("+1");
                             goodView.setImage(R.drawable.ic_love_red);
                             goodView.show(v);
+                            break;
+                        default:
                             break;
                     }
 

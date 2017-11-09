@@ -20,7 +20,7 @@ import com.gank.adapter.MainPagerAdapter;
 import java.util.Random;
 
 /**
- * Created by 11033 on 2017/3/4.
+ * Created by Swy on 2017/3/4.
  */
 
 public class MainFragment extends Fragment {
@@ -170,6 +170,8 @@ public class MainFragment extends Fragment {
                 break;
             case 2:
                 iosPresenter.LookAround();
+                break;
+            default:
                 break;
         }
 

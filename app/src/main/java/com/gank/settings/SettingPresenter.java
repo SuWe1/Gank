@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 import com.gank.R;
 
 /**
- * Created by 11033 on 2017/3/7.
+ * Created by Swy on 2017/3/7.
  */
 
 public class SettingPresenter implements SettingsContract.Presenter {
@@ -37,7 +37,7 @@ public class SettingPresenter implements SettingsContract.Presenter {
         editor.apply();
     }
 
-    private Handler handler=new Handler(){
+    private final Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

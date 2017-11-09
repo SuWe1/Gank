@@ -9,7 +9,7 @@ import com.gank.R;
 import com.gank.bean.BeanTeype;
 
 /**
- * Created by 11033 on 2017/3/5.
+ * Created by Swy on 2017/3/5.
  */
 
 public class DetailActivity extends AppCompatActivity{

@@ -46,6 +46,8 @@ public class IosNewsAdater extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 return new NoImageViewHolder(inflater.inflate(R.layout.home_list_item_without_image,parent,false),listener);
             case TYPE_FOOTER:
                 return new FooterViewHolder(inflater.inflate(R.layout.list_footer,parent,false));
+            default:
+                break;
         }
         return null;
     }

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 11033 on 2017/3/18.
+ * Created by Swy on 2017/3/18.
  */
 
 public class FrontNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -47,6 +47,8 @@ public class FrontNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 return new FrontNewsAdapter.FooterViewHolder(inflater.inflate(R.layout.list_footer,parent,false));
             case TYPE_NO_IMG:
                 return new FrontNewsAdapter.NoImageViewHolder(inflater.inflate(R.layout.home_list_item_without_image,parent,false),listener);
+                default:
+                    break;
         }
         return null;
     }

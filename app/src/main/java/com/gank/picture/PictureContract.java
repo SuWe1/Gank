@@ -7,7 +7,7 @@ import com.gank.BaseView;
 import com.gank.interfaze.MyQQListener;
 
 /**
- * Created by 11033 on 2017/3/22.
+ * Created by Swy on 2017/3/22.
  */
 
 public interface PictureContract {

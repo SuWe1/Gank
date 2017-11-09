@@ -6,7 +6,7 @@ import com.gank.BasePresenter;
 import com.gank.BaseView;
 
 /**
- * Created by 11033 on 2017/3/7.
+ * Created by Swy on 2017/3/7.
  */
 
 public interface SettingsContract {

@@ -18,7 +18,7 @@ import com.gank.db.DatabaseHelper;
 import java.util.Calendar;
 
 /**
- * Created by 11033 on 2017/3/4.
+ * Created by Swy on 2017/3/4.
  * 数据表中还有一个字段--gank_content没有存储
  * 这是因为我们在请求知乎消息列表的时候，并没有返回消息的详细内容呀。
  * 不过详细内容我们还是需要缓存的，网络请求在UI线程上进行可能会引起ANR，那更好的解决办法就是在Service里面完成了。

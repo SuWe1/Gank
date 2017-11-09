@@ -21,7 +21,7 @@ import com.gank.interfaze.OnRecyclerViewOnClickListener;
 import java.util.ArrayList;
 
 /**
- * Created by 11033 on 2017/3/4.
+ * Created by Swy on 2017/3/4.
  */
 
 public class  BookmarksFragment extends Fragment implements BookmarksContract.View {
