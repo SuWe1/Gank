@@ -53,7 +53,7 @@ public class MeiziPresenter implements MeiziContract.Presenter {
             view.showLoading();
         }
         if (Network.networkConnected(context)){
-            mode.load(Api.Gank_Meizi + PagerNum, new OnStringListener() {
+            mode.load(Api.GANK_MEIZI + PagerNum, new OnStringListener() {
                 @Override
                 public void onSuccess(String result) {
                     try {

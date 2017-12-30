@@ -3,6 +3,7 @@ package com.gank.mainpager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,14 +31,13 @@ public class MainFragment extends Fragment {
     private MainPagerAdapter adapter;
     private GankFragment gankFragment;
     private FrontFragment frontFragment;
-//    private MeiziFragment meiziFragment;
     private IosFragment iosFragment;
     private GankPresenter gankPresenter;
     private FrontPresenter frontPresenter;
-//    private MeiziPresenter meiziPresenter;
     private IosPresenter iosPresenter;
 
     private TabLayout tabLayout;
+    private FloatingActionButton fab;
 
     public MainFragment() {
     }
@@ -66,17 +66,14 @@ public class MainFragment extends Fragment {
             FragmentManager manager=getChildFragmentManager();
             gankFragment= (GankFragment) manager.getFragment(savedInstanceState,"gank");
             frontFragment= (FrontFragment) manager.getFragment(savedInstanceState,"front");
-//            meiziFragment= (MeiziFragment) manager.getFragment(savedInstanceState,"meizi");
             iosFragment= (IosFragment) manager.getFragment(savedInstanceState,"ios");
         }else {
             frontFragment=FrontFragment.newInstance();
             gankFragment=GankFragment.newInstance();
-//            meiziFragment=meiziFragment.newInstance();
             iosFragment=IosFragment.newInstance();
         }
         gankPresenter=new GankPresenter(context,gankFragment);
         frontPresenter=new FrontPresenter(context,frontFragment);
-//        meiziPresenter=new MeiziPresenter(context,meiziFragment);
         iosPresenter=new IosPresenter(iosFragment,context);
     }
 
@@ -126,6 +123,13 @@ public class MainFragment extends Fragment {
         //当我们的tab选择时，让viewpager选中对应的item。
         //setupWithViewPager必须在ViewPager.setAdapter()之后调用
         tabLayout.setupWithViewPager(viewPager);
+//        fab = (FloatingActionButton) v.findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -143,7 +147,6 @@ public class MainFragment extends Fragment {
             FragmentManager manager=getChildFragmentManager();
             manager.putFragment(outState,"gank",gankFragment);
             manager.putFragment(outState,"front",frontFragment);
-//            manager.putFragment(outState,"meizi",meiziFragment);
             manager.putFragment(outState,"ios",iosFragment);
         }
 
@@ -151,7 +154,7 @@ public class MainFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.action_look_around){
+        if (item.getItemId()==R.id.action_search){
             lookAround();
         }
         return true;

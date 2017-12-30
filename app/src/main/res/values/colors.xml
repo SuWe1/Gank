@@ -21,4 +21,9 @@
     <color name="lime_500">#CDDC39</color>
     <color name="amber_500">#FFC107</color>
     <color name="pink_500">#E91E63</color>
+
+    <!-- 字体颜色-->
+    <color name="font_content_color">#263238</color>
+    <color name="font_date_color">#8A898B</color>
+    <color name="font_name_color">#8A898B</color>
 </resources>

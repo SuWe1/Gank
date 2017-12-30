@@ -56,7 +56,7 @@ public class IosPresenter implements IosContract.Presenter {
             view.showLoading();
         }
         if (Network.networkConnected(context)){
-            model.load(Api.Gank_IOS + PagerNum, new OnStringListener() {
+            model.load(Api.GANK_IOS + PagerNum, new OnStringListener() {
                 @Override
                 public void onSuccess(String result) {
                     IosNews news=gson.fromJson(result,IosNews.class);

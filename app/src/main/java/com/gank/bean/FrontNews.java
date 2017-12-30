@@ -51,6 +51,27 @@ public class FrontNews {
         @Column(COL_MARK)
         public boolean mark=false;
 
+        @Column("publishedAt")
+        private String publishedAt;
+        @Column("who")
+        private String who;
+
+        public String getPublishedAt() {
+            return publishedAt;
+        }
+
+        public void setPublishedAt(String publishedAt) {
+            this.publishedAt = publishedAt;
+        }
+
+        public String getWho() {
+            return who;
+        }
+
+        public void setWho(String who) {
+            this.who = who;
+        }
+
         public int getId() {
             return id;
         }

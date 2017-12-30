@@ -59,8 +59,8 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (!(holder instanceof FooterViewHolder)){
             GankNews.Question item=list.get(position);
             if (item!=null){
-
                 if (holder instanceof NormalViewHolder){
+                    NormalViewHolder normalViewHolder= (NormalViewHolder) holder;
                     Glide.with(context)
                             .load(item.getImages().get(0))
                             .asBitmap()
@@ -69,9 +69,15 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             .error(R.mipmap.loading)
                             .centerCrop()
                             .into(((NormalViewHolder) holder).imageView);
-                    ((NormalViewHolder) holder).textView.setText(item.getDesc());
+                    normalViewHolder.textViewTitle.setText(item.getDesc());
+                    String time =item.getPublishedAt().substring(0,10);
+                    normalViewHolder.textViewDate.setText(time);
+                    normalViewHolder.textViewName.setText(item.getWho());
                 }else if (holder instanceof NoImageViewHolder){
-                    ((NoImageViewHolder) holder).textViewNoImg.setText(item.getDesc());
+                    NoImageViewHolder noImageViewHolder= (NoImageViewHolder) holder;
+                    noImageViewHolder.textViewNoImg.setText(item.getDesc());
+                    noImageViewHolder.textViewDate.setText(item.getPublishedAt().substring(0,10));
+                    noImageViewHolder.textViewName.setText(item.getWho());
                 }
             }
         }
@@ -100,47 +106,6 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.listener=listener;
     }
 
-    class NormalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-         ImageView imageView;
-         TextView textView;
-         OnRecyclerViewOnClickListener listener;
-
-        public NormalViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
-            super(itemView);
-            imageView= (ImageView) itemView.findViewById(R.id.imageViewCover);
-            textView= (TextView) itemView.findViewById(R.id.textViewTitle);
-            this.listener=listener;
-            //设置监听
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (listener!=null){
-                listener.onItemClick(v,getLayoutPosition());
-            }
-        }
-    }
-
-    class NoImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-         TextView textViewNoImg;
-        OnRecyclerViewOnClickListener listener;
-        public NoImageViewHolder(View itemView ,OnRecyclerViewOnClickListener listener) {
-            super(itemView);
-            textViewNoImg = (TextView) itemView.findViewById(R.id.textViewTitle);
-            this.listener=listener;
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (listener!=null){
-                listener.onItemClick(v,getLayoutPosition());
-            }
-        }
-    }
     class FooterViewHolder extends RecyclerView.ViewHolder{
         public FooterViewHolder(View itemView) {
             super(itemView);

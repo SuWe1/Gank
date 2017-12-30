@@ -52,7 +52,7 @@ public class FrontPresenter implements FrontContract.Presenter {
             view.showLoading();
         }
         if (Network.networkConnected(context)){
-            model.load(Api.Gank_Front + PagerNum, new OnStringListener() {
+            model.load(Api.GANK_FRONT + PagerNum, new OnStringListener() {
                 @Override
                 public void onSuccess(String result) {
                     try {

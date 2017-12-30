@@ -59,7 +59,7 @@ public class GankPresenter implements GankContract.Presenter {
             view.showLoading();
         }
         if (Network.networkConnected(context)) {
-            model.load(Api.Gank_Android + PagerNum, new OnStringListener() {
+            model.load(Api.GANK_ANDROID + PagerNum, new OnStringListener() {
                 @Override
                 public void onSuccess(String result) {
                     try {
