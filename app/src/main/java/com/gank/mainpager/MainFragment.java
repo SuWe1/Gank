@@ -14,7 +14,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
+import com.example.searchview.HistorySearchView;
 import com.gank.R;
 import com.gank.adapter.MainPagerAdapter;
 
@@ -38,6 +40,7 @@ public class MainFragment extends Fragment {
 
     private TabLayout tabLayout;
     private FloatingActionButton fab;
+    private HistorySearchView historySearchView;
 
     public MainFragment() {
     }
@@ -130,6 +133,44 @@ public class MainFragment extends Fragment {
 //
 //            }
 //        });
+        historySearchView= (HistorySearchView) v.findViewById(R.id.search_view);
+        historySearchView.setOnQueryTextListener(new HistorySearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        historySearchView.setSearchViewListener(new HistorySearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewOpened() {
+
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+
+            }
+        });
+//        historySearchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                // Do something when the suggestion list is clicked.
+//                String suggestion = historySearchView.getSuggestionAtPosition(position);
+
+//                historySearchView.setQuery(suggestion, false);
+//            }
+//        });
+//        historySearchView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                return false;
+//            }
+//        });
     }
 
     @Override
@@ -155,7 +196,7 @@ public class MainFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()==R.id.action_search){
-            lookAround();
+            historySearchView.openSearch();
         }
         return true;
     }
@@ -177,8 +218,9 @@ public class MainFragment extends Fragment {
             default:
                 break;
         }
-
     }
+
+
      public MainPagerAdapter getAdapter(){
         return adapter;
     }

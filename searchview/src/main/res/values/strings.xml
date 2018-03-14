@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SearchView</string>
+    <string name="edit_text_hint">Search...</string>
+    <string name="action_back_description">返回按钮</string>
+    <string name="search_bar_description">搜索栏</string>
+    <string name="action_clear_description">清除</string>
+</resources>

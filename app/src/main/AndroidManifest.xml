@@ -89,6 +89,14 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             />
 
+        <provider
+            android:name="com.example.searchview.db.HistoryProvider"
+            android:authorities="com.gank.app.materialsearchview.searchhistorydatabase"
+            android:exported="false"
+            android:protectionLevel="signature"
+            android:syncable="true"/>
+
+
     </application>
 
 </manifest>

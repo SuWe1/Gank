@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.hide(bookmarksfragment);
         fragmentTransaction.hide(meiziFragment);
         fragmentTransaction.commit();
-        toolbar.setTitle(getResources().getString(R.string.app_name));
+        toolbar.setTitle(getResources().getString(R.string.nav_default));
     }
 
     // 显示BookmarksFragment并设置Title
