@@ -183,10 +183,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         sp.edit().putInt("theme",1).apply();
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     }
-                    getWindow().setWindowAnimations(R.style.WindowsAnimationonChange);
+//                    getWindow().setWindowAnimations(R.style.WindowsAnimationonChange);
 //                    MainActivity.this.recreate();
                     Intent intent = getIntent();
                     finish();
+                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                     startActivity(intent);
                 }
 

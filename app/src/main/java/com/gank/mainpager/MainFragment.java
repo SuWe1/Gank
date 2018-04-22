@@ -133,29 +133,29 @@ public class MainFragment extends Fragment {
 //
 //            }
 //        });
-        historySearchView= (HistorySearchView) v.findViewById(R.id.search_view);
-        historySearchView.setOnQueryTextListener(new HistorySearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        historySearchView.setSearchViewListener(new HistorySearchView.SearchViewListener() {
-            @Override
-            public void onSearchViewOpened() {
-
-            }
-
-            @Override
-            public void onSearchViewClosed() {
-
-            }
-        });
+//        historySearchView= (HistorySearchView) v.findViewById(R.id.search_view);
+//        historySearchView.setOnQueryTextListener(new HistorySearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
+//        historySearchView.setSearchViewListener(new HistorySearchView.SearchViewListener() {
+//            @Override
+//            public void onSearchViewOpened() {
+//
+//            }
+//
+//            @Override
+//            public void onSearchViewClosed() {
+//
+//            }
+//        });
 //        historySearchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -195,9 +195,9 @@ public class MainFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.action_search){
-            historySearchView.openSearch();
-        }
+//        if (item.getItemId()==R.id.action_search){
+//            historySearchView.openSearch();
+//        }
         return true;
     }
     //随机读取android  前端

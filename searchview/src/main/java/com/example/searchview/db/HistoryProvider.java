@@ -26,27 +26,28 @@ public class HistoryProvider extends ContentProvider {
     private static final int SEARCH_HISTORY_ID = 102;
     private static final int SEARCH_HISTORY_IS_HISTORY = 103;
 
-    private static final UriMatcher mUriMatcher=buildUriMatcher();
+    private static final UriMatcher mUriMatcher = buildUriMatcher();
 
     private HistoryDbHelper dbHelper;
 
     /**
      * uri匹配 返回对应code码  uri格式：content:.// + authority+path+id
+     * <p>
+     * --常量 UriMatcher.NO_MATCH 表示不匹配任何路径的返回码
+     * <p>
+     * --# 号为通配符
+     * <p>
+     * --* 号为任意字符
+     * <p>
+     * <p>
+     * ContentUris 类通过ID: parseId(uri)获取Uri路径后面的ID部分或者通过withAppendedId方法，为该Uri加上ID
      *
-     --常量 UriMatcher.NO_MATCH 表示不匹配任何路径的返回码
-
-     --# 号为通配符
-
-     --* 号为任意字符
-
-
-     ContentUris 类通过ID: parseId(uri)获取Uri路径后面的ID部分或者通过withAppendedId方法，为该Uri加上ID
      * @return
      */
-    public static UriMatcher buildUriMatcher(){
-        String content= HistoryContract.CONTENT_AUTHORITY;
-        UriMatcher  matcher=new UriMatcher(UriMatcher.NO_MATCH);
-        matcher.addURI(content,HistoryContract.PATH_HISTORY,SEARCH_HISTORY);
+    public static UriMatcher buildUriMatcher() {
+        String content = HistoryContract.CONTENT_AUTHORITY;
+        UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+        matcher.addURI(content, HistoryContract.PATH_HISTORY, SEARCH_HISTORY);
         matcher.addURI(content, HistoryContract.PATH_HISTORY + "/#", SEARCH_HISTORY_DATE);
         matcher.addURI(content, HistoryContract.PATH_HISTORY + "/#", SEARCH_HISTORY_ID);
         matcher.addURI(content, HistoryContract.PATH_HISTORY + "/#", SEARCH_HISTORY_IS_HISTORY);
@@ -55,18 +56,18 @@ public class HistoryProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        dbHelper=new HistoryDbHelper(getContext());
+        dbHelper = new HistoryDbHelper(getContext());
         return true;
     }
 
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        final SQLiteDatabase db=dbHelper.getReadableDatabase();
+        final SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor mCursor;
-        switch (mUriMatcher.match(uri)){
+        switch (mUriMatcher.match(uri)) {
             case SEARCH_HISTORY:
-                mCursor=db.query(HistoryContract.HistoryEntry.TABLE_NAME,
+                mCursor = db.query(HistoryContract.HistoryEntry.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -75,11 +76,11 @@ public class HistoryProvider extends ContentProvider {
                         sortOrder
                 );
                 break;
-            case  SEARCH_HISTORY_DATE:
-                long date= ContentUris.parseId(uri);
-                mCursor=db.query(HistoryContract.HistoryEntry.TABLE_NAME,
+            case SEARCH_HISTORY_DATE:
+                long date = ContentUris.parseId(uri);
+                mCursor = db.query(HistoryContract.HistoryEntry.TABLE_NAME,
                         projection,
-                        HistoryContract.HistoryEntry.COLUMN_INSERT_DATE+" =?",
+                        HistoryContract.HistoryEntry.COLUMN_INSERT_DATE + " =?",
                         new String[]{String.valueOf(date)},
                         null,
                         null,
@@ -87,10 +88,10 @@ public class HistoryProvider extends ContentProvider {
                 );
                 break;
             case SEARCH_HISTORY_ID:
-                long id= ContentUris.parseId(uri);
-                mCursor=db.query(HistoryContract.HistoryEntry.TABLE_NAME,
+                long id = ContentUris.parseId(uri);
+                mCursor = db.query(HistoryContract.HistoryEntry.TABLE_NAME,
                         projection,
-                        HistoryContract.HistoryEntry.COLUMN_INSERT_DATE+" =?",
+                        HistoryContract.HistoryEntry.COLUMN_INSERT_DATE + " =?",
                         new String[]{String.valueOf(id)},
                         null,
                         null,
@@ -113,10 +114,10 @@ public class HistoryProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown Uri: " + uri);
         }
-        Context context=getContext();
-        if (context!=null){
+        Context context = getContext();
+        if (context != null) {
             //cursor自动更新
-            mCursor.setNotificationUri(context.getContentResolver(),uri);
+            mCursor.setNotificationUri(context.getContentResolver(), uri);
         }
         return mCursor;
     }
@@ -144,39 +145,39 @@ public class HistoryProvider extends ContentProvider {
 
         long _id;
         Uri retUri;
-        switch (mUriMatcher.match(uri)){
+        switch (mUriMatcher.match(uri)) {
             case SEARCH_HISTORY:
-                _id=db.insert(HistoryContract.HistoryEntry.TABLE_NAME,null,values);
-                if (_id>0){
-                   retUri= HistoryContract.HistoryEntry.buildHistoryUri(_id);
-                }else {
-                    throw  new UnsupportedOperationException("Unable to insert rows into "+uri);
+                _id = db.insert(HistoryContract.HistoryEntry.TABLE_NAME, null, values);
+                if (_id > 0) {
+                    retUri = HistoryContract.HistoryEntry.buildHistoryUri(_id);
+                } else {
+                    throw new UnsupportedOperationException("Unable to insert rows into " + uri);
                 }
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown Uri" + uri);
         }
-        return retUri;       -9
+        return retUri;
     }
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        SQLiteDatabase db=dbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         // Number of rows effected.
         int rows;
-        switch (mUriMatcher.match(uri)){
+        switch (mUriMatcher.match(uri)) {
             case SEARCH_HISTORY:
-                rows=db.delete(HistoryContract.HistoryEntry.TABLE_NAME,
-                       selection,selectionArgs
+                rows = db.delete(HistoryContract.HistoryEntry.TABLE_NAME,
+                        selection, selectionArgs
                 );
                 break;
             default:
-                throw new UnknownFormatConversionException("Unknown Uri"+uri);
+                throw new UnknownFormatConversionException("Unknown Uri" + uri);
         }
-        if (selection == null || rows !=0){
-            Context context=getContext();
-            if (context!=null){
-                context.getContentResolver().notifyChange(uri,null);
+        if (selection == null || rows != 0) {
+            Context context = getContext();
+            if (context != null) {
+                context.getContentResolver().notifyChange(uri, null);
             }
         }
         return rows;
@@ -184,20 +185,20 @@ public class HistoryProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        SQLiteDatabase db=dbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         // Number of rows effected.
         int rows;
-        switch (mUriMatcher.match(uri)){
+        switch (mUriMatcher.match(uri)) {
             case SEARCH_HISTORY:
-                rows=db.update(HistoryContract.HistoryEntry.TABLE_NAME,values,selection,selectionArgs);
+                rows = db.update(HistoryContract.HistoryEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             default:
-                throw new UnknownFormatConversionException("Unknown Uri "+uri);
+                throw new UnknownFormatConversionException("Unknown Uri " + uri);
         }
-        if (rows!=0){
-            Context context=getContext();
-            if (context!=null){
-                context.getContentResolver().notifyChange(uri,null);
+        if (rows != 0) {
+            Context context = getContext();
+            if (context != null) {
+                context.getContentResolver().notifyChange(uri, null);
             }
         }
         return rows;
