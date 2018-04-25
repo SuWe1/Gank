@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textViewType"
-    android:background="@color/BookMarkHeader"
-    android:paddingLeft="8dp"
-    android:paddingStart="8dp"
-    android:paddingRight="8dp"
-    android:paddingEnd="8dp"
-    android:paddingTop="8dp"
-    android:gravity="center_vertical"
-    android:textColor="@color/colorPrimary"
-    android:textAllCaps="false"
-    >
+    android:layout_height="wrap_content">
 
-</TextView>
+    <View
+        android:layout_width="3dp"
+        android:layout_height="12dp"
+        android:background="@color/mark_title_color"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginLeft="8dp"/>
+    <TextView
+        android:id="@+id/textViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/BookMarkHeader"
+        android:gravity="center_vertical"
+        android:textAllCaps="false"
+        android:textColor="@color/textColorPrimary" />
+
+</LinearLayout>

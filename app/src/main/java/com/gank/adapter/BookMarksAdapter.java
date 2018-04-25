@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.R;
+import com.gank.bean.BaseBean;
 import com.gank.bean.FrontNews;
 import com.gank.bean.GankNews;
 import com.gank.bean.IosNews;
@@ -26,9 +27,7 @@ import java.util.List;
 public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private LayoutInflater inflater;
-    private ArrayList<GankNews.Question> gankList;
-    private ArrayList<FrontNews.Question> frontList;
-    private ArrayList<IosNews.Question> iosList;
+    private ArrayList<BaseBean> newsList;
 
 
     private OnRecyclerViewOnClickListener listener;
@@ -41,99 +40,94 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static final int TYPE_IOS_WITH_HEADER = 5;
 
     private List<Integer> types;
-    public BookMarksAdapter(Context context, ArrayList<GankNews.Question> gankList, ArrayList<FrontNews.Question> frontList , ArrayList<IosNews.Question> iosList,ArrayList<Integer> types) {
+
+    public BookMarksAdapter(Context context, ArrayList<BaseBean> newsList, ArrayList<Integer> types) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.gankList = gankList;
-        this.frontList=frontList;
-        this.iosList=iosList;
-        this.types=types;
+        this.types = types;
+        this.newsList = newsList;
     }
 
 
-    public void setItemOnClickListener(OnRecyclerViewOnClickListener listener){
-        this.listener=listener;
+    public void setItemOnClickListener(OnRecyclerViewOnClickListener listener) {
+        this.listener = listener;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch (viewType){
+        switch (viewType) {
             case TYPE_Front_NORMAL:
             case TYPE_Gank_NORMAL:
             case TYPE_IOS_NORMAL:
-                return new GankViewHolder(inflater.inflate(R.layout.home_list_item_layout,parent,false),this.listener);
+                return new GankViewHolder(inflater.inflate(R.layout.home_list_item_layout, parent, false), this.listener);
+            default:
+                return new GankTitleViewHolder(inflater.inflate(R.layout.bookmark_header, parent, false));
         }
-        return new GankTitleViewHolder(inflater.inflate(R.layout.bookmark_header,parent,false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        switch (types.get(position)){
+        switch (types.get(position)) {
             case TYPE_Gank_WITH_HEADER:
-                ((GankTitleViewHolder)holder).textView.setText(context.getResources().getString(R.string.bookmarks_Android_title));
+                ((GankTitleViewHolder) holder).textView.setText(context.getResources().getString(R.string.bookmarks_Android_title));
                 break;
             case TYPE_Gank_NORMAL:
-                if (!gankList.isEmpty()){
-                    //第一个为title
-                    GankNews.Question ad=gankList.get(position-1);
-                    if (ad.getImages()==null){
-                        ((GankViewHolder)holder).imageView.setVisibility(View.VISIBLE);
-                    }else {
-                        Glide.with(context)
-                                .load(ad.getImages().get(0))
-                                .asBitmap()
-                                .centerCrop()
-                                .placeholder(R.mipmap.loading)
-                                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                .error(R.mipmap.loading)
-                                .into(((GankViewHolder)holder).imageView);
-                    }
-                    ((GankViewHolder)holder).textView.setText(ad.getDesc());
+                //第一个为title
+                GankNews.Question ad = (GankNews.Question) newsList.get(position);
+                if (ad.getImages() == null) {
+                    ((GankViewHolder) holder).imageView.setVisibility(View.VISIBLE);
+                } else {
+                    Glide.with(context)
+                            .load(ad.getImages().get(0))
+                            .asBitmap()
+                            .centerCrop()
+                            .placeholder(R.mipmap.loading)
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .error(R.mipmap.loading)
+                            .into(((GankViewHolder) holder).imageView);
                 }
+                ((GankViewHolder) holder).textView.setText(ad.getDesc());
                 break;
             case TYPE_Front_WITH_HEADER:
-                ((GankTitleViewHolder)holder).textView.setText(context.getResources().getString(R.string.bookmarks_Front_title));
+                ((GankTitleViewHolder) holder).textView.setText(context.getResources().getString(R.string.bookmarks_Front_title));
                 break;
             case TYPE_Front_NORMAL:
-                if (!frontList.isEmpty()){
-                    FrontNews.Question question=frontList.get(position-gankList.size()-2);
-                    if (question.getImages()==null){
-                        ((GankViewHolder)holder).imageView.setVisibility(View.VISIBLE);
-                    }else {
-                        Glide.with(context)
-                                .load(question.getImages().get(0))
-                                .asBitmap()
-                                .centerCrop()
-                                .placeholder(R.mipmap.loading)
-                                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                .error(R.mipmap.loading)
-                                .into(((GankViewHolder)holder).imageView);
-                    }
-                    ((GankViewHolder)holder).textView.setText(question.getDesc());
+                FrontNews.Question front = (FrontNews.Question) newsList.get(position);
+                if (front.getImages() == null) {
+                    ((GankViewHolder) holder).imageView.setVisibility(View.VISIBLE);
+                } else {
+                    Glide.with(context)
+                            .load(front.getImages().get(0))
+                            .asBitmap()
+                            .centerCrop()
+                            .placeholder(R.mipmap.loading)
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .error(R.mipmap.loading)
+                            .into(((GankViewHolder) holder).imageView);
                 }
+                ((GankViewHolder) holder).textView.setText(front.getDesc());
                 break;
             case TYPE_IOS_WITH_HEADER:
-                ((GankTitleViewHolder)holder).textView.setText(context.getResources().getString(R.string.bookmarks_Ios_title));
+                ((GankTitleViewHolder) holder).textView.setText(context.getResources().getString(R.string.bookmarks_Ios_title));
                 break;
             case TYPE_IOS_NORMAL:
-                if (!iosList.isEmpty()){
-                    IosNews.Question question=iosList.get(position-gankList.size()-frontList.size()-3);
-                    if (question.getImages()==null){
-                        ((GankViewHolder)holder).imageView.setVisibility(View.VISIBLE);
-                    }else {
-                        Glide.with(context)
-                                .load(question.getImages().get(0))
-                                .asBitmap()
-                                .centerCrop()
-                                .placeholder(R.mipmap.loading)
-                                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                .error(R.mipmap.loading)
-                                .into(((GankViewHolder)holder).imageView);
-                    }
-                    ((GankViewHolder)holder).textView.setText(question.getDesc());
+                IosNews.Question ios = (IosNews.Question) newsList.get(position);
+                if (ios.getImages() == null) {
+                    ((GankViewHolder) holder).imageView.setVisibility(View.VISIBLE);
+                } else {
+                    Glide.with(context)
+                            .load(ios.getImages().get(0))
+                            .asBitmap()
+                            .centerCrop()
+                            .placeholder(R.mipmap.loading)
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .error(R.mipmap.loading)
+                            .into(((GankViewHolder) holder).imageView);
                 }
+                ((GankViewHolder) holder).textView.setText(ios.getDesc());
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 
@@ -156,26 +150,26 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public GankViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
             super(itemView);
             this.listener = listener;
-            imageView= (ImageView) itemView.findViewById(R.id.imageViewCover);
-            textView= (TextView) itemView.findViewById(R.id.textViewTitle);
+            imageView = (ImageView) itemView.findViewById(R.id.imageViewCover);
+            textView = (TextView) itemView.findViewById(R.id.textViewTitle);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if (listener!=null){
-                listener.onItemClick(v,getLayoutPosition());
+            if (listener != null) {
+                listener.onItemClick(v, getLayoutPosition());
             }
         }
     }
 
     //分类 没有点击事件  考虑能不能用收缩列表
-    class GankTitleViewHolder extends RecyclerView.ViewHolder{
+    class GankTitleViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
 
         public GankTitleViewHolder(View itemView) {
             super(itemView);
-            textView= (TextView) itemView.findViewById(R.id.textViewType);
+            textView = (TextView) itemView.findViewById(R.id.textViewType);
         }
     }
 }

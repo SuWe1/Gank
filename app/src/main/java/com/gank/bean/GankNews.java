@@ -1,5 +1,6 @@
 package com.gank.bean;
 
+import com.gank.adapter.BookMarksAdapter;
 import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.Default;
 import com.litesuits.orm.db.annotation.PrimaryKey;
@@ -12,9 +13,10 @@ import java.util.ArrayList;
  * Created by Swy on 2017/3/4.
  */
 
-public class GankNews  {
+public class GankNews extends BaseBean {
     private String error;
     private ArrayList<Question> results;
+
 
     public String getError() {
         return error;
@@ -32,9 +34,15 @@ public class GankNews  {
         this.results = results;
     }
 
-    @Table("Gank") public class Question{
-        public static final String COL_MARK= "mark";
-        public static final String COL_ID= "_id";
+    @Table("Gank")
+    public class Question extends BaseBean {
+
+        public Question() {
+            this.beanTeype = BeanTeype.TYPE_Gank;
+        }
+
+        public static final String COL_MARK = "mark";
+        public static final String COL_ID = "_id";
         @PrimaryKey(AssignType.AUTO_INCREMENT)
         private int id;
         @Column("images")
@@ -49,7 +57,7 @@ public class GankNews  {
         private String url;
         @Default("false")
         @Column(COL_MARK)
-        public boolean mark=false;
+        public boolean mark = false;
 
         @Column("publishedAt")
         private String publishedAt;

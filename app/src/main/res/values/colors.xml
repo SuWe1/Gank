@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#4865D3  </color>
-    <color name="colorPrimaryDark">#337EE3 </color>
+    <color name="colorPrimary">#4865D3</color>
+    <color name="colorPrimaryDark">#337EE3</color>
     <color name="colorAccent">#009688</color>
     <color name="detailTitleColor">#5d92d9</color>
     <color name="textColorPrimary">#616161</color>
     <color name="textColorReaded">#b4b4b4</color>
     <color name="viewBackground">@android:color/white</color>
-    <color name="FloatingActionBarBackground">#337EE3  </color>
-    <color name="BookMarkHeader">#F7F7F7 </color>
+    <color name="FloatingActionBarBackground">#337EE3</color>
+    <color name="BookMarkHeader">#F7F7F7</color>
     <color name="PicBackground">#000</color>
 
     <!--Welcome Pager-->
@@ -26,4 +26,9 @@
     <color name="font_content_color">#263238</color>
     <color name="font_date_color">#8A898B</color>
     <color name="font_name_color">#8A898B</color>
+
+    <!--其他-->
+    <color name="mark_title_color">#6471FB</color>
+    <color name="data_empty_bg">#FFFFFF</color>
+    <color name="data_empty_text_color">#717273</color>
 </resources>

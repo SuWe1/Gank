@@ -113,4 +113,8 @@
     <string name="errcode_unsupported">Does not support errors</string>
     <string name="errcode_unknown">Send back</string>
 
+
+    <!--other-->
+    <string name="no_data">No Data</string>
+
 </resources>

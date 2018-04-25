@@ -114,4 +114,6 @@
     <string name="errcode_unsupported">不支持错误</string>
     <string name="errcode_unknown">发送返回</string>
 
+    <!--other-->
+    <string name="no_data">无收藏</string>
 </resources>

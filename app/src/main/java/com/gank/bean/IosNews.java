@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by Swy on 2017/6/9.
  */
 
-public class IosNews {
+public class IosNews extends BaseBean {
     private String error;
     private ArrayList<Question> results;
 
@@ -32,9 +32,15 @@ public class IosNews {
         this.results = results;
     }
 
-    @Table("IOS") public class Question{
-        public static final String COL_MARK= "mark";
-        public static final String COL_ID= "_id";
+    @Table("IOS")
+    public class Question extends BaseBean {
+
+        public Question() {
+            this.beanTeype = BeanTeype.TYPE_IOS;
+        }
+
+        public static final String COL_MARK = "mark";
+        public static final String COL_ID = "_id";
         @PrimaryKey(AssignType.AUTO_INCREMENT)
         private int id;
         @Column("images")
@@ -49,7 +55,7 @@ public class IosNews {
         private String url;
         @Default("false")
         @Column(COL_MARK)
-        public boolean mark=false;
+        public boolean mark = false;
 
         @Column("publishedAt")
         private String publishedAt;

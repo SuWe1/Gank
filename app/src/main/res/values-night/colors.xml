@@ -9,4 +9,7 @@
         <color name="FloatingActionBarBackground">#35464e </color>
         <color name="BookMarkHeader">#212a2f </color>
         <color name="PicBackground">#000</color>
+        <color name="mark_title_color">#6471FB</color>
+        <color name="data_empty_bg">#101B24</color>
+        <color name="data_empty_text_color">#92979C</color>
 </resources>

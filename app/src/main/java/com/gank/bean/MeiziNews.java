@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by Swy on 2017/3/17.
  */
 
-public class MeiziNews {
+public class MeiziNews extends BaseBean{
     private String error;
     private ArrayList<MeiziNews.Question> results;
 
@@ -32,7 +32,7 @@ public class MeiziNews {
         this.results = results;
     }
 
-    @Table("Meizi")public class Question{
+    @Table("Meizi")public class Question extends BaseBean{
         public static final String COL_ID= "_id";
         @PrimaryKey(AssignType.AUTO_INCREMENT)
         private int id;
