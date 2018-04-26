@@ -74,7 +74,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.read_detail,container,false);
+        View view=inflater.inflate(R.layout.activity_read_detail,container,false);
         initView(view);
         setHasOptionsMenu(true);
         presenter.requestData();
@@ -106,7 +106,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
             getActivity().onBackPressed();
         }else if (id==R.id.action_more){
             final BottomSheetDialog dialog=new BottomSheetDialog(getActivity());
-            final View view=getActivity().getLayoutInflater().inflate(R.layout.detail_bar_detail,null);
+            final View view=getActivity().getLayoutInflater().inflate(R.layout.view_detail_bar_detail,null);
             if (presenter.queryIsBooksMarks()){
                 Log.i(TAG, "onOptionsItemSelected: "+presenter.queryIsBooksMarks());
                 ((TextView)view.findViewById(R.id.textView)).setText(R.string.action_delete_from_bookmarks);
@@ -133,7 +133,6 @@ public class DetailFragment extends Fragment implements DetailContract.View {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-//                    presenter.copyText();
                     showCopyTextError();
                 }
             });
@@ -151,7 +150,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    View shareLayout=LayoutInflater.from(getActivity()).inflate(R.layout.popup_share_layout,null);
+                    View shareLayout=LayoutInflater.from(getActivity()).inflate(R.layout.view_popup_share_layout,null);
 //                    PopupWindow popupWindow=new PopupWindow(getActivity());
 //                    popupWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
 //                    popupWindow.setHeight(LinearLayout.LayoutParams.MATCH_PARENT);

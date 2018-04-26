@@ -5,8 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -45,7 +43,7 @@ public class GankNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case TYPE_NORMTAL:
                 return new NormalViewHolder(inflater.inflate(R.layout.home_list_item_layout,parent,false),listener);
             case TYPE_FOOTER:
-                return new FooterViewHolder(inflater.inflate(R.layout.list_footer,parent,false));
+                return new FooterViewHolder(inflater.inflate(R.layout.view_list_footer,parent,false));
             case TYPE_NO_IMG:
                 return new NoImageViewHolder(inflater.inflate(R.layout.home_list_item_without_image,parent,false),listener);
                 default:

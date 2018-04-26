@@ -61,7 +61,7 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             case TYPE_IOS_NORMAL:
                 return new GankViewHolder(inflater.inflate(R.layout.home_list_item_layout, parent, false), this.listener);
             default:
-                return new GankTitleViewHolder(inflater.inflate(R.layout.bookmark_header, parent, false));
+                return new GankTitleViewHolder(inflater.inflate(R.layout.view_bookmark_header, parent, false));
         }
     }
 

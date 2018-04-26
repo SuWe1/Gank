@@ -74,7 +74,7 @@ public class GankPresenter implements GankContract.Presenter {
                             /**
                              * issue1.数据库查重:首先检测数据库中是否已经储存过该条数据
                              * issue2:因为每次重启后都是在网络上重新下载数据 如果是数据库已经存在的数据则不会重新加载，也导致了这些数据当前id值为空
-                             * ，所有要绑定队友的id值.
+                             * ，所有要绑定对应的id值.
                              */
                             if (!queryIfIdExists(item.get_id())){
                                 DbLiteOrm.insert(item, ConflictAlgorithm.Replace);

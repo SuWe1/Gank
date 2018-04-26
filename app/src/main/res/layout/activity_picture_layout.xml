@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/PicBackground"
     >
-    <include layout="@layout/app_bar_picture"/>
+    <include layout="@layout/view_app_bar_picture"/>
     <ImageView
         android:id="@+id/Img_Meizi"
         android:layout_width="match_parent"

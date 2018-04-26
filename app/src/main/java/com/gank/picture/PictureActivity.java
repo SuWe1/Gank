@@ -56,7 +56,7 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.picture_layout);
+        setContentView(R.layout.activity_picture_layout);
         presenter=new PicturePresenter(this,this);
         initView();
         parseIntent();
@@ -141,7 +141,7 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
                 break;
             case R.id.action_more:
                 final BottomSheetDialog dialog=new BottomSheetDialog(this);
-                View view= LayoutInflater.from(this).inflate(R.layout.picture_bootom_dialog_layout,null);
+                View view= LayoutInflater.from(this).inflate(R.layout.view_picture_bootom_dialog_layout,null);
                 view.findViewById(R.id.save_picture).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -15,7 +15,7 @@ public class AboutPreferenceActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.about);
+        setContentView(R.layout.activity_about_layout);
         initView();
 
         AboutPreferenceFragment fragment=new AboutPreferenceFragment();

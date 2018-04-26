@@ -51,7 +51,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             case TYPE_NORMTAL:
             return new MeiziViewHolder(inflater.inflate(R.layout.home_list_item_meizi,parent,false),listener);
             case TYPE_FOOTER:
-                return new FooterViewHolder(inflater.inflate(R.layout.list_footer,parent,false));
+                return new FooterViewHolder(inflater.inflate(R.layout.view_list_footer,parent,false));
             default:
                 break;
         }
