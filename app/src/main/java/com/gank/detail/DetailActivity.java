@@ -12,24 +12,24 @@ import com.gank.bean.BeanTeype;
  * Created by Swy on 2017/3/5.
  */
 
-public class DetailActivity extends AppCompatActivity{
+public class DetailActivity extends AppCompatActivity {
     private DetailFragment detailFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frame_layout);
-        if (savedInstanceState!=null){
-            detailFragment= (DetailFragment) getSupportFragmentManager().getFragment(savedInstanceState,"detailFragment");
-        }else {
-            detailFragment=DetailFragment.newInstance();
-            getSupportFragmentManager().beginTransaction().replace(R.id.container,detailFragment).commit();
+        if (savedInstanceState != null) {
+            detailFragment = (DetailFragment) getSupportFragmentManager().getFragment(savedInstanceState, "detailFragment");
+        } else {
+            detailFragment = DetailFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, detailFragment).commit();
         }
         //获取列表传过来的具体item数据
-        Intent intent=getIntent();
-        DetailPresenter presenter=new DetailPresenter(detailFragment,DetailActivity.this);
+        Intent intent = getIntent();
+        DetailPresenter presenter = new DetailPresenter(detailFragment, DetailActivity.this);
         presenter.setType((BeanTeype) intent.getSerializableExtra("type"));
-        presenter.setId(intent.getIntExtra("id",1));
+        presenter.setId(intent.getIntExtra("id", 1));
         presenter.set_id(intent.getStringExtra("_id"));
         presenter.setTitle(intent.getStringExtra("title"));
         presenter.setUrl(intent.getStringExtra("url"));
@@ -39,8 +39,8 @@ public class DetailActivity extends AppCompatActivity{
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (detailFragment.isAdded()){
-            getSupportFragmentManager().putFragment(outState,"detailFragment",detailFragment);
+        if (detailFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, "detailFragment", detailFragment);
         }
     }
 }

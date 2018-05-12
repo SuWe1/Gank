@@ -29,7 +29,7 @@ import com.gank.settings.SettingsPreferenceActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private  MainFragment mainFragment;
+    private MainFragment mainFragment;
     private BookmarksFragment bookmarksfragment;
     private MeiziFragment meiziFragment;
     private Fragment currentFragment;
@@ -49,14 +49,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         /**
          * 添加Fragment前检查是否有保存的。如果没有状态保存，说明Acitvity是第1次被创建，我们添加Fragment
          */
-        if (savedInstanceState!=null){
-            mainFragment= (MainFragment) getSupportFragmentManager().getFragment(savedInstanceState,"MainFragment");
-            bookmarksfragment=(BookmarksFragment) getSupportFragmentManager().getFragment(savedInstanceState,"BookmarksFragment");
-            meiziFragment= (MeiziFragment) getSupportFragmentManager().getFragment(savedInstanceState,"meiziFragment");
-        }else {
-            mainFragment=MainFragment.newInstance();
-            bookmarksfragment=BookmarksFragment.newInstance();
-            meiziFragment=MeiziFragment.newInstance();
+        if (savedInstanceState != null) {
+            mainFragment = (MainFragment) getSupportFragmentManager().getFragment(savedInstanceState, "MainFragment");
+            bookmarksfragment = (BookmarksFragment) getSupportFragmentManager().getFragment(savedInstanceState, "BookmarksFragment");
+            meiziFragment = (MeiziFragment) getSupportFragmentManager().getFragment(savedInstanceState, "meiziFragment");
+        } else {
+            mainFragment = MainFragment.newInstance();
+            bookmarksfragment = BookmarksFragment.newInstance();
+            meiziFragment = MeiziFragment.newInstance();
         }
         //Fragment事务
 //        if (savedInstanceState==null){
@@ -64,52 +64,53 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,bookmarksfragment,"BookmarksFragment").commit();
 //            getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,meiziFragment,"meiziFragment").commit();
 //        }
-        if(!mainFragment.isAdded()){
-            getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,mainFragment,"MainFragment").commit();
+        if (!mainFragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment, mainFragment, "MainFragment").commit();
         }
-        if (!bookmarksfragment.isAdded()){
-            getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,bookmarksfragment,"BookmarksFragment").commit();
+        if (!bookmarksfragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment, bookmarksfragment, "BookmarksFragment").commit();
         }
-        if (!meiziFragment.isAdded()){
-            getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment,meiziFragment,"meiziFragment").commit();
+        if (!meiziFragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction().add(R.id.layout_fragment, meiziFragment, "meiziFragment").commit();
         }
-        new BookmarksPresenter(MainActivity.this,bookmarksfragment);
-        new MeiziPresenter(MainActivity.this,meiziFragment);
-        String action=getIntent().getAction();
+        new BookmarksPresenter(MainActivity.this, bookmarksfragment);
+        new MeiziPresenter(MainActivity.this, meiziFragment);
+        String action = getIntent().getAction();
         /**
          * issus:The action is grabbed from the Intent that started the activity,You didn't specify an action for the Intent  action可能为null
          * https://stackoverflow.com/questions/15048883/intent-getaction-is-returning-null
          */
-        if (action!=null&&action.equals(ACTION_BOOKMARKS)){
+        if (action != null && action.equals(ACTION_BOOKMARKS)) {
             showBookMarksFragment();
             navigationView.setCheckedItem(R.id.nav_bookmarks);
-        }else if (action!=null&&action.equals(ACTION_MEIZI)){
+        } else if (action != null && action.equals(ACTION_MEIZI)) {
             showMeiziFragment();
             navigationView.setCheckedItem(R.id.nav_meizi);
-        }else {
+        } else {
             showMainFragment();
             navigationView.setCheckedItem(R.id.nav_home);
         }
 
     }
 
-    private void initView(){
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
+    private void initView() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        drawerLayout= (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         //ActionBarDrawerToggle是一个开关，用于打开/关闭DrawerLayout抽屉
-        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(MainActivity.this,drawerLayout,toolbar,
-                R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         ///该方法会自动和actionBar关联, 将开关的图片显示在了action上，如果不设置，也可以有抽屉的效果，不过是默认的图标
         toggle.syncState();
-        navigationView= (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
     // 显示MainFragment并设置Title
-    private void showMainFragment(){
+    private void showMainFragment() {
 //        currentFragment=mainFragment;
-        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(mainFragment);
         fragmentTransaction.hide(bookmarksfragment);
         fragmentTransaction.hide(meiziFragment);
@@ -118,31 +119,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     // 显示BookmarksFragment并设置Title
-    private void showBookMarksFragment(){
+    private void showBookMarksFragment() {
 //        currentFragment=bookmarksfragment;
-        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(bookmarksfragment);
         fragmentTransaction.hide(mainFragment);
         fragmentTransaction.hide(meiziFragment);
         fragmentTransaction.commit();
         toolbar.setTitle(getResources().getString(R.string.nav_mark));
-        if (bookmarksfragment.isAdded()){
+        if (bookmarksfragment.isAdded()) {
             bookmarksfragment.notifyDataChanged();
         }
     }
 
-    public void showMeiziFragment(){
+    public void showMeiziFragment() {
 //        currentFragment=meiziFragment;
-        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(meiziFragment);
         fragmentTransaction.hide(mainFragment);
         fragmentTransaction.hide(bookmarksfragment);
         fragmentTransaction.commit();
         toolbar.setTitle(getResources().getString(R.string.nav_meizi));
-        if (meiziFragment.isAdded()){
+        if (meiziFragment.isAdded()) {
             meiziFragment.notifyDataChanged();
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -151,14 +153,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawerLayout.closeDrawer(GravityCompat.START);
-        int id=item.getItemId();
-        if (id==R.id.nav_home){
+        int id = item.getItemId();
+        if (id == R.id.nav_home) {
             showMainFragment();
-        }else if (id==R.id.nav_bookmarks){
+        } else if (id == R.id.nav_bookmarks) {
             showBookMarksFragment();
-        }else if (id==R.id.nav_meizi){
+        } else if (id == R.id.nav_meizi) {
             showMeiziFragment();
-        }else if (id==R.id.nav_change_theme){
+        } else if (id == R.id.nav_change_theme) {
             //当DrawerLayout关闭后更改主题
             drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
                 @Override
@@ -173,21 +175,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 @Override
                 public void onDrawerClosed(View drawerView) {
-                    SharedPreferences sp=getSharedPreferences("user_settings", Context.MODE_PRIVATE);
+                    SharedPreferences sp = getSharedPreferences("user_settings", Context.MODE_PRIVATE);
                     //检测当前主题模式
-                    int mode=getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                    if (mode==Configuration.UI_MODE_NIGHT_YES){
-                        sp.edit().putInt("theme",0).apply();
+                    int mode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                    if (mode == Configuration.UI_MODE_NIGHT_YES) {
+                        sp.edit().putInt("theme", 0).apply();
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    }else if (mode==Configuration.UI_MODE_NIGHT_NO){
-                        sp.edit().putInt("theme",1).apply();
+                    } else if (mode == Configuration.UI_MODE_NIGHT_NO) {
+                        sp.edit().putInt("theme", 1).apply();
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     }
 //                    getWindow().setWindowAnimations(R.style.WindowsAnimationonChange);
 //                    MainActivity.this.recreate();
                     Intent intent = getIntent();
                     finish();
-                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     startActivity(intent);
                 }
 
@@ -196,9 +198,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }
             });
-        }else if (id==R.id.nav_settings){
+        } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsPreferenceActivity.class));
-        }else if (id==R.id.nav_about){
+        } else if (id == R.id.nav_about) {
             startActivity(new Intent(this, AboutPreferenceActivity.class));
         }
         return true;
@@ -216,14 +218,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-        if (mainFragment.isAdded()){
-            getSupportFragmentManager().putFragment(outState,"MainFragment",mainFragment);
+        if (mainFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, "MainFragment", mainFragment);
         }
-        if (bookmarksfragment.isAdded()){
-            getSupportFragmentManager().putFragment(outState,"BookmarksFragment",bookmarksfragment);
+        if (bookmarksfragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, "BookmarksFragment", bookmarksfragment);
         }
-        if (meiziFragment.isAdded()){
-            getSupportFragmentManager().putFragment(outState,"meiziFragment",meiziFragment);
+        if (meiziFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, "meiziFragment", meiziFragment);
         }
 //        if (outState==null){
 //        FragmentManager manager = getSupportFragmentManager();

@@ -61,27 +61,27 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.context=getContext();
+        this.context = getContext();
     }
 
     @Override
     public void setPresenter(DetailContract.Presenter presenter) {
-        if (presenter!=null){
-            this.presenter=presenter;
+        if (presenter != null) {
+            this.presenter = presenter;
         }
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.activity_read_detail,container,false);
+        View view = inflater.inflate(R.layout.activity_read_detail, container, false);
         initView(view);
         setHasOptionsMenu(true);
         presenter.requestData();
         view.findViewById(R.id.toolbar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scrollView.smoothScrollTo(0,0);
+                scrollView.smoothScrollTo(0, 0);
             }
         });
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -96,21 +96,21 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_more,menu);
+        inflater.inflate(R.menu.menu_more, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id=item.getItemId();
-        if (id==android.R.id.home){
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             getActivity().onBackPressed();
-        }else if (id==R.id.action_more){
-            final BottomSheetDialog dialog=new BottomSheetDialog(getActivity());
-            final View view=getActivity().getLayoutInflater().inflate(R.layout.view_detail_bar_detail,null);
-            if (presenter.queryIsBooksMarks()){
-                Log.i(TAG, "onOptionsItemSelected: "+presenter.queryIsBooksMarks());
-                ((TextView)view.findViewById(R.id.textView)).setText(R.string.action_delete_from_bookmarks);
-                ((ImageView)view.findViewById(R.id.imageView)).setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+        } else if (id == R.id.action_more) {
+            final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
+            final View view = getActivity().getLayoutInflater().inflate(R.layout.view_detail_bar_detail, null);
+            if (presenter.queryIsBooksMarks()) {
+                Log.i(TAG, "onOptionsItemSelected: " + presenter.queryIsBooksMarks());
+                ((TextView) view.findViewById(R.id.textView)).setText(R.string.action_delete_from_bookmarks);
+                ((ImageView) view.findViewById(R.id.imageView)).setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
             }
             //添加收藏
             view.findViewById(R.id.layout_bookmark).setOnClickListener(new View.OnClickListener() {
@@ -145,12 +145,12 @@ public class DetailFragment extends Fragment implements DetailContract.View {
                 }
             });
             //分享文章
-            final LinearLayout shareLinearLayout= (LinearLayout) view.findViewById(R.id.layout_share);
+            final LinearLayout shareLinearLayout = (LinearLayout) view.findViewById(R.id.layout_share);
             shareLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    View shareLayout=LayoutInflater.from(getActivity()).inflate(R.layout.view_popup_share_layout,null);
+                    View shareLayout = LayoutInflater.from(getActivity()).inflate(R.layout.view_popup_share_layout, null);
 //                    PopupWindow popupWindow=new PopupWindow(getActivity());
 //                    popupWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
 //                    popupWindow.setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
@@ -158,11 +158,11 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 //                    popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
 //                    popupWindow.setAnimationStyle(R.style.WindowsAnimationonChange);
 //                    popupWindow.showAsDropDown(coordinatorLayout, Gravity.CENTER,0,0);
-                    final AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(R.string.choice_share_way)
                             .setView(shareLayout);
-                    final AlertDialog shareDialog=builder.create();
-                    Window window=shareDialog.getWindow();
+                    final AlertDialog shareDialog = builder.create();
+                    Window window = shareDialog.getWindow();
                     window.setWindowAnimations(R.style.WindowsAnimationonChange);
                     shareDialog.show();
                     shareLayout.findViewById(R.id.QQRL).setOnClickListener(new View.OnClickListener() {
@@ -201,7 +201,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         return true;
     }
 
-    private MyQQListener myQQListener=new MyQQListener(){
+    private MyQQListener myQQListener = new MyQQListener() {
         //分享成功
         @Override
         public void onComplete(Object o) {
@@ -219,23 +219,23 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         public void onError(UiError uiError) {
             super.onError(uiError);
             shareError();
-            Log.i("picture", "onError:errorCode: "+uiError.errorCode+" errorMessage: "+uiError.errorMessage+"  errorDetail "+uiError.errorDetail);
+            Log.i("picture", "onError:errorCode: " + uiError.errorCode + " errorMessage: " + uiError.errorMessage + "  errorDetail " + uiError.errorDetail);
         }
     };
 
     @Override
     public void shareSuccess() {
-        Snackbar.make(coordinatorLayout,R.string.share_success,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, R.string.share_success, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void shareError() {
-        Snackbar.make(coordinatorLayout,R.string.share_onerror,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, R.string.share_onerror, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void shareCancel() {
-        Snackbar.make(coordinatorLayout,R.string.share_cancel,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, R.string.share_cancel, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -260,7 +260,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @Override
     public void showLoadingError() {
-        Snackbar.make(imageView,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(imageView, R.string.loaded_failed, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -271,7 +271,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @Override
     public void showSharingError() {
-        Snackbar.make(imageView,R.string.share_error,Snackbar.LENGTH_INDEFINITE);
+        Snackbar.make(imageView, R.string.share_error, Snackbar.LENGTH_INDEFINITE);
     }
 
     @Override
@@ -302,7 +302,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @Override
     public void showBrowserNotFoundError() {
-        Snackbar.make(imageView, R.string.no_browser_found,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(imageView, R.string.no_browser_found, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -331,13 +331,12 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     }
 
 
-
     @Override
     public void initView(View view) {
-        refreshLayout= (SwipeRefreshLayout) view.findViewById(R.id.refreshlayout);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshlayout);
         //设置下拉刷新的按钮的颜色
         refreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        webview= (WebView) view.findViewById(R.id.web_view);
+        webview = (WebView) view.findViewById(R.id.web_view);
         webview.setScrollbarFadingEnabled(true);
         //fragment和acticity交互之组件传递
         DetailActivity activity = (DetailActivity) getActivity();
@@ -346,7 +345,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
         imageView = (ImageView) view.findViewById(R.id.image_view);
         scrollView = (NestedScrollView) view.findViewById(R.id.scrollView);
-        coordinatorLayout= (CoordinatorLayout) view.findViewById(R.id.coordinatorlayout);
+        coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinatorlayout);
         toolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.toolbar_layout);
         //扩张时候的title颜色
 //        toolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorPrimary));
@@ -363,12 +362,12 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         //开启application Cache功能
         webview.getSettings().setAppCacheEnabled(false);
 
-        webview.setWebViewClient(new WebViewClient(){
+        webview.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 //解决 net::ERR_UNKNOWN_URL_SCHEME
                 //屏蔽掉错误的重定向url
-                if (url.startsWith("http:") || url.startsWith("https:")){
+                if (url.startsWith("http:") || url.startsWith("https:")) {
                     view.loadUrl(url);
                 }
                 return true;
@@ -377,7 +376,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     }
 
-    private void setCollapsingToolbarLayoutTitle(String title){
+    private void setCollapsingToolbarLayoutTitle(String title) {
         toolbarLayout.setTitle(title);
         toolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
         toolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
@@ -390,7 +389,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         super.onDestroyView();
         webview.removeAllViews();
         webview.destroy();
-        webview=null;
+        webview = null;
         Log.i(TAG, "onDestroyView: webview is destroy");
     }
 }

@@ -37,7 +37,7 @@ import static com.gank.picture.PicturePresenter.MY_PERMISSIONS_REQUEST_WRITE_EXT
  * Created by Swy on 2017/3/22.
  */
 
-public class PictureActivity extends AppCompatActivity implements PictureContract.View{
+public class PictureActivity extends AppCompatActivity implements PictureContract.View {
 
     private CoordinatorLayout coordinatorLayout;
     private ImageView mImageView;
@@ -46,25 +46,26 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
     private PhotoViewAttacher mPhotoViewAttacher;
     private String ImgUrl;
 
-    public static final String Img_Url="imgUrl";
-    public static final String TRANSIT_PIC="picture";
+    public static final String Img_Url = "imgUrl";
+    public static final String TRANSIT_PIC = "picture";
 
     //是否隐藏appbar
-    private boolean mIsHide=false;
+    private boolean mIsHide = false;
 
     private PictureContract.Presenter presenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture_layout);
-        presenter=new PicturePresenter(this,this);
+        presenter = new PicturePresenter(this, this);
         initView();
         parseIntent();
-        ViewCompat.setTransitionName(mImageView,TRANSIT_PIC);
-        presenter.LoadPic(ImgUrl,mImageView);
+        ViewCompat.setTransitionName(mImageView, TRANSIT_PIC);
+        presenter.LoadPic(ImgUrl, mImageView);
     }
 
-    private void initView(){
+    private void initView() {
         /**
          * 主题使用的是NoActionbar不设定setSupportActionBar是不会显示菜单栏的
          * 用 setSupportActionBar 设定，Toolbar即能取代原本的 actionbar
@@ -73,29 +74,29 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
          * 了还回按钮则finish PictureActivity
          * issue:toolbar.setTitle()需要在调用setSupportActionBar(toolbar)方法之前设置
          */
-        mToolbar= (Toolbar) findViewById(R.id.picture_toolbar);
-        mToolbar.setTitle("妹子");
+        mToolbar = (Toolbar) findViewById(R.id.picture_toolbar);
+        mToolbar.setTitle(R.string.nav_meizi);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        coordinatorLayout= (CoordinatorLayout) findViewById(R.id.pic_coordinatorlayout);
-        mImageView= (ImageView) findViewById(R.id.Img_Meizi);
-        mAppBarLayout= (AppBarLayout) findViewById(R.id.pic_appbar);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.pic_coordinatorlayout);
+        mImageView = (ImageView) findViewById(R.id.Img_Meizi);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.pic_appbar);
 //        setupPhotoAttacher();
     }
 
-    public static Intent newIntent(Context context,String url){
-        Intent intent=new Intent(context,PictureActivity.class);
-        intent.putExtra(Img_Url,url);
+    public static Intent newIntent(Context context, String url) {
+        Intent intent = new Intent(context, PictureActivity.class);
+        intent.putExtra(Img_Url, url);
         return intent;
     }
 
-    private void parseIntent(){
-        ImgUrl=getIntent().getStringExtra(Img_Url);
-        Log.i("gank", "parseIntent: "+ImgUrl);
+    private void parseIntent() {
+        ImgUrl = getIntent().getStringExtra(Img_Url);
+        Log.i("gank", "parseIntent: " + ImgUrl);
     }
 
-    private void setupPhotoAttacher(){
-        mPhotoViewAttacher=new PhotoViewAttacher(mImageView);
+    private void setupPhotoAttacher() {
+        mPhotoViewAttacher = new PhotoViewAttacher(mImageView);
         mPhotoViewAttacher.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
             @Override
             public void onViewTap(View view, float v, float v1) {
@@ -118,7 +119,7 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
                         .setPositiveButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                             dialog.dismiss();
+                                dialog.dismiss();
                             }
                         })
                         .show();
@@ -127,21 +128,22 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_more,menu);
+        getMenuInflater().inflate(R.menu.menu_more, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
             case R.id.action_more:
-                final BottomSheetDialog dialog=new BottomSheetDialog(this);
-                View view= LayoutInflater.from(this).inflate(R.layout.view_picture_bootom_dialog_layout,null);
+                final BottomSheetDialog dialog = new BottomSheetDialog(this);
+                View view = LayoutInflater.from(this).inflate(R.layout.view_picture_bootom_dialog_layout, null);
                 view.findViewById(R.id.save_picture).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -170,7 +172,7 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                presenter.sharePicToQQ(ImgUrl,myQQListener);
+                                presenter.sharePicToQQ(ImgUrl, myQQListener);
                             }
                         });
                     }
@@ -185,18 +187,18 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
     }
 
     //是否隐藏appbar
-    private void hideOrShowAppBar(){
+    private void hideOrShowAppBar() {
         mAppBarLayout.animate()
-                .translationY(mIsHide?0:-mAppBarLayout.getHeight())
+                .translationY(mIsHide ? 0 : -mAppBarLayout.getHeight())
                 .setInterpolator(new DecelerateInterpolator(2))
                 .start();
-        mIsHide=!mIsHide;
+        mIsHide = !mIsHide;
     }
 
     @Override
     public void setPresenter(PictureContract.Presenter presenter) {
-        if (presenter!=null){
-            this.presenter=presenter;
+        if (presenter != null) {
+            this.presenter = presenter;
         }
     }
 
@@ -207,32 +209,32 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
 
     @Override
     public void showSaveSuccessful(String path) {
-        Snackbar.make(coordinatorLayout,R.string.save_success,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, R.string.save_success, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showSaveFail() {
-        Snackbar.make(coordinatorLayout,R.string.save_fail,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, R.string.save_fail, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showNoPermission() {
-        Snackbar.make(coordinatorLayout,R.string.save_fail_no_permission,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, R.string.save_fail_no_permission, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void shareSuccess() {
-        Snackbar.make(coordinatorLayout,R.string.share_success,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, R.string.share_success, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void shareError() {
-        Snackbar.make(coordinatorLayout,R.string.share_onerror,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, R.string.share_onerror, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void shareCancel() {
-        Snackbar.make(coordinatorLayout,R.string.share_cancel,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, R.string.share_cancel, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -251,8 +253,8 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
                 // Permission Denied
                 showNoPermission();
             }
-        }else if (requestCode==MY_PERMISSIONS_REQUEST_READ_PHONE_STATUS){
-            Snackbar.make(coordinatorLayout,R.string.share_again,Snackbar.LENGTH_LONG).show();
+        } else if (requestCode == MY_PERMISSIONS_REQUEST_READ_PHONE_STATUS) {
+            Snackbar.make(coordinatorLayout, R.string.share_again, Snackbar.LENGTH_LONG).show();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -260,10 +262,10 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Tencent.onActivityResultData(requestCode,resultCode,data,myQQListener);
+        Tencent.onActivityResultData(requestCode, resultCode, data, myQQListener);
     }
 
-    MyQQListener myQQListener=new MyQQListener(){
+    MyQQListener myQQListener = new MyQQListener() {
         //分享成功
         @Override
         public void onComplete(Object o) {
@@ -281,7 +283,7 @@ public class PictureActivity extends AppCompatActivity implements PictureContrac
         public void onError(UiError uiError) {
             super.onError(uiError);
             shareError();
-            Log.i("picture", "onError:errorCode: "+uiError.errorCode+" errorMessage: "+uiError.errorMessage+"  errorDetail "+uiError.errorDetail);
+            Log.i("picture", "onError:errorCode: " + uiError.errorCode + " errorMessage: " + uiError.errorMessage + "  errorDetail " + uiError.errorDetail);
         }
     };
 }

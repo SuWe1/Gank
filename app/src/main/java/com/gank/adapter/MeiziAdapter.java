@@ -25,33 +25,33 @@ import java.util.List;
 public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "MeiziAdapter";
     private Context context;
-    private List<MeiziNews.Question> list=new ArrayList<>();
+    private List<MeiziNews.Question> list = new ArrayList<>();
     private final LayoutInflater inflater;
 
     //点击事件回调
     private OnMeiziRecyclerViewOnClickListener listener;
 
-    private static final int TYPE_NORMTAL=0;
-    private static final  int TYPE_FOOTER=1;
+    private static final int TYPE_NORMTAL = 0;
+    private static final int TYPE_FOOTER = 1;
 
-    public MeiziAdapter(List<MeiziNews.Question> list,Context context) {
-        this.context=context;
-        this.list=list;
-        inflater=LayoutInflater.from(context);
+    public MeiziAdapter(List<MeiziNews.Question> list, Context context) {
+        this.context = context;
+        this.list = list;
+        inflater = LayoutInflater.from(context);
     }
 
     //点击事件回调
-    public void setItemOnClickListener(OnMeiziRecyclerViewOnClickListener listener){
-        this.listener=listener;
+    public void setItemOnClickListener(OnMeiziRecyclerViewOnClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch (viewType){
+        switch (viewType) {
             case TYPE_NORMTAL:
-            return new MeiziViewHolder(inflater.inflate(R.layout.home_list_item_meizi,parent,false),listener);
+                return new MeiziViewHolder(inflater.inflate(R.layout.home_list_item_meizi, parent, false), listener);
             case TYPE_FOOTER:
-                return new FooterViewHolder(inflater.inflate(R.layout.view_list_footer,parent,false));
+                return new FooterViewHolder(inflater.inflate(R.layout.view_list_footer, parent, false));
             default:
                 break;
         }
@@ -60,8 +60,8 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (!(holder instanceof FooterViewHolder)){
-            MeiziNews.Question item=list.get(position);
+        if (!(holder instanceof FooterViewHolder)) {
+            MeiziNews.Question item = list.get(position);
             Glide.with(context)
                     .load(item.getUrl())
                     .asBitmap()
@@ -69,20 +69,20 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .fitCenter()
                     .error(R.mipmap.loading)
-                    .into(((MeiziViewHolder)holder).imageView);
-            String time=item.getCreatedAt().substring(0,10);
+                    .into(((MeiziViewHolder) holder).imageView);
+            String time = item.getCreatedAt().substring(0, 10);
             ((MeiziViewHolder) holder).textView.setText(time);
         }
     }
 
     @Override
     public int getItemCount() {
-        return list.size()+1;
+        return list.size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position==getItemCount()-1){
+        if (position == getItemCount() - 1) {
             return TYPE_FOOTER;
         }
         return TYPE_NORMTAL;
@@ -96,12 +96,12 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         OnMeiziRecyclerViewOnClickListener onRecyclerViewOnClickListener;
 
         //设置监听
-        public MeiziViewHolder(View itemView,OnMeiziRecyclerViewOnClickListener listener) {
+        public MeiziViewHolder(View itemView, OnMeiziRecyclerViewOnClickListener listener) {
             super(itemView);
-            this.onRecyclerViewOnClickListener=listener;
-            imageView= (ImageView) itemView.findViewById(R.id.meiziImg);
-            button= (Button) itemView.findViewById(R.id.meiziBtn);
-            textView= (TextView) itemView.findViewById(R.id.meiziTextTime);
+            this.onRecyclerViewOnClickListener = listener;
+            imageView = (ImageView) itemView.findViewById(R.id.meiziImg);
+            button = (Button) itemView.findViewById(R.id.meiziBtn);
+            textView = (TextView) itemView.findViewById(R.id.meiziTextTime);
 //            itemView.setOnClickListener(this);
             imageView.setOnClickListener(this);
             button.setOnClickListener(this);
@@ -110,8 +110,8 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         @Override
         public void onClick(View v) {
-            if (onRecyclerViewOnClickListener!=null){
-                onRecyclerViewOnClickListener.onItemClick(v,imageView,getLayoutPosition());
+            if (onRecyclerViewOnClickListener != null) {
+                onRecyclerViewOnClickListener.onItemClick(v, imageView, getLayoutPosition());
             }
         }
 
@@ -125,7 +125,8 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             return true;
         }*/
     }
-    class FooterViewHolder extends RecyclerView.ViewHolder{
+
+    class FooterViewHolder extends RecyclerView.ViewHolder {
         public FooterViewHolder(View itemView) {
             super(itemView);
         }

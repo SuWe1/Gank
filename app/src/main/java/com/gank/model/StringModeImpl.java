@@ -5,14 +5,13 @@ import android.content.Context;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.gank.interfaze.OnStringListener;
 
 /**
  * Created by Swy on 2017/3/4.
  * onStringListener实现类
  */
 
-public class StringModeImpl  {
+public class StringModeImpl {
     private Context context;
 
     //获取Application的context避免内存泄漏
@@ -20,8 +19,8 @@ public class StringModeImpl  {
         this.context = context.getApplicationContext();
     }
 
-    public void load(String url, final OnStringListener listener){
-        StringRequest request=new StringRequest(url, new Response.Listener<String>() {
+    public void load(String url, final OnStringListener listener) {
+        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 listener.onSuccess(s);

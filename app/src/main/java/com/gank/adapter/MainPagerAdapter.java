@@ -38,10 +38,10 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     private Context context;
     private GankFragment gankFragment;
     private FrontFragment frontFragment;
-//    private MeiziFragment meiziFragment;
+    //    private MeiziFragment meiziFragment;
     private IosFragment iosFragment;
 
-    private List<Fragment> fragments=new ArrayList<>();
+    private List<Fragment> fragments = new ArrayList<>();
 
     public GankFragment getGankFragment() {
         return gankFragment;
@@ -62,11 +62,11 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public MainPagerAdapter(FragmentManager fm, Context context, GankFragment gankFragment, FrontFragment frontFragment, IosFragment iosFragment) {
         super(fm);
         this.context = context;
-        titles = new String[]{"Android", "Web","IOS"};
+        titles = new String[]{"Android", "Web", "IOS"};
         this.gankFragment = gankFragment;
         this.frontFragment = frontFragment;
 //        this.meiziFragment=meiziFragment;
-        this.iosFragment=iosFragment;
+        this.iosFragment = iosFragment;
         fragments.add(gankFragment);
         fragments.add(frontFragment);
         fragments.add(iosFragment);
@@ -77,7 +77,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
         if (position == 1) {
             return frontFragment;
-        }else if (position==2){
+        } else if (position == 2) {
             return iosFragment;
         }
         return gankFragment;

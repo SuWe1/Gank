@@ -39,12 +39,10 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static final int TYPE_IOS_NORMAL = 4;
     public static final int TYPE_IOS_WITH_HEADER = 5;
 
-    private List<Integer> types;
 
-    public BookMarksAdapter(Context context, ArrayList<BaseBean> newsList, ArrayList<Integer> types) {
+    public BookMarksAdapter(Context context, ArrayList<BaseBean> newsList) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.types = types;
         this.newsList = newsList;
     }
 
@@ -67,7 +65,7 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        switch (types.get(position)) {
+        switch (newsList.get(position).newsDetailType) {
             case TYPE_Gank_WITH_HEADER:
                 ((GankTitleViewHolder) holder).textView.setText(context.getResources().getString(R.string.bookmarks_Android_title));
                 break;
@@ -133,12 +131,12 @@ public class BookMarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return types.size();
+        return newsList.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return types.get(position);
+        return newsList.get(position).newsDetailType;
     }
 
     class GankViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

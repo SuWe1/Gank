@@ -8,17 +8,16 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <include layout="@layout/view_app_bar_main"/>
+    <include layout="@layout/view_app_bar_main" />
 
     <!-- 注意给 NavigationView 设置 android:layout_gravity="start" 属性-->
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/view_nav_header_main"
-        app:menu="@menu/activity_main_drawer"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/view_nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
 
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Gank</string>
     <!--nav_head -->
-    <string name="nav_home">Home page</string>
-    <string name="nav_meizi">Welfare</string>
-    <string name="nav_mark">My Collection</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_meizi">Picture</string>
+    <string name="nav_mark">Collection</string>
     <string name="nav_change_theme">Switch Theme</string>
     <string name="nac_setting">Setting</string>
-    <string name="nav_anout">About Me</string>
+    <string name="nav_anout">About</string>
     <string name="default_name">Ganker</string>
 
     <!-- -->
@@ -69,16 +69,16 @@
     <string name="sure">Sure</string>
     <string name="yes">Yes</string>
     <string name="no_app_store_found">没有邮件类App</string>
-    <string name="action_delete_from_bookmarks">No mail app is installed</string>
+    <string name="action_delete_from_bookmarks">Remove from favorites</string>
     <string name="save_picture_to_local">Save the picture to the local？</string>
     <string name="save_picture_mes">Save the picture to the phone</string>
     <string name="share_picture_to_wx">Share pictures to WeChat friends</string>
     <string name="share_article_to_wx">WeChat</string>
     <string name="share_picture_to_wx_friend_community">Share pictures to WeChat circle</string>
-    <string name="share_article_to_wx_friend_community">WeChat circle</string>
+    <string name="share_article_to_wx_friend_community">Wx Circle</string>
     <string name="share_picture_to_QQ">Share pictures to QQ friends</string>
-    <string name="share_article_to_QQ">QQ friends</string>
-    <string name="share_article_to_wxMark">WeChat collection</string>
+    <string name="share_article_to_QQ">QQ</string>
+    <string name="share_article_to_wxMark">Wx Mark</string>
     <string name="share_picture_to_weibo">Share pictures to microblogging</string>
     <string name="share_success">Sharing success</string>
     <string name="share_onerror">Sharing failed</string>

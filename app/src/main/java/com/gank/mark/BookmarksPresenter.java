@@ -29,14 +29,12 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
 
     private ArrayList<BaseBean> newsList = new ArrayList<>();
 
-    private ArrayList<Integer> types;
 
     public BookmarksPresenter(Context context, BookmarksContract.View view) {
         this.context = context;
         this.view = view;
         this.view.setPresenter(this);
         gson = new Gson();
-        types = new ArrayList<>();
     }
 
     @Override
@@ -45,11 +43,10 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
             view.showLoading();
         } else {
             newsList.clear();
-            types.clear();
         }
         checkForFreshData();
         if (newsList != null) {
-            view.showResults(newsList, types);
+            view.showResults(newsList);
         }
         view.stopLoading();
     }
@@ -122,32 +119,29 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
                 .where(GankNews.Question.COL_MARK + "=?", new String[]{markSign});
         ArrayList<GankNews.Question> gklist = App.DbLiteOrm.query(gankqb);
         if (gklist.size() > 0) {
-            types.add(0, BookMarksAdapter.TYPE_Gank_WITH_HEADER);
             newsList.add(new BaseBean(BookMarksAdapter.TYPE_Gank_WITH_HEADER));
             for (int i = 0; i < gklist.size(); i++) {
+                gklist.get(i).newsDetailType = BookMarksAdapter.TYPE_Gank_NORMAL;
                 newsList.add(gklist.get(i));
-                types.add(BookMarksAdapter.TYPE_Gank_NORMAL);
             }
         }
         QueryBuilder frontqb = new QueryBuilder(FrontNews.Question.class)
                 .where(FrontNews.Question.COL_MARK + "= ?", new String[]{markSign});
         ArrayList<FrontNews.Question> ftlist = App.DbLiteOrm.query(frontqb);
         if (ftlist.size() > 0) {
-            types.add(BookMarksAdapter.TYPE_Front_WITH_HEADER);
             newsList.add(new BaseBean(BookMarksAdapter.TYPE_Front_WITH_HEADER));
             for (int i = 0; i < ftlist.size(); i++) {
+                ftlist.get(i).newsDetailType = BookMarksAdapter.TYPE_Front_NORMAL;
                 newsList.add(ftlist.get(i));
-                types.add(BookMarksAdapter.TYPE_Front_NORMAL);
             }
         }
         QueryBuilder iosqb = new QueryBuilder<>(IosNews.Question.class).where(IosNews.Question.COL_MARK + "=?", new String[]{markSign});
         ArrayList<IosNews.Question> ioslist = App.DbLiteOrm.query(iosqb);
         if (ioslist.size() > 0) {
-            types.add(BookMarksAdapter.TYPE_IOS_WITH_HEADER);
             newsList.add(new BaseBean(BookMarksAdapter.TYPE_IOS_WITH_HEADER));
             for (int i = 0; i < ioslist.size(); i++) {
+                ioslist.get(i).newsDetailType = BookMarksAdapter.TYPE_IOS_NORMAL;
                 newsList.add(ioslist.get(i));
-                types.add(BookMarksAdapter.TYPE_IOS_NORMAL);
             }
         }
     }

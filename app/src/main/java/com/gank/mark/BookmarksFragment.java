@@ -60,7 +60,7 @@ public class BookmarksFragment extends Fragment implements BookmarksContract.Vie
     }
 
     @Override
-    public void showResults(ArrayList<BaseBean> newsList, ArrayList<Integer> types) {
+    public void showResults(ArrayList<BaseBean> newsList) {
         if (newsList.size() <= 0) {
             //显示无数据界面
             mNoDataLayout.setVisibility(View.VISIBLE);
@@ -70,7 +70,7 @@ public class BookmarksFragment extends Fragment implements BookmarksContract.Vie
             mMarkContentLayout.setVisibility(View.VISIBLE);
         }
         if (adapter == null) {
-            adapter = new BookMarksAdapter(getActivity(), newsList, types);
+            adapter = new BookMarksAdapter(getActivity(), newsList);
             adapter.setItemOnClickListener(new OnRecyclerViewOnClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {

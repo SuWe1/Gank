@@ -32,7 +32,8 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
     private GoodView goodView;
 
     private MeiziContract.Presenter presenter;
-    public MeiziFragment() {     
+
+    public MeiziFragment() {
     }
 
     public static MeiziFragment newInstance() {
@@ -42,7 +43,7 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_list,container,false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
         initView(view);
         presenter.start();
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -52,19 +53,20 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
             }
         });
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            boolean isScrollState=false;
+            boolean isScrollState = false;
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                LinearLayoutManager manager= (LinearLayoutManager) recyclerView.getLayoutManager();
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 //没有滚动时候
-                if (newState==RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     //获的最后一个可见的item
-                    int lastVisibilityItem=manager.findLastCompletelyVisibleItemPosition();
-                    int totalItemCount=manager.getItemCount();
+                    int lastVisibilityItem = manager.findLastCompletelyVisibleItemPosition();
+                    int totalItemCount = manager.getItemCount();
 
                     //判断是否滚动到底部并且是向下滑动
-                    if (lastVisibilityItem==(totalItemCount-1)&&isScrollState){
+                    if (lastVisibilityItem == (totalItemCount - 1) && isScrollState) {
                         presenter.loadMore(1);
                     }
                 }
@@ -73,11 +75,11 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                isScrollState=dy>0;
+                isScrollState = dy > 0;
                 //妹子页面不显示fab
-                if (dy>0){
+                if (dy > 0) {
                     fab.hide();
-                }else {
+                } else {
                     fab.hide();
                 }
             }
@@ -87,7 +89,7 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
 
     @Override
     public void showError() {
-        Snackbar.make(fab, R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(fab, R.string.loaded_failed, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -125,14 +127,14 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
 
     @Override
     public void showResult(ArrayList<MeiziNews.Question> list) {
-        if (adapter==null){
-            adapter=new MeiziAdapter(list,getContext());
+        if (adapter == null) {
+            adapter = new MeiziAdapter(list, getContext());
             adapter.setItemOnClickListener(new OnMeiziRecyclerViewOnClickListener() {
                 @Override
                 public void onItemClick(View v, View meizhiView, int position) {
-                    switch (v.getId()){
+                    switch (v.getId()) {
                         case R.id.meiziImg:
-                            presenter.StartReading(position,meizhiView);
+                            presenter.StartReading(position, meizhiView);
                             break;
                         case R.id.meiziBtn:
                             goodView.setText("+1");
@@ -146,7 +148,7 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
                 }
             });
             recyclerView.setAdapter(adapter);
-        }else {
+        } else {
             adapter.notifyDataSetChanged();
         }
     }
@@ -158,19 +160,19 @@ public class MeiziFragment extends Fragment implements MeiziContract.View {
 
     @Override
     public void setPresenter(MeiziContract.Presenter presenter) {
-        if (presenter!=null){
-            this.presenter=presenter;
+        if (presenter != null) {
+            this.presenter = presenter;
         }
     }
 
     @Override
     public void initView(View view) {
-        goodView=new GoodView(getContext());
-        recyclerView= (RecyclerView) view.findViewById(R.id.recyclerview);
+        goodView = new GoodView(getContext());
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        refresh= (SwipeRefreshLayout) view.findViewById(R.id.refreshlayout);
+        refresh = (SwipeRefreshLayout) view.findViewById(R.id.refreshlayout);
         //设置下拉刷新的按钮的颜色
         refresh.setColorSchemeResources(R.color.colorPrimary);
 

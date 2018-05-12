@@ -1,4 +1,4 @@
-package com.gank.interfaze;
+package com.gank.model;
 
 import com.android.volley.VolleyError;
 

@@ -195,9 +195,10 @@ public class MainFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId()==R.id.action_search){
+        if (item.getItemId()==R.id.action_search){
 //            historySearchView.openSearch();
-//        }
+//            lookAround();
+        }
         return true;
     }
     //随机读取android  前端

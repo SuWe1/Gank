@@ -18,7 +18,7 @@ import com.gank.R;
 /**
  * A placeholder fragment containing a simple view.
  */
-public  class WelcomeFragment extends Fragment {
+public class WelcomeFragment extends Fragment {
 
     private AppCompatTextView description_head;
     private AppCompatTextView description_body;
@@ -49,9 +49,8 @@ public  class WelcomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        page=getArguments().getInt(ARG_SECTION_NUMBER);
+        page = getArguments().getInt(ARG_SECTION_NUMBER);
     }
-
 
 
     @Override
@@ -59,7 +58,7 @@ public  class WelcomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_welcome, container, false);
         initView(rootView);
-        switch (page){
+        switch (page) {
             case 0:
                 description_head.setText(R.string.welcoem_description_one_head);
                 description_body.setText(R.string.welcoem_description_one_body);
@@ -74,13 +73,15 @@ public  class WelcomeFragment extends Fragment {
                 description_head.setText(R.string.welcoem_description_three_head);
                 description_body.setText(R.string.welcoem_description_three_body);
                 img_welcome_description.setBackgroundResource(R.drawable.ic_share_2);
+            default:
+                break;
         }
         return rootView;
     }
 
-    private void initView(View view){
-        description_head= (AppCompatTextView) view.findViewById(R.id.description_head);
-        description_body= (AppCompatTextView) view.findViewById(R.id.description_body);
-        img_welcome_description= (ImageView) view.findViewById(R.id.img_welcome_description);
+    private void initView(View view) {
+        description_head = (AppCompatTextView) view.findViewById(R.id.description_head);
+        description_body = (AppCompatTextView) view.findViewById(R.id.description_body);
+        img_welcome_description = (ImageView) view.findViewById(R.id.img_welcome_description);
     }
 }

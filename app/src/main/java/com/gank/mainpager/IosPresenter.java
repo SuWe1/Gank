@@ -10,7 +10,7 @@ import com.gank.bean.BeanTeype;
 import com.gank.bean.IosNews;
 import com.gank.model.StringModeImpl;
 import com.gank.detail.DetailActivity;
-import com.gank.interfaze.OnStringListener;
+import com.gank.model.OnStringListener;
 import com.gank.util.Api;
 import com.gank.util.Network;
 import com.google.gson.Gson;

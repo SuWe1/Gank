@@ -10,7 +10,7 @@ import com.gank.bean.BeanTeype;
 import com.gank.bean.GankNews;
 import com.gank.model.StringModeImpl;
 import com.gank.detail.DetailActivity;
-import com.gank.interfaze.OnStringListener;
+import com.gank.model.OnStringListener;
 import com.gank.util.Api;
 import com.gank.util.Network;
 import com.google.gson.Gson;
@@ -52,6 +52,11 @@ public class GankPresenter implements GankContract.Presenter {
     }
 
 
+    /**
+     *
+     * @param PagerNum 页数
+     * @param cleaing 是否需要清空  区分刷新和加载更多
+     */
     @Override
     public void loadPosts(int PagerNum, final boolean cleaing) {
         CurrentPagerNum=PagerNum;

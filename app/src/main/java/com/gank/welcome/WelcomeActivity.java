@@ -46,14 +46,15 @@ public class WelcomeActivity extends AppCompatActivity {
     private int currentPage;
     private SharedPreferences sp;
 
-    private static final int INIT_DATA_IN_FRIST_COME_APP_FINISH=1;
+    private static final int INIT_DATA_IN_FRIST_COME_APP_FINISH = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        sp= PreferenceManager.getDefaultSharedPreferences(this);
-        if (sp.getBoolean("frsitLaunch",true)){
+        sp = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sp.getBoolean("frsitLaunch", true)) {
             setContentView(R.layout.welcome_main);
             initView();
             initData();
@@ -62,20 +63,17 @@ public class WelcomeActivity extends AppCompatActivity {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 //                    ArgbEvaluator().evaluate(float fraction, Object startValue, Object endValue)
-                    int colorUpdate= (int) new ArgbEvaluator().evaluate(positionOffset,
-                            bgColors[position],bgColors[position==2?position:position+1]);
+                    int colorUpdate = (int) new ArgbEvaluator().evaluate(positionOffset,
+                            bgColors[position], bgColors[position == 2 ? position : position + 1]);
                     mViewPager.setBackgroundColor(colorUpdate);
                 }
 
                 @Override
                 public void onPageSelected(int position) {
-                    currentPage=position;
+                    currentPage = position;
                     updateColor(position);
                     mViewPager.setBackgroundColor(bgColors[position]);
-//                    btnPre.setVisibility(position==0? View.GONE:View.VISIBLE);
-//                    btnNext.setVisibility(position==2?View.GONE:View.VISIBLE);
-//                    btnNext.setVisibility(position==2?View.VISIBLE:View.GONE);
-                    switch (position){
+                    switch (position) {
                         case 0:
                             btnPre.setVisibility(View.GONE);
                             btnNext.setVisibility(View.VISIBLE);
@@ -105,67 +103,67 @@ public class WelcomeActivity extends AppCompatActivity {
             btnPre.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    currentPage-=1;
+                    currentPage -= 1;
                     mViewPager.setCurrentItem(currentPage);
                 }
             });
             btnNext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    currentPage+=1;
+                    currentPage += 1;
                     mViewPager.setCurrentItem(currentPage);
                 }
             });
             btnFinish.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SharedPreferences.Editor editor=sp.edit();
-                    editor.putBoolean("frsitLaunch",false);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putBoolean("frsitLaunch", false);
                     editor.apply();
                     notFristLaunchApp();
                 }
             });
-        }else {
+        } else {
             notFristLaunchApp();
             finish();
         }
 
     }
 
-    private void initView(){
+    private void initView() {
         mSectionsPagerAdapter = new WelcomeAdapter(getSupportFragmentManager());
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        btnPre= (ImageButton) findViewById(R.id.btnPre);
-        btnNext= (ImageButton) findViewById(R.id.btnNext);
-        btnFinish= (AppCompatButton) findViewById(R.id.btnFinish);
-        indicators=new ImageView[]{(ImageView) findViewById(R.id.indicator1), (ImageView) findViewById(R.id.indicator2), (ImageView) findViewById(R.id.indicator3)};
+        btnPre = (ImageButton) findViewById(R.id.btnPre);
+        btnNext = (ImageButton) findViewById(R.id.btnNext);
+        btnFinish = (AppCompatButton) findViewById(R.id.btnFinish);
+        indicators = new ImageView[]{(ImageView) findViewById(R.id.indicator1), (ImageView) findViewById(R.id.indicator2), (ImageView) findViewById(R.id.indicator3)};
     }
 
-    public void initData(){
-        bgColors=new int[]{ContextCompat.getColor(this,R.color.colorPrimary),
+    public void initData() {
+        bgColors = new int[]{ContextCompat.getColor(this, R.color.colorPrimary),
                 ContextCompat.getColor(this, R.color.cyan_500),
                 ContextCompat.getColor(this, R.color.light_blue_500)};
     }
 
-    private void updateColor(int position){
-        for (int i=0;i<indicators.length;i++){
-            indicators[i].setBackgroundResource(i==position ? R.drawable.wel_onboarding_indicator_selected : R.drawable.wel_onboarding_indicator_unselected);
+    private void updateColor(int position) {
+        for (int i = 0; i < indicators.length; i++) {
+            indicators[i].setBackgroundResource(i == position ? R.drawable.wel_onboarding_indicator_selected : R.drawable.wel_onboarding_indicator_unselected);
         }
     }
 
-    private void notFristLaunchApp(){
-        Intent intent=new Intent(this, MainActivity.class);
+    private void notFristLaunchApp() {
+        Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
-    private Handler handler=new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case INIT_DATA_IN_FRIST_COME_APP_FINISH:
                     btnFinish.setText(R.string.welcome_finish);
                     btnFinish.setEnabled(true);
@@ -179,7 +177,7 @@ public class WelcomeActivity extends AppCompatActivity {
     /**
      * 第一次进入App所需要的预加载
      */
-    class InitDataInFristComeApp extends AsyncTask<Void,Void,Void>{
+    class InitDataInFristComeApp extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPostExecute(Void aVoid) {
@@ -198,9 +196,6 @@ public class WelcomeActivity extends AppCompatActivity {
             handler.sendEmptyMessage(INIT_DATA_IN_FRIST_COME_APP_FINISH);
         }
     }
-
-
-
 
 
 }

@@ -17,19 +17,20 @@ class NoImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     TextView textViewDate;
     TextView textViewName;
     OnRecyclerViewOnClickListener listener;
-    public NoImageViewHolder(View itemView ,OnRecyclerViewOnClickListener listener) {
+
+    public NoImageViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
         super(itemView);
         textViewNoImg = (TextView) itemView.findViewById(R.id.textViewTitle);
         textViewDate = (TextView) itemView.findViewById(R.id.textviewDate);
         textViewName = (TextView) itemView.findViewById(R.id.textviewName);
-        this.listener=listener;
+        this.listener = listener;
         itemView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (listener!=null){
-            listener.onItemClick(v,getLayoutPosition());
+        if (listener != null) {
+            listener.onItemClick(v, getLayoutPosition());
         }
     }
 }

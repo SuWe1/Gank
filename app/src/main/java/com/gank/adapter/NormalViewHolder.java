@@ -22,19 +22,19 @@ class NormalViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     public NormalViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
         super(itemView);
-        imageView= (ImageView) itemView.findViewById(R.id.imageViewCover);
+        imageView = (ImageView) itemView.findViewById(R.id.imageViewCover);
         textViewTitle = (TextView) itemView.findViewById(R.id.textViewTitle);
         textViewDate = (TextView) itemView.findViewById(R.id.textviewDate);
         textViewName = (TextView) itemView.findViewById(R.id.textviewName);
-        this.listener=listener;
+        this.listener = listener;
         //设置监听
         itemView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (listener!=null){
-            listener.onItemClick(v,getLayoutPosition());
+        if (listener != null) {
+            listener.onItemClick(v, getLayoutPosition());
         }
     }
 }

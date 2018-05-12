@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--设计参考http://jaeger.itscoder.com/android/2016/02/16/use-navigation-view-detail.html -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="192dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    >
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="center"
-        android:background="@drawable/nav_header"/>
+        android:background="@drawable/navigation_head_icon"
+        android:scaleType="center" />
+
     <ImageView
+        android:id="@+id/head_img"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="36dp"
-        android:padding="8dp"
-        android:src="@drawable/ic_icon"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:padding="16dp"
-        android:text="@string/default_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/ic_icon" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/head_tv"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/head_img"
+        android:layout_alignStart="@+id/head_img"
+        android:layout_below="@+id/head_img"
+        android:gravity="center_horizontal"
+        android:text="@string/default_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+</RelativeLayout>
